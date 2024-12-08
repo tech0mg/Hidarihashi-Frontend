@@ -12,10 +12,6 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
   const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const pagesToSave = ["page1", "page2", "page3", "page4", "page5"]; // 保存対象のページID
 
-  const toggleColorModal = () => {
-    setIsColorModalOpen((prev) => !prev);
-  };
-
   return (
     <>
       <div className="bg-[#EDEAE7] w-full shadow-lg p-4">
