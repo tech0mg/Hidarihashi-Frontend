@@ -10,6 +10,12 @@ const App = () => {
   const [images, setImages] = useState([]);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  const buttonStyles = {
+    shiori: { default: "#98CBB0", hover: "#6FAE91" },
+    star: { default: "#E1DA0F", hover: "#B8B40C" },
+    kiroku: { default: "#C2AAC5", hover: "#A990A6" },
+  };
+
   useEffect(() => {
     fetch(`${apiUrl}/api/images`)
       .then((response) => {
@@ -26,17 +32,29 @@ const App = () => {
     router.push("/customers/list"); // リストページに遷移
   };
 
+  const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center justify-center"
+      style={{ transition: "transform 0.2s ease" }}
+      onMouseEnter={(e) => {
+        e.currentTarget.querySelector("svg").style.fill = fillHover;
+        e.currentTarget.style.transform = "scale(1.1)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.querySelector("svg").style.fill = fillDefault;
+        e.currentTarget.style.transform = "scale(1)";
+      }}
+    >
+      {children}
+    </button>
+  );
+
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       {/* ヘッダー */}
       <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-        {/* <button
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          onClick={goToList}
-        >
-          Go to List
-        </button> */}
       </header>
 
       {/* メインコンテンツ */}
@@ -68,7 +86,7 @@ const App = () => {
                   Like
                 </button>
                 {/* StarIconをここに追加 */}
-                <StarIcon size={30} fill="gold" className="mx-2" />
+                <StarIcon size={24} fill="gold" className="mx-2" />
               </div>
             </div>
           ))}
@@ -76,21 +94,33 @@ const App = () => {
       </main>
 
       {/* フッター */}
-      <footer className="bg-[#EDEAE7] shadow-inner p-4 flex justify-center items-center space-x-8">
-        <button className="flex flex-col items-center justify-center">
-          <ShioriIcon size={24} className="mx-2" />
+      <footer className="bg-[#EDEAE7] shadow-inner p-6 flex justify-center items-center space-x-8">
+        <IconButton
+          onClick={() => alert("しおりをつくるボタンが押されました")}
+          fillDefault={buttonStyles.shiori.default}
+          fillHover={buttonStyles.shiori.hover}
+        >
+          <ShioriIcon size={32} fill={buttonStyles.shiori.default} />
           <span className="text-sm">しおりをつくる</span>
-        </button>
+        </IconButton>
 
-        <button className="flex flex-col items-center justify-center">
-          <StarIcon size={24} className="mx-2" />
+        <IconButton
+          onClick={() => alert("リストをみるボタンが押されました")}
+          fillDefault={buttonStyles.star.default}
+          fillHover={buttonStyles.star.hover}
+        >
+          <StarIcon size={32} fill={buttonStyles.star.default} />
           <span className="text-sm">リストをみる</span>
-        </button>
+        </IconButton>
 
-        <button className="flex flex-col items-center justify-center">
-          <KirokuIcon size={24} className="mx-2" />
+        <IconButton
+          onClick={() => alert("きろくをみるボタンが押されました")}
+          fillDefault={buttonStyles.kiroku.default}
+          fillHover={buttonStyles.kiroku.hover}
+        >
+          <KirokuIcon size={32} fill={buttonStyles.kiroku.default} />
           <span className="text-sm">きろくをみる</span>
-        </button>
+        </IconButton>
       </footer>
     </div>
   );
