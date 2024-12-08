@@ -13,7 +13,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
   const pagesToSave = ["page1", "page2", "page3", "page4", "page5"]; // 保存対象のページID
 
   const toggleColorModal = () => {
-    setIsColorModalOpen(!isColorModalOpen);
+    setIsColorModalOpen((prev) => !prev);
   };
 
   return (
