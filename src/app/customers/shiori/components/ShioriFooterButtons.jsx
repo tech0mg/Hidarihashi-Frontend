@@ -41,9 +41,9 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
   );
 
   return (
-    <div className="bg-[#EDEAE7] w-full shadow-lg p-4">
+    <div className="bg-[#EDEAE7] shadow-inner p-6 flex justify-center items-center space-x-8">
       <div
-        className="grid grid-cols-3 gap-4"
+        className="grid grid-cols-3 gap-12"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)", // 3列に分割
@@ -58,7 +58,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
           fillHover={buttonStyles.paint.hover}
         >
           <PaintIcon size={32} fill={buttonStyles.paint.default} />
-          <span className="text-sm mt-2">いろをえらぶ</span>
+          <span className="text-sm mt-3">いろをえらぶ</span>
         </IconButton>
 
         {/* イラストを選ぶボタン */}
@@ -68,7 +68,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
           fillHover={buttonStyles.crown.hover}
         >
           <CrownIcon size={32} fill={buttonStyles.crown.default} />
-          <span className="text-sm mt-2">イラストをえらぶ</span>
+          <span className="text-sm mt-3">イラストをえらぶ</span>
         </IconButton>
 
         {/* 保存するボタン */}
@@ -81,7 +81,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
               fillHover={buttonStyles.save.hover}
             >
               <SaveIcon size={32} fill={buttonStyles.save.default} />
-              <span className="text-sm mt-2">ほぞんする</span>
+              <span className="text-sm mt-3">ほぞんする</span>
             </IconButton>
           )}
         />
@@ -93,7 +93,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
           fillHover={buttonStyles.close.hover}
         >
           <CloseIcon size={32} fill={buttonStyles.close.default} />
-          <span className="text-sm mt-2">やめる</span>
+          <span className="text-sm mt-3">やめる</span>
         </IconButton>
 
         {/* リストにもどるボタン */}
@@ -103,7 +103,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
           fillHover={buttonStyles.star.hover}
         >
           <StarIcon size={32} fill={buttonStyles.star.default} />
-          <span className="text-sm mt-2">リストにもどる</span>
+          <span className="text-sm mt-3">リストにもどる</span>
         </IconButton>
 
         {/* 記録を見るボタン */}
@@ -113,7 +113,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
           fillHover={buttonStyles.kiroku.hover}
         >
           <KirokuIcon size={32} fill={buttonStyles.kiroku.default} />
-          <span className="text-sm mt-2">きろくをみる</span>
+          <span className="text-sm mt-3">きろくをみる</span>
         </IconButton>
       </div>
     </div>

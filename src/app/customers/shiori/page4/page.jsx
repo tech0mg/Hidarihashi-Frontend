@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
@@ -8,6 +8,7 @@ import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢�
 const ShioriPage4 = () => {
   const router = useRouter();
   const { shioriColor } = useColor(); // Contextから色を取得
+  const [contentHeight, setContentHeight] = useState(0); // 動的なコンテンツ高さ
   const [items, setItems] = useState(["", "", "", "", "", ""]); // 持ち物リスト初期値
   const [memory, setMemory] = useState(""); // 思い出の記録初期値
 
@@ -24,28 +25,56 @@ const ShioriPage4 = () => {
     }
   };
 
+  // 持ち物リスト更新
   const updateItem = (index, value) => {
     const updatedItems = [...items];
     updatedItems[index] = value;
     setItems(updatedItems);
   };
 
+  // 動的にメインコンテンツの高さを計算
+  useEffect(() => {
+    const updateContentHeight = () => {
+      const headerHeight = document.querySelector("header")?.offsetHeight || 0;
+      const footerHeight = document.querySelector("footer")?.offsetHeight || 0;
+      const availableHeight = window.innerHeight - headerHeight - footerHeight;
+
+      // 上下余白分を計算し引く
+      const verticalPadding = 40; // 余白を設定
+      setContentHeight(availableHeight - verticalPadding * 2);
+    };
+
+    updateContentHeight();
+    window.addEventListener("resize", updateContentHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateContentHeight);
+    };
+  }, []);
+
   return (
-    <div id="page4" className={`flex flex-col items-center justify-between min-h-screen ${shioriColor}`}>
+    <div id="page4" className={`flex flex-col min-h-screen ${shioriColor}`}>
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center w-full">
+      <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
       </header>
 
-      {/* 上部コンテンツ（ラッパー + 矢印アイコンの配置） */}
-      <div className="relative flex justify-center items-center w-full h-[calc(100vh-100px)]">
+      {/* メインコンテンツ */}
+      <main
+        className="flex-grow bg-gradient-main flex justify-center items-center"
+        style={{
+          height: `${contentHeight}px`,
+          paddingTop: "40px", // 上部の余白を設定
+          paddingBottom: "40px", // 下部の余白を設定
+        }}
+      >
         {/* コンテンツ全体のラッパー */}
         <div
           className="relative bg-white shadow-lg border-8 border-[#da7997] rounded-md"
           style={{
             aspectRatio: "210 / 297", // A4の比率
-            height: "70%", // 高さを親要素に合わせる
-            maxWidth: "calc(100vh * 210 / 297)", // 幅を高さに合わせてA4比率を維持
+            height: "100%",
+            maxWidth: `calc(${contentHeight}px * 210 / 297)`,
           }}
         >
           <div className="p-6 w-full h-full flex flex-col justify-between">
@@ -85,10 +114,12 @@ const ShioriPage4 = () => {
             </button>
           </div>
         </div>
-      </div>
+      </main>
 
-      {/* 下部ボタンセクション */}
-      <ShioriFooterButtons handleNavigation={handleNavigation} />
+      {/* フッター */}
+      <footer className="bg-[#EDEAE7] shadow-inner">
+        <ShioriFooterButtons handleNavigation={handleNavigation} />
+      </footer>
     </div>
   );
 };

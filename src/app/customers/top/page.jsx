@@ -101,7 +101,7 @@ const App = () => {
           fillHover={buttonStyles.shiori.hover}
         >
           <ShioriIcon size={32} fill={buttonStyles.shiori.default} />
-          <span className="text-sm">しおりをつくる</span>
+          <span className="text-sm p-3">しおりをつくる</span>
         </IconButton>
 
         <IconButton
@@ -110,7 +110,7 @@ const App = () => {
           fillHover={buttonStyles.star.hover}
         >
           <StarIcon size={32} fill={buttonStyles.star.default} />
-          <span className="text-sm">リストをみる</span>
+          <span className="text-sm p-3">リストをみる</span>
         </IconButton>
 
         <IconButton
@@ -119,7 +119,7 @@ const App = () => {
           fillHover={buttonStyles.kiroku.hover}
         >
           <KirokuIcon size={32} fill={buttonStyles.kiroku.default} />
-          <span className="text-sm">きろくをみる</span>
+          <span className="text-sm p-3">きろくをみる</span>
         </IconButton>
       </footer>
     </div>
