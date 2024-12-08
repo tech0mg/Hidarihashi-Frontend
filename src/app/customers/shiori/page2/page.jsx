@@ -3,6 +3,8 @@ import React from "react";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import { useNavigation } from "../components/useNavigation";
+import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
+import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右矢印アイコン
 
 const ShioriPage2 = () => {
   const { navigateTo } = useNavigation();
@@ -26,22 +28,19 @@ const ShioriPage2 = () => {
           <DestinationSection />
         </div>
       </div>
-
-      {/* 戻るボタンと次へボタン */}
-      <div className="mt-4 flex space-x-4">
-        <button
-          className="p-2 bg-gray-200 rounded-full shadow-md"
-          onClick={() => navigateTo("prev")}
-        >
-          ←
+      
+      {/* 戻るボタン（左矢印） */}
+      <div className="absolute top-1/2 -left-10 transform -translate-y-1/2">
+        <button onClick={() => handleNavigation("prev")}>
+          <LeftArrowIcon size={24} />
         </button>
-        <button
-          className="p-2 bg-gray-200 rounded-full shadow-md"
-          onClick={() => navigateTo("next")}
-        >
-          →
+      </div>  
+      {/* 次へボタン（右矢印） */}
+      <div className="absolute top-1/2 -right-10 transform -translate-y-1/2">
+        <button onClick={() => handleNavigation("next")}>
+          <RightArrowIcon size={24} />
         </button>
-      </div>
+      </div>      
 
       {/* 下部ボタン */}
       <ShioriFooterButtons handleNavigation={navigateTo} />

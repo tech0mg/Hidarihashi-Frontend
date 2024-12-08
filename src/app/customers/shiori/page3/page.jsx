@@ -5,6 +5,8 @@ import { useNavigation } from "../components/useNavigation";
 import WeatherInfo from "../components/WeatherInfo";
 import RouteInfo from "../components/RouteInfo";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
+import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
+import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右矢印アイコン
 
 const ShioriPage3 = () => {
   const { navigateTo } = useNavigation();
@@ -75,19 +77,44 @@ const ShioriPage3 = () => {
   }
 };
 
- 
-
-
   return (
     <div 
     id="page3" 
     className="flex flex-col items-center justify-between min-h-screen"
     style={{ backgroundColor: shioriColor }}
     >
-      {/* 上部コンテンツ */}
-      <div className="flex flex-col items-center mt-8 w-full max-w-2xl">
-        <div className="border-4 border-pink-500 rounded-md p-6 bg-white shadow-lg w-full">
-          <h1 className="text-3xl font-bold mb-4 text-center">しおりpage3</h1>
+      {/* ヘッダー */}
+      <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center w-full">
+        <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
+      </header>      
+      {/* 上部コンテンツ（ラッパー + 矢印アイコンの配置） */}
+      <div className="relative flex justify-center items-center w-full h-[calc(100vh-100px)]">
+        {/* コンテンツ全体のラッパー */}
+        <div
+          className="relative bg-white shadow-lg border-8 border-[#da7997] rounded-md"
+          style={{
+            aspectRatio: "210 / 297", // A4の比率
+            height: "70%", // 高さを親要素に合わせる
+            maxWidth: "calc(100vh * 210 / 297)", // 幅を高さに合わせてA4比率を維持
+          }}
+        >
+          <div className="p-6 w-full h-full flex flex-col justify-between">
+            {/* 天気予報セクション */}
+            <div className="mb-4"> {/* 余白を減らしました */}
+              <h2 className="text-xl font-bold mb-3 text-center text-gray-600">天気予報</h2>
+              <div className="border-2 border-gray-300 p-4 rounded-lg bg-gray-50 w-full">
+                <p className="text-sm text-gray-600">
+                  <span className="font-bold">現在の天気：</span> 晴れ
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-bold">気温：</span> 25°C
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-bold">降水確率：</span> 10%
+                </p>
+              </div>
+            </div>
+          </div>
 
           {/* 出発地入力 */}
           <div className="mb-6">
@@ -136,19 +163,17 @@ const ShioriPage3 = () => {
         </div>
       </div>
 
-      {/* 戻るボタンと次へボタン */}
-      <div className="mt-4 flex space-x-4">
-        <button
-          className="p-2 bg-gray-200 rounded-full shadow-md"
-          onClick={() => navigateTo("prev")}
-        >
-          ←
+      {/* 戻るボタン（左矢印） */}
+      <div className="absolute top-1/2 -left-10 transform -translate-y-1/2">
+        <button onClick={() => handleNavigation("prev")}>
+          <LeftArrowIcon size={24} />
         </button>
-        <button
-          className="p-2 bg-gray-200 rounded-full shadow-md"
-          onClick={() => navigateTo("next")}
-        >
-          →
+      </div>
+
+      {/* 次へボタン（右矢印） */}
+      <div className="absolute top-1/2 -right-10 transform -translate-y-1/2">
+        <button onClick={() => handleNavigation("next")}>
+          <RightArrowIcon size={24} />
         </button>
       </div>
 

@@ -1,15 +1,14 @@
 "use client";
 import React,{ useState } from "react";
-import SaveToPDF from "./SaveToPDF";
-import PaintIcon from "../../../components/icon/icon_paint"; 
-import CrownIcon from "../../../components/icon/icon_crown"; 
-import SaveIcon from "../../../components/icon/icon_save"; 
-import CloseIcon from "../../../components/icon/icon_close"; 
-import StarIcon from "../../../components/icon/icon_star"; 
-import KirokuIcon from "../../../components/icon/icon_kiroku"; 
-import ColorModal from "../components/ColorModal";
+import PaintIcon from "../../../components/icon/icon_paint";
+import CrownIcon from "../../../components/icon/icon_crown";
+import SaveIcon from "../../../components/icon/icon_save";
+import CloseIcon from "../../../components/icon/icon_close";
+import StarIcon from "../../../components/icon/icon_star";
+import KirokuIcon from "../../../components/icon/icon_kiroku";
+import SaveToPDF from "../components/SaveToPDF"; // 正しい相対パス
 
-const ShioriFooterButtons = ({ handleNavigation }) => {
+const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
   const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const pagesToSave = ["page1", "page2", "page3", "page4", "page5"]; // 保存対象のページID
 
@@ -19,14 +18,10 @@ const ShioriFooterButtons = ({ handleNavigation }) => {
 
   return (
     <>
-      <div className="bg-[#EDEAE7]  w-full shadow-lg p-4">
+      <div className="bg-[#EDEAE7] w-full shadow-lg p-4">
         <div className="grid grid-cols-3 gap-4 text-center">
-          {/* いろをえらぶ */}
-          <button
-            onClick={toggleColorModal}
-            className="flex flex-col items-center"
-            aria-label="いろをえらぶ"
-          >
+        {/* 色を選ぶボタン */}
+        <button onClick={toggleColorModal} className="flex flex-col items-center">
             <div
               className="w-12 h-12 rounded-full flex items-center justify-center bg-gray-200 hover:bg-gray-300"
               style={{ transition: "background-color 0.2s ease" }}
@@ -43,7 +38,7 @@ const ShioriFooterButtons = ({ handleNavigation }) => {
             onClick={() => alert("イラストをえらぶボタンが押されました")}
             className="flex flex-col items-center"
           >
-            <div className="w-12 h-12  rounded-full flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center">
               <CrownIcon size={24} />
             </div>
             <span className="text-sm mt-2">イラストをえらぶ</span>
