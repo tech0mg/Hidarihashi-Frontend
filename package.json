@@ -2,8 +2,8 @@
   "name": "nextjs-flask-app",
   "version": "0.1.0",
   "private": true,
-  "main": "index.js",
-  "scripts": {"start": "node index.js"},
+  "main": "server.js",
+  "scripts": {"start": "node server.js"},
   "scripts": {
     "dev": "next dev",
     "build": "next build",
