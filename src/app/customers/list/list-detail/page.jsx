@@ -1,7 +1,8 @@
 "use client";
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-const ListDetail = () => {
+const ListDetailContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const image = searchParams.get("image");
@@ -20,8 +21,6 @@ const ListDetail = () => {
     alert("リストから外すボタンが押されました");
   };
 
-
-
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4 text-center">Image Detail</h1>
@@ -29,7 +28,7 @@ const ListDetail = () => {
         <div className="flex flex-col items-center">
           {/* 親コンテナ */}
           <div className="mb-4 w-full max-w-xl">
-          <div className="relative w-full" style={{ aspectRatio: "16 / 9" , maxWidth: "500px", margin: "0 auto" }}>
+            <div className="relative w-full" style={{ aspectRatio: "16 / 9", maxWidth: "500px", margin: "0 auto" }}>
               <img
                 src={`${apiUrl}${image}`}
                 alt="Selected Image"
@@ -38,7 +37,7 @@ const ListDetail = () => {
                   maxWidth: "100%",
                   maxHeight: "100%",
                   margin: "auto",
-                }}    
+                }}
               />
             </div>
           </div>
@@ -69,5 +68,11 @@ const ListDetail = () => {
     </div>
   );
 };
+
+const ListDetail = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <ListDetailContent />
+  </Suspense>
+);
 
 export default ListDetail;
