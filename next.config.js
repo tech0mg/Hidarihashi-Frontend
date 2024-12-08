@@ -5,7 +5,6 @@ const nextConfig = {
 }
 
 module.exports = {
-  reactStrictMode: true,
   experimental: {
     appDir: true, // appディレクトリを有効化
   },
