@@ -2,7 +2,8 @@
   "name": "nextjs-flask-app",
   "version": "0.1.0",
   "private": true,
-  "main": "server.js",
+  "main": "index.js", // 必要なエントリーファイルに変更
+  "scripts": {"start": "node index.js"}, // 必要なスクリプトを指定
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -20,9 +21,13 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
-    "eslint": "9.14.0",
-    "eslint-config-next": "15.0.2",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.15"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.7"
   }
 }
