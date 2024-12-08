@@ -2,8 +2,8 @@
   "name": "nextjs-flask-app",
   "version": "0.1.0",
   "private": true,
-  "main": "index.js", // 必要なエントリーファイルに変更
-  "scripts": {"start": "node index.js"}, // 必要なスクリプトを指定
+  "main": "index.js",
+  "scripts": {"start": "node index.js"},
   "scripts": {
     "dev": "next dev",
     "build": "next build",
