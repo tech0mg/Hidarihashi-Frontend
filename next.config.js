@@ -3,13 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   env: {
-    PORT: process.env.PORT || 3000,
+    PORT: (process.env.PORT || '3000'), // PORT は文字列として扱う
   },
-  experimental: {
-    appDir: true,
-  },
-  basePath: '', // サブディレクトリにホスティングする場合に変更
-  assetPrefix: './', // 静的ファイルの配信を調整する
+  assetPrefix: '/', // デフォルトの静的ファイル配信
 };
 
 module.exports = nextConfig;
