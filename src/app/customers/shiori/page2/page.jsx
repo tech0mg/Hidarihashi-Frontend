@@ -1,26 +1,15 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
+import { useNavigation } from "../components/useNavigation";
 import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
 import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右矢印アイコン
 
-const ShioriPage2 = () => {
-  const router = useRouter();
-  const { shioriColor } = useColor(); // Contextから色を取得
 
-  const handleNavigation = (destination) => {
-    if (destination === "next") {
-      router.push("/customers/shiori/page3");
-    } else if (destination === "prev") {
-      router.push("/customers/shiori/page1");
-    } else if (destination === "list-detail") {
-      router.push("/customers/list/list-detail");
-    } else if (destination === "list") {
-      router.push("/customers/list");
-    }
-  };
+const ShioriPage2 = () => {
+  const { navigateTo } = useNavigation();
+  const { shioriColor } = useColor(); // Contextから色を取得
 
   return (
     <div id="page2" className={`flex flex-col min-h-screen ${shioriColor}`}>
@@ -74,14 +63,14 @@ const ShioriPage2 = () => {
 
           {/* 戻るボタン（左矢印） */}
           <div className="absolute top-1/2 -left-10 transform -translate-y-1/2">
-            <button onClick={() => handleNavigation("prev")}>
+            <button onClick={() => navigateTo("prev")}>
               <LeftArrowIcon size={24} />
             </button>
           </div>
 
           {/* 次へボタン（右矢印） */}
           <div className="absolute top-1/2 -right-10 transform -translate-y-1/2">
-            <button onClick={() => handleNavigation("next")}>
+            <button onClick={() => navigateTo("next")}>
               <RightArrowIcon size={24} />
             </button>
           </div>
@@ -90,7 +79,7 @@ const ShioriPage2 = () => {
 
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner p-2 fixed bottom-0 w-full z-50">
-        <ShioriFooterButtons handleNavigation={handleNavigation} />
+        <ShioriFooterButtons handleNavigation={navigateTo} />
       </footer>
     </div>
   );
