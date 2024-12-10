@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { useRouter } from "next/navigation";
 
 const ShioriCheck = () => {
