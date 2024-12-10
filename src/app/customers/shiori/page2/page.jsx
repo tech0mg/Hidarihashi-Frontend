@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect }from "react";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import { useNavigation } from "../components/useNavigation";
@@ -10,6 +10,11 @@ import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右�
 const ShioriPage2 = () => {
   const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
+
+  useEffect(() => {
+    // ページ2のスケジュール情報を localStorage に保存
+    localStorage.setItem("page2", JSON.stringify({ schedule: "スケジュール詳細" }));
+  }, []);
 
   return (
     <div id="page2" className={`flex flex-col min-h-screen ${shioriColor}`}>
