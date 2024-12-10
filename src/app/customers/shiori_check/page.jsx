@@ -1,6 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ShioriCard from "../../components/ShioriCard";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { jsPDF } from "jspdf";
 
 
 const ShioriCheck = () => {
@@ -8,6 +11,7 @@ const ShioriCheck = () => {
     const [page2, setPage2] = useState({});
     const [page3, setPage3] = useState({});
     const [page4, setPage4] = useState({});
+    const [selectedDate, setSelectedDate] = useState(new Date()); // 予定日管理
 
   useEffect(() => {
     // ローカルストレージから page1～page4 のデータを取得
@@ -16,6 +20,37 @@ const ShioriCheck = () => {
     setPage3(JSON.parse(localStorage.getItem("page3")) || {});
     setPage4(JSON.parse(localStorage.getItem("page4")) || {});
   }, []);
+
+  // PDF生成処理
+  const handleSaveAsPDF = () => {
+    const doc = new jsPDF();
+    doc.setFont("Helvetica", "normal");
+
+    // Page1 内容
+    doc.setFontSize(16);
+    doc.text("しおりタイトル", 10, 10);
+    doc.text(page1.title || "未設定", 10, 20);
+    doc.text("Produced by " + (page1.producer || "未設定"), 10, 30);
+
+    // Page2 内容
+    doc.addPage();
+    doc.text("スケジュール", 10, 10);
+    doc.text(page2.schedule || "スケジュール未設定", 10, 20);
+
+    // Page3 内容
+    doc.addPage();
+    doc.text("天気と経路情報", 10, 10);
+    doc.text(page3.weather || "天気未設定", 10, 20);
+
+    // Page4 内容
+    doc.addPage();
+    doc.text("メモ", 10, 10);
+    doc.text(page4.memo || "メモ未設定", 10, 20);
+
+    doc.save("Shiori.pdf");
+  };
+
+
 
   return (
     <div className="flex flex-col items-center bg-[#FFF8E1] min-h-screen py-4">
@@ -44,6 +79,42 @@ const ShioriCheck = () => {
           <p>{page4.memo || "メモ未設定"}</p>
         </ShioriCard>
       </div>
+
+      {/* 予定日入力 */}
+      <div className="my-6 text-center">
+        <h2 className="text-lg font-bold mb-2">予定日時を入力する</h2>
+        <div className="flex items-center justify-center space-x-4">
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            dateFormat="yyyy/MM/dd"
+            className="border p-2 rounded"
+          />
+          <input
+            type="text"
+            value={selectedDate.getHours()}
+            className="border p-2 w-12 text-center rounded"
+            readOnly
+          />
+          <span>時</span>
+          <input
+            type="text"
+            value={selectedDate.getMinutes()}
+            className="border p-2 w-12 text-center rounded"
+            readOnly
+          />
+          <span>分</span>
+        </div>
+      </div>
+
+      {/* PDF保存ボタン */}
+      <button
+        onClick={handleSaveAsPDF}
+        className="px-6 py-2 bg-pink-500 text-white rounded-full shadow-lg hover:bg-pink-600"
+      >
+        PDFに保存する
+      </button>
+      
       {/* 戻るボタン */}
       <button
         className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md"
