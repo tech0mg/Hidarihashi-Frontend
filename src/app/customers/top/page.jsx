@@ -33,9 +33,14 @@ const App = () => {
       .catch((error) => console.error("Error fetching images:", error));
   }, []);
 
-  const goToList = () => {
-    // 修正箇所 3: 別のページ（/customers/list）に遷移
-    router.push("/customers/list");
+  const handleClick = (image) => {
+    // 画像クリックで詳細ページに遷移
+    router.push(`/customers/list/list-detail?image=${encodeURIComponent(image.image_url)}`);
+  };
+
+  const handleFooterClick = (destination) => {
+    // フッターのリンクを処理
+    router.push(destination);
   };
 
   return (
@@ -94,21 +99,27 @@ const App = () => {
 
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner p-4 flex justify-center items-center space-x-8">
-        <button className="flex flex-col items-center justify-center">
-          <ShioriIcon size={24} className="mx-2" />
-          <span className="text-sm">しおりをつくる</span>
-        </button>
+  <button
+    className="flex flex-col items-center justify-center"
+    onClick={() => handleFooterClick("/customers/shiori/page1")} // しおりをつくる -> /customers/shiori/page1 に遷移
+  >
+    <ShioriIcon size={24} className="mx-2" />
+    <span className="text-sm">しおりをつくる</span>
+  </button>
 
-        <button className="flex flex-col items-center justify-center">
-          <StarIcon size={24} className="mx-2" />
-          <span className="text-sm">リストをみる</span>
-        </button>
+  <button
+    className="flex flex-col items-center justify-center"
+    onClick={() => handleFooterClick("/customers/list")} // リストをみる -> /customers/list に遷移
+  >
+    <StarIcon size={24} className="mx-2" />
+    <span className="text-sm">リストをみる</span>
+  </button>
 
-        <button className="flex flex-col items-center justify-center">
-          <KirokuIcon size={24} className="mx-2" />
-          <span className="text-sm">きろくをみる</span>
-        </button>
-      </footer>
+  <button className="flex flex-col items-center justify-center">
+    <KirokuIcon size={24} className="mx-2" />
+    <span className="text-sm">きろくをみる</span>
+    </button>
+  </footer>
     </div>
   );
 };
