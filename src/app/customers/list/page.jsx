@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import FooterButton from "../../components/FooterButton";
 
 const ImageGrid = () => {
   const [images, setImages] = useState([]);
@@ -37,39 +37,49 @@ const ImageGrid = () => {
     }
   };
 
+  const goToList = () => {
+    router.push("/customers/list");
+  };
+
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">いきたいリスト</h1>
-      <div className="image-grid grid grid-cols-3 gap-4">
-        {images.map((src, index) => (
-          <div 
-            key={index} 
-            className="image-card relative group overflow-hidden rounded-lg shadow-lg"
-            onClick={() => handleClick(src)} // 画面遷移を実行
-          >
-            <img
-              src={`${apiUrl}${src}`}
-              alt={`Image ${index + 1}`}
-              className="w-full h-full object-cover transition-transform transform hover:scale-105"
-            />
-            <div className="like-button absolute top-2 right-2 bg-white p-2 rounded-full shadow-md">
-              <button
-                onClick={(e) => toggleLike(e, src)}
-                style={{
-                  fontFamily: "Arial, sans-serif",
-                  color: likedImages.includes(src) ? "red" : "gray",
-                  fontSize: "1.5rem", // 必要に応じてサイズを調整
-                  border: "none",
-                  background: "none",
-                  cursor: "pointer",
-                }}
-              >
-                ♥
-              </button>
+    <div className="flex flex-col h-screen">
+      {/* メインコンテンツ */}
+      <div className="p-4 flex-1">
+        <h1 className="text-2xl font-bold mb-4 text-center">いきたいリスト</h1>
+        <div className="image-grid grid grid-cols-3 gap-4">
+          {images.map((src, index) => (
+            <div
+              key={index}
+              className="image-card relative group overflow-hidden rounded-lg shadow-lg"
+              onClick={() => handleClick(src)} // 画面遷移を実行
+            >
+              <img
+                src={`${apiUrl}${src}`}
+                alt={`Image ${index + 1}`}
+                className="w-full h-full object-cover transition-transform transform hover:scale-105"
+              />
+              <div className="like-button absolute top-2 right-2 bg-white p-2 rounded-full shadow-md">
+                <button
+                  onClick={(e) => toggleLike(e, src)}
+                  style={{
+                    fontFamily: "Arial, sans-serif",
+                    color: likedImages.includes(src) ? "red" : "gray",
+                    fontSize: "1.5rem", // 必要に応じてサイズを調整
+                    border: "none",
+                    background: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  ♥
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+
+      {/* フッター */}
+      <FooterButton onListClick={goToList} />
     </div>
   );
 };

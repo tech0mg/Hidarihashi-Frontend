@@ -9,8 +9,8 @@ const RouteInfo = ({ isLoading, data, error }) => (
         <p className="text-sm">経路情報を読み込んでいます...</p>
       ) : error ? (
         <p className="text-sm text-red-500">エラーが発生しました: {error.message || "詳細不明なエラー"}</p>
-      ) :  data && data.length > 0 ? (
-        <MapComponent path={data} />
+      ) :  data && data.polyline ? (
+        <MapComponent encodedPath={data.polyline} />
       ) : (
         <p className="text-sm">経路情報を取得できませんでした。</p>
       )}

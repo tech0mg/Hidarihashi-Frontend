@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import StarIcon from "../../components/icon/icon_star"; // StarIconをインポート
-import ShioriIcon from "../../components/icon/icon_shiori"; // ShioriIconをインポート
-import KirokuIcon from "../../components/icon/icon_kiroku"; // KirokuIconをインポート
+import StarIcon from "../../components/icon/icon_star";
+import FooterButton from "../../components/FooterButton";
 
 const App = () => {
   const router = useRouter();
@@ -22,9 +21,6 @@ const App = () => {
       .catch((error) => console.error("Error fetching images:", error));
   }, []);
 
-  const goToList = () => {
-    router.push("/customers/list"); // リストページに遷移
-  };
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
@@ -76,22 +72,7 @@ const App = () => {
       </main>
 
       {/* フッター */}
-      <footer className="bg-[#EDEAE7] shadow-inner p-4 flex justify-center items-center space-x-8">
-        <button className="flex flex-col items-center justify-center">
-          <ShioriIcon size={24} className="mx-2" />
-          <span className="text-sm">しおりをつくる</span>
-        </button>
-
-        <button className="flex flex-col items-center justify-center">
-          <StarIcon size={24} className="mx-2" />
-          <span className="text-sm">リストをみる</span>
-        </button>
-
-        <button className="flex flex-col items-center justify-center">
-          <KirokuIcon size={24} className="mx-2" />
-          <span className="text-sm">きろくをみる</span>
-        </button>
-      </footer>
+      <FooterButton />
     </div>
   );
 };
