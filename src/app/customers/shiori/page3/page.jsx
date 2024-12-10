@@ -44,6 +44,11 @@ const ShioriPage3 = () => {
   };
 
   const transformPath = (snapToRoadsData) => {
+    if (!snapToRoadsData || !snapToRoadsData.snappedPoints) {
+      console.error("No snapped points found in Snap to Roads API response");
+      return [];
+    }
+    
     return snapToRoadsData.snappedPoints.map((point) => ({
       lat: point.location.latitude,
       lng: point.location.longitude,
