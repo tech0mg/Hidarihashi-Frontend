@@ -1,16 +1,18 @@
 "use client";
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const EventRegistrationForm = () => {
   const [formData, setFormData] = useState({
     title: "",
     tags: [],
     theme: "",
-    startDate: "",
-    startTime: "",
-    duration: "",
+    startDate: new Date(),
+    startTime: "11:00",
+    duration: "150",
     description: "",
-    items: ["", "", ""],
+    items: ["エプロン", "三角巾", "手ふきタオル"],
     location: {
       postalCode: "",
       address: "",
@@ -40,6 +42,20 @@ const EventRegistrationForm = () => {
       tags: prev.tags.includes(tag)
         ? prev.tags.filter((t) => t !== tag)
         : [...prev.tags, tag],
+    }));
+  };
+
+  const handleDateChange = (date) => {
+    setFormData((prev) => ({
+      ...prev,
+      startDate: date,
+    }));
+  };
+
+  const handleTimeChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      startTime: e.target.value,
     }));
   };
 
@@ -81,7 +97,7 @@ const EventRegistrationForm = () => {
   return (
     <div className="p-6 bg-[#F9F7F5] min-h-screen">
       <h1 className="text-2xl font-bold mb-6 text-center text-[#8B7A6B]">イベント登録画面</h1>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* イベントタイトル */}
         <div>
           <label className="block mb-2 font-bold text-[#8B7A6B]">イベントタイトル</label>
@@ -145,14 +161,66 @@ const EventRegistrationForm = () => {
         </div>
 
         {/* イベント詳細 */}
-        <div>
-          <label className="block mb-2 font-bold  text-[#8B7A6B]">イベント内容</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            className="w-full border border-[#D7CEC5] p-2 rounded"
-          ></textarea>
+        <div className="bg-white shadow-md p-4 rounded">
+          <h2 className="text-lg font-bold text-[#8B7A6B] mb-4">イベント詳細情報</h2>
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="block mb-2 font-bold text-[#8B7A6B]">開催日</label>
+              <DatePicker
+                selected={formData.startDate}
+                onChange={handleDateChange}
+                dateFormat="yyyy/MM/dd"
+                className="w-full border border-[#D7CEC5] p-2 rounded"
+              />
+            </div>
+            <div>
+              <label className="block mb-2 font-bold text-[#8B7A6B]">開催時間</label>
+              <input
+                type="time"
+                name="startTime"
+                value={formData.startTime}
+                onChange={handleTimeChange}
+                className="w-full border border-[#D7CEC5] p-2 rounded"
+              />
+            </div>
+            <div>
+              <label className="block mb-2 font-bold text-[#8B7A6B]">所要時間 (分)</label>
+              <input
+                type="number"
+                name="duration"
+                value={formData.duration}
+                onChange={handleInputChange}
+                className="w-full border border-[#D7CEC5] p-2 rounded"
+                placeholder="例: 150"
+              />
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <label className="block mb-2 font-bold text-[#8B7A6B]">イベント紹介文 (子ども向け)</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              className="w-full border border-[#D7CEC5] p-2 rounded"
+              placeholder="例: 人気店ガエターノの店主自らに教わるピッツァ教室。親子で好きなものをのせて楽しく焼きましょう！"
+            ></textarea>
+          </div>
+
+          <div className="mt-4">
+            <label className="block mb-2 font-bold text-[#8B7A6B]">持ち物</label>
+            <div className="grid grid-cols-3 gap-2">
+              {formData.items.map((item, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  value={item}
+                  onChange={(e) => handleArrayChange(index, e.target.value)}
+                  className="w-full border border-[#D7CEC5] p-2 rounded"
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* 場所 */}

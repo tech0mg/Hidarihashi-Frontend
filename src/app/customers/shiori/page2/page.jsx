@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect }from "react";
+import React, { useEffect, useState }from "react";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import { useNavigation } from "../components/useNavigation";

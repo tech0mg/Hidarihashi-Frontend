@@ -189,7 +189,6 @@ const ShioriPage3 = () => {
             <p className="text-sm text-red-500 mt-4">エラーが発生しました: {routeError.message || "詳細不明なエラー"}</p>
           )}
         </div>
-      </div>
 
 
           {/* 戻るボタン（左矢印） */}

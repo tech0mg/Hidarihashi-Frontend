@@ -14,6 +14,7 @@ const ShioriPage1 = () => {
   const { shioriColor } = useColor(); // Contextから色を取得
   const [selectedIllustration, setSelectedIllustration] = useState("");
   const [isColorModalOpen, setIsColorModalOpen] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
