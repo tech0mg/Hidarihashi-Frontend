@@ -34,7 +34,6 @@ const ShioriPage1 = () => {
     setIsColorModalOpen(!isColorModalOpen);
   };
 
-
   // 動的にメインコンテンツの高さを計算
   useEffect(() => {
     const updateContentHeight = () => {
@@ -55,13 +54,11 @@ const ShioriPage1 = () => {
     };
   }, []);
 
-
   return (
     <div
       id="page1"
-      className="flex flex-col  justify-between min-h-screen"
-      style={{ backgroundColor: shioriColor }}
-     >
+      className="flex flex-col justify-between min-h-screen bg-gray-100"
+    >
       {/* ヘッダー */}
       <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between">
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
@@ -78,8 +75,9 @@ const ShioriPage1 = () => {
       >
         {/* コンテンツ全体のラッパー */}
         <div
-          className="relative bg-white shadow-lg border-8 border-[#da7997] rounded-md"
+          className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
+            borderColor: shioriColor, // 枠線の色を動的に設定
             aspectRatio: "210 / 297", // A4の比率
             height: "100%",
             maxWidth: `calc(${contentHeight}px * 210 / 297)`,
@@ -87,7 +85,7 @@ const ShioriPage1 = () => {
         >
           <div className="p-12 w-full h-full flex flex-col justify-between">
             <h1 className="text-3xl font-bold mb-4 text-center text-gray-600">しおり</h1>
-            {/*  選択したイラストを表示 */}
+            {/* 選択したイラストを表示 */}
             {selectedIllustration ? (
               <img
                 src={selectedIllustration}
@@ -110,21 +108,17 @@ const ShioriPage1 = () => {
         </div>
       </main>
 
-      
-
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
-        <ShioriFooterButtons 
-          handleNavigation={navigateTo} 
+        <ShioriFooterButtons
+          handleNavigation={navigateTo}
           toggleColorModal={toggleColorModal}
           onIllustrationChange={handleIllustrationChange}
         />
       </footer>
 
       {/* 色選択モーダル */}
-      {isColorModalOpen && (
-        <ColorModal onClose={toggleColorModal} />
-      )}
+      {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
     </div>
   );
 };

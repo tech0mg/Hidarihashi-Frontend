@@ -1,11 +1,10 @@
 "use client";
-import React, { useEffect, useState }from "react";
+import React, { useEffect, useState } from "react";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import { useNavigation } from "../components/useNavigation";
 import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
 import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右矢印アイコン
-
 
 const ShioriPage2 = () => {
   const { navigateTo } = useNavigation();
@@ -33,7 +32,7 @@ const ShioriPage2 = () => {
   }, []);
 
   return (
-    <div id="page2" className={`flex flex-col min-h-screen ${shioriColor}`}>
+    <div id="page2" className="flex flex-col min-h-screen bg-gray-100">
       {/* ヘッダー */}
       <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
@@ -50,8 +49,9 @@ const ShioriPage2 = () => {
       >
         {/* コンテンツ全体のラッパー */}
         <div
-          className="relative bg-white shadow-lg border-8 border-[#da7997] rounded-md"
+          className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
+            borderColor: shioriColor, // 枠線の色を動的に設定
             aspectRatio: "210 / 297", // A4の比率
             height: "100%",
             maxWidth: `calc(${contentHeight}px * 210 / 297)`,
@@ -104,7 +104,6 @@ const ShioriPage2 = () => {
       </main>
 
       {/* フッター */}
-
       <footer className="bg-[#EDEAE7] shadow-inner">
         <ShioriFooterButtons handleNavigation={navigateTo} />
       </footer>

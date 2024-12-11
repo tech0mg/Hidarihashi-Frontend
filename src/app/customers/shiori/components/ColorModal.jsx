@@ -3,7 +3,7 @@ import React from "react";
 import { useColor } from "../../../context/ColorContext";
 
 const ColorModal = ({ onClose }) => {
-  const { setColor } = useColor();
+  const { changeColor } = useColor();
   const colors = [
     { color: "#E37E88", label: "赤" },
     { color: "#DA7997", label: "ピンク" },
@@ -17,7 +17,7 @@ const ColorModal = ({ onClose }) => {
   ];
 
   const handleColorChange = (color) => {
-    setColor(color);
+    changeColor(color); // 枠線の色を変更
     onClose();
   };
 
@@ -32,13 +32,12 @@ const ColorModal = ({ onClose }) => {
               className="w-12 h-12 rounded-full"
               style={{ backgroundColor: colorOption.color }}
               onClick={() => handleColorChange(colorOption.color)}
-            >
-            </button>
+            ></button>
           ))}
         </div>
-        <button 
-        className="mt-6 p-2 bg-gray-400 text-white rounded-md" 
-        onClick={onClose}
+        <button
+          className="mt-6 p-2 bg-gray-400 text-white rounded-md"
+          onClick={onClose}
         >
           とじる
         </button>
