@@ -90,7 +90,7 @@ const ShioriPage1 = () => {
               <img
                 src={selectedIllustration}
                 alt="Selected Illustration"
-                className="mt-4 w-32 h-32 object-contain mx-auto border border-gray-300 rounded-lg"
+                className="mt-4 w-64 h-64 object-contain mx-auto rounded-lg"
               />
             ) : (
               <p className="text-center text-gray-400">イラストが選択されていません</p>
