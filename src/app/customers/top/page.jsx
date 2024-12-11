@@ -9,6 +9,12 @@ const App = () => {
   const [images, setImages] = useState([]);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  const buttonStyles = {
+    shiori: { default: "#98CBB0", hover: "#6FAE91" },
+    star: { default: "#E1DA0F", hover: "#B8B40C" },
+    kiroku: { default: "#C2AAC5", hover: "#A990A6" },
+  };
+
   useEffect(() => {
     fetch(`${apiUrl}/api/images`)
       .then((response) => {
@@ -24,6 +30,24 @@ const App = () => {
   const goToToBTop = () => {
     router.push("/customers/toB_top"); // toB_topページへの遷移
   };
+
+  const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center justify-center"
+      style={{ transition: "transform 0.2s ease" }}
+      onMouseEnter={(e) => {
+        e.currentTarget.querySelector("svg").style.fill = fillHover;
+        e.currentTarget.style.transform = "scale(1.1)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.querySelector("svg").style.fill = fillDefault;
+        e.currentTarget.style.transform = "scale(1)";
+      }}
+    >
+      {children}
+    </button>
+  );
 
 
   return (
@@ -74,7 +98,7 @@ const App = () => {
                   Like
                 </button>
                 {/* StarIconをここに追加 */}
-                <StarIcon size={30} fill="gold" className="mx-2" />
+                <StarIcon size={24} fill="gold" className="mx-2" />
               </div>
             </div>
           ))}

@@ -1,13 +1,13 @@
 import React from 'react';
 
-const KirokuIcon = ({ size = 24, fill = '#C2AAC5', className = '' }) => (
+const KirokuIcon = ({ size = 24, fill = 'currentColor', className = '' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
     width={size}
     height={size}
-    fill={fill}  // fillプロパティで色を指定
-    className={className}
+    style={{ fill }}  // インラインスタイルで対応
+    className={className} // 外部からのクラス名をサポート
   >
     <path
       d="M42.568,392.629c2.391-3.375,5.609-6.031,9.234-7.844c3.578-1.891,7.625-2.875,11.766-2.875h0.688
@@ -40,7 +40,7 @@ const KirokuIcon = ({ size = 24, fill = '#C2AAC5', className = '' }) => (
         c-2.938,0-5.859-0.266-8.813-0.906l-69.828-15.453l-84.328-18.625L63.85,434.535l-8.469-1.891
         c-2.656-0.906-5.047-2.094-7.141-3.625c-3.344-2.469-6.016-5.609-7.828-9.25c-1.891-3.641-2.875-7.688-2.875-11.828
         c0-2.516,0.422-5.172,1.188-7.766C39.646,397.379,40.959,394.848,42.568,392.629z"
-      />
+    />
   </svg>
 );
 
