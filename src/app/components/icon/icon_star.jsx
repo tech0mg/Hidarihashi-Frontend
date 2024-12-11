@@ -1,12 +1,12 @@
 import React from 'react';
 
-const StarIcon = ({ size = 24, fill = '#E1DA0F', className = '' }) => (
+const StarIcon = ({ size = 24, fill = 'currentColor', className = '' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
     width={size}
     height={size}
-    fill={fill}  // fillプロパティをここで指定
+    style={{ fill }}  // インラインスタイルで対応
     className={className}
   >
     <path
