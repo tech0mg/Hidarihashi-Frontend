@@ -1,17 +1,35 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import ShioriCard from "../components/ShioriCard";
 
 const ShioriCheck = () => {
   const router = useRouter();
-  const [shioriData, setShioriData] = useState({});
+  const [shioriData, setShioriData] = useState({
+    page1: null,
+    page2: null,
+    page3: null,
+    page4: null,
+  });
 
   useEffect(() => {
-    // ローカルストレージから page1～page4 のデータを取得
-    const page1 = JSON.parse(localStorage.getItem("page1")) || {};
-    const page2 = JSON.parse(localStorage.getItem("page2")) || {};
-    const page3 = JSON.parse(localStorage.getItem("page3")) || {};
-    const page4 = JSON.parse(localStorage.getItem("page4")) || {};
+    // ローカルストレージからデータを取得する関数を定義
+    const getLocalStorageData = (key) => {
+      try {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : {};
+      } catch (e) {
+        console.error(`Error parsing data for key ${key}:`, e);
+        return {};
+      }
+    };
+
+    // データ取得
+    const page1 = getLocalStorageData("page1");
+    const page2 = getLocalStorageData("page2");
+    const page3 = getLocalStorageData("page3");
+    const page4 = getLocalStorageData("page4");
 
     setShioriData({ page1, page2, page3, page4 });
   }, []);
