@@ -1,35 +1,67 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigation } from "../components/useNavigation";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
 
+// 持ち物リストコンポーネント
+const PackingList = ({ items, onItemChange }) => (
+  <div className="mb-6">
+    <h2 className="text-xl font-bold text-center mb-4 text-gray-600">持ち物リスト</h2>
+    <div className="grid grid-cols-2 gap-4">
+      {items.map((item, index) => (
+        <input
+          key={index}
+          type="text"
+          value={item}
+          onChange={(e) => onItemChange(index, e.target.value)}
+          placeholder={`持ち物 ${index + 1}`}
+          className="p-2 border border-gray-300 rounded shadow-sm w-full"
+        />
+      ))}
+    </div>
+  </div>
+);
+
+// 思い出の記録コンポーネント
+const MemoryRecorder = ({ memory, onMemoryChange }) => (
+  <div className="mb-6">
+    <h2 className="text-xl font-bold text-center mb-4">思い出の記録</h2>
+    <textarea
+      value={memory}
+      onChange={(e) => onMemoryChange(e.target.value)}
+      placeholder="ここに思い出を書いてください..."
+      rows={5}
+      className="p-2 border border-gray-300 rounded shadow-sm w-full"
+    ></textarea>
+  </div>
+);
+
 const ShioriPage4 = () => {
-  const router = useRouter();
+  const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
   const [contentHeight, setContentHeight] = useState(0); // 動的なコンテンツ高さ
   const [items, setItems] = useState(["", "", "", "", "", ""]); // 持ち物リスト初期値
   const [memory, setMemory] = useState(""); // 思い出の記録初期値
 
-  // ページ遷移ハンドラー
-  const handleNavigation = (destination) => {
-    if (destination === "prev") {
-      router.push("/customers/shiori/page3");
-    } else if (destination === "next") {
-      router.push("/customers/shiori/page5");
-    } else if (destination === "list-detail") {
-      router.push("/customers/list/list-detail");
-    } else if (destination === "list") {
-      router.push("/customers/list");
-    }
-  };
 
-  // 持ち物リスト更新
+  // 持ち物リストの更新
   const updateItem = (index, value) => {
     const updatedItems = [...items];
     updatedItems[index] = value;
     setItems(updatedItems);
+
+     // localStorage に保存
+    localStorage.setItem("page4", JSON.stringify({ memo: memory, items: updatedItems }));
+  };
+
+  // 思い出の記録の更新
+  const updateMemory = (value) => {
+    setMemory(value);
+
+    // localStorage に保存
+    localStorage.setItem("page4", JSON.stringify({ memo: value, items }));
   };
 
   // 動的にメインコンテンツの高さを計算
@@ -78,38 +110,16 @@ const ShioriPage4 = () => {
           }}
         >
           <div className="p-6 w-full h-full flex flex-col justify-between">
-            {/* 持ち物リストセクション */}
-            <div className="mb-4">
-              <h2 className="text-xl font-bold text-center mb-4 text-gray-600">持ち物リスト</h2>
-              <div className="grid grid-cols-2 gap-4 text-gray-600">
-                {items.map((item, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={item}
-                    onChange={(e) => updateItem(index, e.target.value)}
-                    placeholder={`持ち物 ${index + 1}`}
-                    className="p-2 border border-gray-300 rounded shadow-sm w-full"
-                  />
-                ))}
-              </div>
-            </div>
+            {/* 持ち物リスト */}
+            <PackingList items={items} onItemChange={updateItem} />
 
-            {/* 思い出の記録セクション */}
-            <div>
-              <h2 className="text-xl font-bold text-center mb-4 text-gray-600">思い出の記録</h2>
-              <textarea
-                value={memory}
-                onChange={(e) => setMemory(e.target.value)}
-                rows={5}
-                className="p-2 border border-gray-300 rounded shadow-sm w-full"
-              ></textarea>
-            </div>
+            {/* 思い出の記録 */}
+            <MemoryRecorder memory={memory} onMemoryChange={updateMemory} />
           </div>
 
           {/* 戻るボタン（左矢印） */}
           <div className="absolute top-1/2 -left-10 transform -translate-y-1/2">
-            <button onClick={() => handleNavigation("prev")}>
+            <button onClick={() => navigateTo("prev")}>
               <LeftArrowIcon size={24} />
             </button>
           </div>
@@ -118,7 +128,7 @@ const ShioriPage4 = () => {
 
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
-        <ShioriFooterButtons handleNavigation={handleNavigation} />
+        <ShioriFooterButtons handleNavigation={navigateTo} />
       </footer>
     </div>
   );

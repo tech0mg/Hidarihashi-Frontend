@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import StarIcon from "../../components/icon/icon_star"; // StarIconをインポート
-import ShioriIcon from "../../components/icon/icon_shiori"; // ShioriIconをインポート
-import KirokuIcon from "../../components/icon/icon_kiroku"; // KirokuIconをインポート
+import StarIcon from "../../components/icon/icon_star";
+import FooterButton from "../../components/FooterButton";
 
 const App = () => {
   const router = useRouter();
@@ -28,8 +27,8 @@ const App = () => {
       .catch((error) => console.error("Error fetching images:", error));
   }, []);
 
-  const goToList = () => {
-    router.push("/customers/list"); // リストページに遷移
+  const goToToBTop = () => {
+    router.push("/customers/toB_top"); // toB_topページへの遷移
   };
 
   const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
@@ -50,11 +49,24 @@ const App = () => {
     </button>
   );
 
+
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       {/* ヘッダー */}
       <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
+        {/* <button
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          onClick={goToList}
+        >
+          Go to List
+        </button> */}
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          onClick={goToToBTop}
+        >
+          企業登録ページリンク
+        </button>
       </header>
 
       {/* メインコンテンツ */}
@@ -94,34 +106,7 @@ const App = () => {
       </main>
 
       {/* フッター */}
-      <footer className="bg-[#EDEAE7] shadow-inner p-6 flex justify-center items-center space-x-8">
-        <IconButton
-          onClick={() => alert("しおりをつくるボタンが押されました")}
-          fillDefault={buttonStyles.shiori.default}
-          fillHover={buttonStyles.shiori.hover}
-        >
-          <ShioriIcon size={32} fill={buttonStyles.shiori.default} />
-          <span className="text-sm p-3">しおりをつくる</span>
-        </IconButton>
-
-        <IconButton
-          onClick={() => alert("リストをみるボタンが押されました")}
-          fillDefault={buttonStyles.star.default}
-          fillHover={buttonStyles.star.hover}
-        >
-          <StarIcon size={32} fill={buttonStyles.star.default} />
-          <span className="text-sm p-3">リストをみる</span>
-        </IconButton>
-
-        <IconButton
-          onClick={() => alert("きろくをみるボタンが押されました")}
-          fillDefault={buttonStyles.kiroku.default}
-          fillHover={buttonStyles.kiroku.hover}
-        >
-          <KirokuIcon size={32} fill={buttonStyles.kiroku.default} />
-          <span className="text-sm p-3">きろくをみる</span>
-        </IconButton>
-      </footer>
+      <FooterButton />
     </div>
   );
 };

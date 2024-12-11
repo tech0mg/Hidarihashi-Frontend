@@ -1,15 +1,24 @@
 "use client";
-import React from "react";
+
+import React,{ useState } from "react";
+import { useRouter } from "next/navigation";
 import PaintIcon from "../../../components/icon/icon_paint";
 import CrownIcon from "../../../components/icon/icon_crown";
 import SaveIcon from "../../../components/icon/icon_save";
 import CloseIcon from "../../../components/icon/icon_close";
 import StarIcon from "../../../components/icon/icon_star";
 import KirokuIcon from "../../../components/icon/icon_kiroku";
-import SaveToPDF from "../components/SaveToPDF"; // 正しい相対パス
+import ColorModal from "../components/ColorModal";
+import IllustrationSelector from "./IllustrationSelector";
 
-const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
-  const pagesToSave = ["page1", "page2", "page3", "page4", "page5"]; // 保存対象のページID
+const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustrationChange }) => {
+  const [isColorModalOpen, setIsColorModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const router = useRouter();
+  const handleSaveClick = () => {router.push("/customers/shiori_check");
+  };
+
 
   // 各ボタンのスタイルを定義
   const buttonStyles = {
@@ -63,7 +72,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
 
         {/* イラストを選ぶボタン */}
         <IconButton
-          onClick={() => alert("イラストをえらぶボタンが押されました")}
+          onClick={toggleModal}
           fillDefault={buttonStyles.crown.default}
           fillHover={buttonStyles.crown.hover}
         >
@@ -71,20 +80,17 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
           <span className="text-sm mt-3">イラストをえらぶ</span>
         </IconButton>
 
+
         {/* 保存するボタン */}
-        <SaveToPDF
-          pages={pagesToSave}
-          fileName="ShioriContent.pdf"
-          customButton={(
-            <IconButton
-              fillDefault={buttonStyles.save.default}
-              fillHover={buttonStyles.save.hover}
-            >
-              <SaveIcon size={32} fill={buttonStyles.save.default} />
-              <span className="text-sm mt-3">ほぞんする</span>
-            </IconButton>
-          )}
-        />
+          <IconButton
+            onClick={handleSaveClick}          
+            fillDefault={buttonStyles.save.default}
+            fillHover={buttonStyles.save.hover}
+          >
+            <SaveIcon size={32} fill={buttonStyles.save.default} />
+            <span className="text-sm mt-3">ほぞんする</span>
+          </IconButton>
+
 
         {/* やめるボタン */}
         <IconButton
@@ -117,6 +123,27 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
         </IconButton>
       </div>
     </div>
+
+          {/* モーダル */}
+          {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
+
+          {/* イラストモーダル */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4 text-center">イラストを選択</h2>
+            <IllustrationSelector onIllustrationChange={onIllustrationChange} />
+            <button
+              className="mt-4 p-2 bg-gray-500 text-white rounded-md"
+              onClick={toggleModal}
+            >
+              イラストをえらぶ
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+
   );
 };
 
