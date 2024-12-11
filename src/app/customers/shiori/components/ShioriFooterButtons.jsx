@@ -125,6 +125,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
         </div>
       </div>
 
+
           {/* モーダル */}
           {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
 
