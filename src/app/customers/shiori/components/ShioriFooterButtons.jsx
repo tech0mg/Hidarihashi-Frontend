@@ -50,79 +50,81 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
   );
 
   return (
-    <div className="bg-[#EDEAE7] shadow-inner p-6 flex justify-center items-center space-x-8">
-      <div
-        className="grid grid-cols-3 gap-12"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)", // 3列に分割
-          justifyContent: "center", // 水平中央寄せ
-          alignItems: "center", // 垂直中央寄せ
-        }}
-      >
-        {/* 色を選ぶボタン */}
-        <IconButton
-          onClick={toggleColorModal}
-          fillDefault={buttonStyles.paint.default}
-          fillHover={buttonStyles.paint.hover}
+    <>
+      <div className="bg-[#EDEAE7] shadow-inner p-6 flex justify-center items-center space-x-8">
+        <div
+          className="grid grid-cols-3 gap-12"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)", // 3列に分割
+            justifyContent: "center", // 水平中央寄せ
+            alignItems: "center", // 垂直中央寄せ
+          }}
         >
-          <PaintIcon size={32} fill={buttonStyles.paint.default} />
-          <span className="text-sm mt-3">いろをえらぶ</span>
-        </IconButton>
-
-        {/* イラストを選ぶボタン */}
-        <IconButton
-          onClick={toggleModal}
-          fillDefault={buttonStyles.crown.default}
-          fillHover={buttonStyles.crown.hover}
-        >
-          <CrownIcon size={32} fill={buttonStyles.crown.default} />
-          <span className="text-sm mt-3">イラストをえらぶ</span>
-        </IconButton>
-
-
-        {/* 保存するボタン */}
+          {/* 色を選ぶボタン */}
           <IconButton
-            onClick={handleSaveClick}          
-            fillDefault={buttonStyles.save.default}
-            fillHover={buttonStyles.save.hover}
+            onClick={toggleColorModal}
+            fillDefault={buttonStyles.paint.default}
+            fillHover={buttonStyles.paint.hover}
           >
-            <SaveIcon size={32} fill={buttonStyles.save.default} />
-            <span className="text-sm mt-3">ほぞんする</span>
+            <PaintIcon size={32} fill={buttonStyles.paint.default} />
+            <span className="text-sm mt-3">いろをえらぶ</span>
+          </IconButton>
+
+          {/* イラストを選ぶボタン */}
+          <IconButton
+            onClick={toggleModal}
+            fillDefault={buttonStyles.crown.default}
+            fillHover={buttonStyles.crown.hover}
+          >
+            <CrownIcon size={32} fill={buttonStyles.crown.default} />
+            <span className="text-sm mt-3">イラストをえらぶ</span>
           </IconButton>
 
 
-        {/* やめるボタン */}
-        <IconButton
-          onClick={() => handleNavigation("list-detail")}
-          fillDefault={buttonStyles.close.default}
-          fillHover={buttonStyles.close.hover}
-        >
-          <CloseIcon size={32} fill={buttonStyles.close.default} />
-          <span className="text-sm mt-3">やめる</span>
-        </IconButton>
+          {/* 保存するボタン */}
+            <IconButton
+              onClick={handleSaveClick}          
+              fillDefault={buttonStyles.save.default}
+              fillHover={buttonStyles.save.hover}
+            >
+              <SaveIcon size={32} fill={buttonStyles.save.default} />
+              <span className="text-sm mt-3">ほぞんする</span>
+            </IconButton>
 
-        {/* リストにもどるボタン */}
-        <IconButton
-          onClick={() => handleNavigation("list")}
-          fillDefault={buttonStyles.star.default}
-          fillHover={buttonStyles.star.hover}
-        >
-          <StarIcon size={32} fill={buttonStyles.star.default} />
-          <span className="text-sm mt-3">リストにもどる</span>
-        </IconButton>
 
-        {/* 記録を見るボタン */}
-        <IconButton
-          onClick={() => alert("きろくをみるボタンが押されました")}
-          fillDefault={buttonStyles.kiroku.default}
-          fillHover={buttonStyles.kiroku.hover}
-        >
-          <KirokuIcon size={32} fill={buttonStyles.kiroku.default} />
-          <span className="text-sm mt-3">きろくをみる</span>
-        </IconButton>
+          {/* やめるボタン */}
+          <IconButton
+            onClick={() => handleNavigation("list-detail")}
+            fillDefault={buttonStyles.close.default}
+            fillHover={buttonStyles.close.hover}
+          >
+            <CloseIcon size={32} fill={buttonStyles.close.default} />
+            <span className="text-sm mt-3">やめる</span>
+          </IconButton>
+
+          {/* リストにもどるボタン */}
+          <IconButton
+            onClick={() => handleNavigation("list")}
+            fillDefault={buttonStyles.star.default}
+            fillHover={buttonStyles.star.hover}
+          >
+            <StarIcon size={32} fill={buttonStyles.star.default} />
+            <span className="text-sm mt-3">リストにもどる</span>
+          </IconButton>
+
+          {/* 記録を見るボタン */}
+          <IconButton
+            onClick={() => alert("きろくをみるボタンが押されました")}
+            fillDefault={buttonStyles.kiroku.default}
+            fillHover={buttonStyles.kiroku.hover}
+          >
+            <KirokuIcon size={32} fill={buttonStyles.kiroku.default} />
+            <span className="text-sm mt-3">きろくをみる</span>
+          </IconButton>
+        </div>
       </div>
-    
+
 
           {/* モーダル */}
           {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
@@ -141,8 +143,8 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
             </button>
           </div>
         </div>
-      )};
-    </div>  
+      )}
+    </>
   );
 };
 

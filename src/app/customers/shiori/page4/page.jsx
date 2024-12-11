@@ -51,17 +51,11 @@ const ShioriPage4 = () => {
     const updatedItems = [...items];
     updatedItems[index] = value;
     setItems(updatedItems);
-
-     // localStorage に保存
-    localStorage.setItem("page4", JSON.stringify({ memo: memory, items: updatedItems }));
   };
 
   // 思い出の記録の更新
   const updateMemory = (value) => {
     setMemory(value);
-
-    // localStorage に保存
-    localStorage.setItem("page4", JSON.stringify({ memo: value, items }));
   };
 
   // 動的にメインコンテンツの高さを計算

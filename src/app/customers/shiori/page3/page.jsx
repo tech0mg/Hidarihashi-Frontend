@@ -59,7 +59,7 @@ const ShioriPage3 = () => {
       setWeatherData(weather);
 
       // 天気データを localStorage に保存
-    localStorage.setItem("page3", JSON.stringify({ weather: weather.weather[0].description, mapUrl: "" }));
+    //localStorage.setItem("page3", JSON.stringify({ weather: weather.weather[0].description, mapUrl: "" }));
     } catch (error) {
       console.error("Error fetching weather:", error.message);
       alert(`天気データの取得に失敗しました: ${error.message}`);
@@ -101,7 +101,7 @@ const ShioriPage3 = () => {
       setRouteData(path);
 
       // 経路データを localStorage に保存
-      localStorage.setItem("page3", JSON.stringify({ weather: weatherData?.weather[0]?.description || "", mapUrl: route.googleMapsUrl }));
+      //localStorage.setItem("page3", JSON.stringify({ weather: weatherData?.weather[0]?.description || "", mapUrl: route.googleMapsUrl }));
     } else {
       setRouteError(new Error("Route data not found in response"));
     }

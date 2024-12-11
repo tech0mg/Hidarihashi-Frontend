@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect }from "react";
+import React, { useEffect, useState }from "react";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import { useNavigation } from "../components/useNavigation";
@@ -11,11 +11,6 @@ const ShioriPage2 = () => {
   const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
   const [contentHeight, setContentHeight] = useState(0);
-
-  useEffect(() => {
-    // ページ2のスケジュール情報を localStorage に保存
-    localStorage.setItem("page2", JSON.stringify({ schedule: "スケジュール詳細" }));
-  }, []);
 
   // 動的にメインコンテンツの高さを計算
   useEffect(() => {
