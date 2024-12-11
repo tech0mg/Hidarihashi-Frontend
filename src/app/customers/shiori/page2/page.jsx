@@ -10,36 +10,62 @@ import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右�
 const ShioriPage2 = () => {
   const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
+  const [contentHeight, setContentHeight] = useState(0);
 
   useEffect(() => {
     // ページ2のスケジュール情報を localStorage に保存
     localStorage.setItem("page2", JSON.stringify({ schedule: "スケジュール詳細" }));
   }, []);
 
+  // 動的にメインコンテンツの高さを計算
+  useEffect(() => {
+    const updateContentHeight = () => {
+      const headerHeight = document.querySelector("header")?.offsetHeight || 0;
+      const footerHeight = document.querySelector("footer")?.offsetHeight || 0;
+      const availableHeight = window.innerHeight - headerHeight - footerHeight;
+
+      // 上下余白分を計算し引く
+      const verticalPadding = 40; // 余白を設定
+      setContentHeight(availableHeight - verticalPadding * 2);
+    };
+
+    updateContentHeight();
+    window.addEventListener("resize", updateContentHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateContentHeight);
+    };
+  }, []);
+
   return (
     <div id="page2" className={`flex flex-col min-h-screen ${shioriColor}`}>
-    {/* ヘッダー */}
-    <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-    </header>
+      {/* ヘッダー */}
+      <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
+        <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
+      </header>
 
       {/* メインコンテンツ */}
       <main
         className="flex-grow bg-gradient-main flex justify-center items-center"
+        style={{
+          height: `${contentHeight}px`,
+          paddingTop: "40px", // 上部の余白を設定
+          paddingBottom: "40px", // 下部の余白を設定
+        }}
       >
         {/* コンテンツ全体のラッパー */}
         <div
           className="relative bg-white shadow-lg border-8 border-[#da7997] rounded-md"
           style={{
             aspectRatio: "210 / 297", // A4の比率
-            height: "calc(100vh - 96px)", // ヘッダーとフッターの高さを引いた高さ
-            maxWidth: "calc((100vh - 96px) * 210 / 297)", // 幅を高さに合わせてA4比率を維持
+            height: "100%",
+            maxWidth: `calc(${contentHeight}px * 210 / 297)`,
           }}
         >
           <div className="p-8 w-full h-full flex flex-col justify-between">
             {/* スケジュールセクション */}
-            <div className="mb-4">
-              <h3 className="text-lg font-bold text-center mb-4 text-gray-600">スケジュール</h3>
+            <div className="mb-3">
+              <h3 className="text-lg font-bold text-center mb-3 text-gray-600">スケジュール</h3>
               <div className="border-t-2 border-b-2 border-gray-300 py-4 px-6 text-left text-sm text-gray-600">
                 <p className="text-xs">9:00 出発</p>
                 <p className="text-xs">9:29 香椎駅</p>
@@ -83,7 +109,8 @@ const ShioriPage2 = () => {
       </main>
 
       {/* フッター */}
-      <footer className="bg-[#EDEAE7] shadow-inner p-2 fixed bottom-0 w-full z-50">
+
+      <footer className="bg-[#EDEAE7] shadow-inner">
         <ShioriFooterButtons handleNavigation={navigateTo} />
       </footer>
     </div>

@@ -9,6 +9,12 @@ const App = () => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // 環境変数からAPIのURLを取得
   const sasToken = process.env.NEXT_PUBLIC_SAS_TOKEN || ""; // SASトークンの環境変数
 
+  const buttonStyles = {
+    shiori: { default: "#98CBB0", hover: "#6FAE91" },
+    star: { default: "#E1DA0F", hover: "#B8B40C" },
+    kiroku: { default: "#C2AAC5", hover: "#A990A6" },
+  };
+
   useEffect(() => {
     // APIエンドポイントから画像データとイベント名を取得
     fetch(`${apiUrl}/api/images`)
@@ -36,6 +42,25 @@ const App = () => {
   const goToToBTop = () => {
     router.push("/customers/toB_top"); // toB_topページへの遷移
   };
+
+  const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center justify-center"
+      style={{ transition: "transform 0.2s ease" }}
+      onMouseEnter={(e) => {
+        e.currentTarget.querySelector("svg").style.fill = fillHover;
+        e.currentTarget.style.transform = "scale(1.1)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.querySelector("svg").style.fill = fillDefault;
+        e.currentTarget.style.transform = "scale(1)";
+      }}
+    >
+      {children}
+    </button>
+  );
+
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">

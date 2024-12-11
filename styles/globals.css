@@ -11,14 +11,14 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #9A877A;
   text-decoration: none;
 }
 
 * {
   box-sizing: border-box;
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -27,4 +27,4 @@ a {
     color: white;
     background: black;
   }
-}
+} */
