@@ -18,10 +18,7 @@ const ShioriPage1 = () => {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  useEffect(() => {
-    // 初期化用データを localStorage に保存
-    localStorage.setItem("page1", JSON.stringify({ title: "しおりタイトル" }));
-    
+  useEffect(() => {    
     const savedIllustration = localStorage.getItem("selectedIllustration");
     if (savedIllustration) {
       setSelectedIllustration(savedIllustration);

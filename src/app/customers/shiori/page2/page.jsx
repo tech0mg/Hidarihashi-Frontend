@@ -12,11 +12,6 @@ const ShioriPage2 = () => {
   const { shioriColor } = useColor(); // Contextから色を取得
   const [contentHeight, setContentHeight] = useState(0);
 
-  useEffect(() => {
-    // ページ2のスケジュール情報を localStorage に保存
-    localStorage.setItem("page2", JSON.stringify({ schedule: "スケジュール詳細" }));
-  }, []);
-
   // 動的にメインコンテンツの高さを計算
   useEffect(() => {
     const updateContentHeight = () => {

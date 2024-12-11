@@ -13,13 +13,26 @@ const ShioriCheck = () => {
     const [selectedDate, setSelectedDate] = useState(new Date()); // 予定日管理
     const shioriRef = useRef(); // PDF生成用の参照
     const [html2pdf, setHtml2pdf] = useState(null);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    // ローカルストレージから page1～page4 のデータを取得
-    setPage1(JSON.parse(localStorage.getItem("page1")) || {});
-    setPage2(JSON.parse(localStorage.getItem("page2")) || {});
-    setPage3(JSON.parse(localStorage.getItem("page3")) || {});
-    setPage4(JSON.parse(localStorage.getItem("page4")) || {});
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/shiori-data`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setPage1(data.page1 || {});
+        setPage2(data.page2 || {});
+        setPage3(data.page3 || {});
+        setPage4(data.page4 || {});
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
 
     // html2pdf.js をクライアントサイドでのみ動的にインポート
     import("html2pdf.js")
