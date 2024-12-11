@@ -1,23 +1,32 @@
 "use client";
 import React,{ useState } from "react";
+import { useRouter } from "next/navigation";
 import PaintIcon from "../../../components/icon/icon_paint";
 import CrownIcon from "../../../components/icon/icon_crown";
 import SaveIcon from "../../../components/icon/icon_save";
 import CloseIcon from "../../../components/icon/icon_close";
 import StarIcon from "../../../components/icon/icon_star";
 import KirokuIcon from "../../../components/icon/icon_kiroku";
-import SaveToPDF from "../components/SaveToPDF"; // 正しい相対パス
+import ColorModal from "../components/ColorModal";
+import IllustrationSelector from "./IllustrationSelector";
 
-const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
+const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustrationChange }) => {
   const [isColorModalOpen, setIsColorModalOpen] = useState(false);
-  const pagesToSave = ["page1", "page2", "page3", "page4", "page5"]; // 保存対象のページID
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const router = useRouter();
+  const handleSaveClick = () => {router.push("/customers/shiori_check");
+  };
+
 
   return (
     <>
       <div className="bg-[#EDEAE7] w-full shadow-lg p-4">
         <div className="grid grid-cols-3 gap-4 text-center">
         {/* 色を選ぶボタン */}
-        <button onClick={toggleColorModal} className="flex flex-col items-center">
+        <button 
+            onClick={toggleColorModal} 
+            className="flex flex-col items-center">
             <div
               className="w-12 h-12 rounded-full flex items-center justify-center bg-gray-200 hover:bg-gray-300"
               style={{ transition: "background-color 0.2s ease" }}
@@ -31,7 +40,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
 
         {/* イラストを選ぶ */}
         <button
-            onClick={() => alert("イラストをえらぶボタンが押されました")}
+            onClick={toggleModal}
             className="flex flex-col items-center"
           >
             <div className="w-12 h-12 rounded-full flex items-center justify-center">
@@ -41,20 +50,15 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
           </button>
 
           {/* 保存するボタン */}
-          <SaveToPDF
-            pages={pagesToSave} // PDF出力対象のページを指定
-            fileName="ShioriContent.pdf" // 保存するPDFの名前
-            customButton={(
-              <button
-                className="flex flex-col items-center"
-              >
-                <div className="w-12 h-12 rounded-full flex items-center justify-center">
-                  <SaveIcon size={24} />
-                </div>
-                <span className="text-sm mt-2">ほぞんする</span>
-              </button>
-            )}
-          />
+          <button
+            onClick={handleSaveClick}
+            className="flex flex-col items-center"
+          >
+            <div className="w-12 h-12 rounded-full flex items-center justify-center">
+              <SaveIcon size={24} />
+            </div>
+            <span className="text-sm mt-2">ほぞんする</span>
+          </button>
 
 
           {/* やめる */}
@@ -93,6 +97,22 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal }) => {
     </div>
           {/* モーダル */}
           {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
+
+          {/* イラストモーダル */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4 text-center">イラストを選択</h2>
+            <IllustrationSelector onIllustrationChange={onIllustrationChange} />
+            <button
+              className="mt-4 p-2 bg-gray-500 text-white rounded-md"
+              onClick={toggleModal}
+            >
+              イラストをえらぶ
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
