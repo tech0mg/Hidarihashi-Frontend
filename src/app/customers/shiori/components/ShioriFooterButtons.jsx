@@ -122,7 +122,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
           <span className="text-sm mt-3">きろくをみる</span>
         </IconButton>
       </div>
-    </div>
+    
 
           {/* モーダル */}
           {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
@@ -141,9 +141,8 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
             </button>
           </div>
         </div>
-      )}
-    </>
-
+      )};
+    </div>  
   );
 };
 

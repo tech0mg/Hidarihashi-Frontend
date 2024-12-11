@@ -5,9 +5,9 @@ import StarIcon from "../../components/icon/icon_star";
 import FooterButton from "../../components/FooterButton";
 
 const App = () => {
-  const router = useRouter();
-  const [images, setImages] = useState([]);
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [images, setImages] = useState([]); // 画像データの状態管理
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL; // 環境変数からAPIのURLを取得
+  const sasToken = process.env.NEXT_PUBLIC_SAS_TOKEN || ""; // SASトークンの環境変数
 
   const buttonStyles = {
     shiori: { default: "#98CBB0", hover: "#6FAE91" },
@@ -16,6 +16,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    // APIエンドポイントから画像データとイベント名を取得
     fetch(`${apiUrl}/api/images`)
       .then((response) => {
         if (!response.ok) {
@@ -23,7 +24,18 @@ const App = () => {
         }
         return response.json();
       })
-      .then((data) => setImages(data.images))
+      .then((data) => {
+        console.log("Fetched data from API:", data); // デバッグ: APIレスポンスの確認
+
+        // 画像URLにSASトークンを付与して保存
+        const updatedImages = data.images.map((item) => ({
+          ...item,
+          image_url: sasToken ? `${item.image_url}?${sasToken}` : item.image_url,
+        }));
+
+        console.log("Updated images with SAS token:", updatedImages); // デバッグ: 更新後の画像データ確認
+        setImages(updatedImages);
+      })
       .catch((error) => console.error("Error fetching images:", error));
   }, []);
 
@@ -55,12 +67,6 @@ const App = () => {
       {/* ヘッダー */}
       <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-        {/* <button
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          onClick={goToList}
-        >
-          Go to List
-        </button> */}
         <button
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           onClick={goToToBTop}
@@ -71,22 +77,26 @@ const App = () => {
 
       {/* メインコンテンツ */}
       <main className="flex-grow p-4 bg-gradient-main">
+        {/* デスクトップ表示 */}
         <div className="hidden md:flex flex-wrap gap-4 justify-center">
-          {images.map((src, index) => (
+          {images.map((image, index) => (
             <div key={index} className="w-1/4 p-2">
               <img
-                src={`${apiUrl}${src}`}
-                alt={`Image ${index + 1}`}
+                src={image.image_url} // 画像URL
+                alt={image.event_name} // イベント名をaltに設定
                 className="w-full h-full object-cover rounded-lg shadow-md"
               />
+              <p className="text-center mt-2">{image.event_name}</p> {/* イベント名 */}
             </div>
           ))}
         </div>
+
+        {/* モバイル表示 */}
         <div className="block md:hidden">
-          {images.map((src, index) => (
+          {images.map((image, index) => (
             <div key={index} className="mb-4">
               <img
-                src={`${apiUrl}${src}`}
+                src={image.image_url}
                 alt={`Image ${index + 1}`}
                 className="w-full h-64 object-cover rounded-lg shadow-md"
               />
@@ -97,8 +107,7 @@ const App = () => {
                 <button className="px-4 py-2 bg-green-500 text-white rounded-full shadow-md hover:bg-green-600">
                   Like
                 </button>
-                {/* StarIconをここに追加 */}
-                <StarIcon size={24} fill="gold" className="mx-2" />
+                <StarIcon size={30} fill="gold" className="mx-2" />
               </div>
             </div>
           ))}
