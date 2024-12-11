@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Header from "../../../components/Header"; // ヘッダーコンポーネント
 import { useNavigation } from "../components/useNavigation";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
@@ -63,9 +64,7 @@ const ShioriPage4 = () => {
   return (
     <div id="page4" className="flex flex-col min-h-screen bg-gray-100">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-      </header>
+      <Header onHomeClick={() => navigateTo("top")} />
 
       {/* メインコンテンツ */}
       <main

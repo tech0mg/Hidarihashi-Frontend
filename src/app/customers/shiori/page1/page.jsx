@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Header from "../../../components/Header"; // ヘッダーコンポーネント
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import IllustrationSelector from "../components/IllustrationSelector";
@@ -34,6 +35,7 @@ const ShioriPage1 = () => {
     setIsColorModalOpen(!isColorModalOpen);
   };
 
+
   // 動的にメインコンテンツの高さを計算
   useEffect(() => {
     const updateContentHeight = () => {
@@ -60,9 +62,7 @@ const ShioriPage1 = () => {
       className="flex flex-col justify-between min-h-screen bg-gray-100"
     >
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between">
-        <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-      </header>
+      <Header onHomeClick={() => navigateTo("top")} />
 
       {/* メインコンテンツ */}
       <main
