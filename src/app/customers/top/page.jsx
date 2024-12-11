@@ -21,6 +21,10 @@ const App = () => {
       .catch((error) => console.error("Error fetching images:", error));
   }, []);
 
+  const goToToBTop = () => {
+    router.push("/customers/toB_top"); // toB_topページへの遷移
+  };
+
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
@@ -33,6 +37,12 @@ const App = () => {
         >
           Go to List
         </button> */}
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          onClick={goToToBTop}
+        >
+          企業登録ページリンク
+        </button>
       </header>
 
       {/* メインコンテンツ */}

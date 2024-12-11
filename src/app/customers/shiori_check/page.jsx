@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ShioriCard from "../../components/ShioriCard";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { jsPDF } from "jspdf";
 
 
 const ShioriCheck = () => {
@@ -12,6 +11,8 @@ const ShioriCheck = () => {
     const [page3, setPage3] = useState({});
     const [page4, setPage4] = useState({});
     const [selectedDate, setSelectedDate] = useState(new Date()); // 予定日管理
+    const shioriRef = useRef(); // PDF生成用の参照
+    const [html2pdf, setHtml2pdf] = useState(null);
 
   useEffect(() => {
     // ローカルストレージから page1～page4 のデータを取得
@@ -19,38 +20,28 @@ const ShioriCheck = () => {
     setPage2(JSON.parse(localStorage.getItem("page2")) || {});
     setPage3(JSON.parse(localStorage.getItem("page3")) || {});
     setPage4(JSON.parse(localStorage.getItem("page4")) || {});
+
+    // html2pdf.js をクライアントサイドでのみ動的にインポート
+    import("html2pdf.js")
+      .then((module) => {
+        setHtml2pdf(() => module.default);
+      })
+      .catch((error) => console.error("Failed to load html2pdf.js:", error));
   }, []);
 
-  // PDF生成処理
-  const handleSaveAsPDF = () => {
-    const doc = new jsPDF();
-    doc.setFont("Helvetica", "normal");
+  // html2pdf.jsを使ってPDFを保存する
+  const handleSavePDF = () => {
+    if (!html2pdf) return;
 
-    // Page1 内容
-    doc.setFontSize(16);
-    doc.text("しおりタイトル", 10, 10);
-    doc.text(page1.title || "未設定", 10, 20);
-    doc.text("Produced by " + (page1.producer || "未設定"), 10, 30);
-
-    // Page2 内容
-    doc.addPage();
-    doc.text("スケジュール", 10, 10);
-    doc.text(page2.schedule || "スケジュール未設定", 10, 20);
-
-    // Page3 内容
-    doc.addPage();
-    doc.text("天気と経路情報", 10, 10);
-    doc.text(page3.weather || "天気未設定", 10, 20);
-
-    // Page4 内容
-    doc.addPage();
-    doc.text("メモ", 10, 10);
-    doc.text(page4.memo || "メモ未設定", 10, 20);
-
-    doc.save("Shiori.pdf");
+    const element = shioriRef.current;
+    const options = {
+      margin: 1,
+      filename: "Shiori.pdf",
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+    html2pdf().set(options).from(element).save();
   };
-
-
 
   return (
     <div className="flex flex-col items-center bg-[#FFF8E1] min-h-screen py-4">
@@ -109,7 +100,7 @@ const ShioriCheck = () => {
 
       {/* PDF保存ボタン */}
       <button
-        onClick={handleSaveAsPDF}
+        onClick={handleSavePDF}
         className="px-6 py-2 bg-pink-500 text-white rounded-full shadow-lg hover:bg-pink-600"
       >
         PDFに保存する
