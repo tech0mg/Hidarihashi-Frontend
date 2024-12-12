@@ -18,6 +18,7 @@ const EventRegistrationForm = () => {
       address: "",
       building: "",
       phone: "",
+      venueName: "",
     },
     participation: {
       maxParticipants: "",
@@ -244,6 +245,14 @@ const EventRegistrationForm = () => {
           />
           <input
             type="text"
+            name="venueName" 
+            value={formData.location.venueName}
+            onChange={handleLocationChange}
+            placeholder="開催場所名"
+            className="w-full border border-gray-300 p-2 rounded mb-2"
+          />
+          <input
+            type="text"
             name="phone"
             value={formData.location.phone}
             onChange={handleLocationChange}
@@ -252,43 +261,112 @@ const EventRegistrationForm = () => {
           />
         </div>
 
-        {/* 参加費 */}
-        <div>
-          <label className="block mb-2 font-bold">参加費情報</label>
-          <input
-            type="text"
-            name="maxParticipants"
-            value={formData.participation.maxParticipants}
-            onChange={handleParticipationChange}
-            placeholder="最大参加人数"
-            className="w-full border border-gray-300 p-2 rounded mb-2"
-          />
-          <input
-            type="text"
-            name="cost"
-            value={formData.participation.cost}
-            onChange={handleParticipationChange}
-            placeholder="参加費"
-            className="w-full border border-gray-300 p-2 rounded mb-2"
-          />
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="includeTax"
-              checked={formData.participation.includeTax}
-              onChange={handleParticipationChange}
-            />
-            <span>税込み</span>
+        {/* 募集要項 */}
+        <div className="bg-white shadow-md p-4 rounded">
+          <h2 className="text-lg font-bold text-[#8B7A6B] mb-4">イベント募集要項</h2>
+          <div className="grid grid-cols-2 gap-4">
+            {/* 最小人数 */}
+            <div>
+              <label className="block mb-2 font-bold text-[#8B7A6B]">最小人数</label>
+              <input
+                type="number"
+                name="minParticipants"
+                value={formData.participation.minParticipants || ""}
+                onChange={handleParticipationChange}
+                placeholder="3"
+                className="w-full border border-[#D7CEC5] p-2 rounded"
+              />
+            </div>
+            {/* 最大人数 */}
+            <div>
+              <label className="block mb-2 font-bold text-[#8B7A6B]">最大人数</label>
+              <input
+                type="number"
+                name="maxParticipants"
+                value={formData.participation.maxParticipants}
+                onChange={handleParticipationChange}
+                placeholder="10"
+                className="w-full border border-[#D7CEC5] p-2 rounded"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            {/* 募集締切日 */}
+            <div>
+              <label className="block mb-2 font-bold text-[#8B7A6B]">募集締切日</label>
+              <DatePicker
+                selected={formData.participation.deadline || new Date()}
+                onChange={(date) =>
+                  handleParticipationChange({ target: { name: "deadline", value: date } })
+                }
+                dateFormat="yyyy/MM/dd"
+                className="w-full border border-[#D7CEC5] p-2 rounded"
+              />
+            </div>
+            {/* 参加費 */}
+            <div>
+              <label className="block mb-2 font-bold text-[#8B7A6B]">参加費</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  name="cost"
+                  value={formData.participation.cost}
+                  onChange={handleParticipationChange}
+                  placeholder="500"
+                  className="w-full border border-[#D7CEC5] p-2 rounded"
+                />
+                <span className="text-[#8B7A6B]">円</span>
+              </div>
+            </div>
+          </div>
+          {/* 申し込み方法 */}
+          <div className="mt-4">
+            <label className="block mb-2 font-bold text-[#8B7A6B]">申し込み方法</label>
+            <div className="flex items-center gap-4">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="applicationMethod"
+                  value="app"
+                  checked={formData.participation.applicationMethod === "app"}
+                  onChange={handleParticipationChange}
+                  className="accent-[#8B7A6B]"
+                />
+                <span className="text-[#8B7A6B]">アプリで申し込み</span>
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="applicationMethod"
+                  value="external"
+                  checked={formData.participation.applicationMethod === "external"}
+                  onChange={handleParticipationChange}
+                  className="accent-[#8B7A6B]"
+                />
+                <span className="text-[#8B7A6B]">外部サイトにて申し込み</span>
+              </label>
+            </div>
+            {formData.participation.applicationMethod === "external" && (
+              <input
+                type="url"
+                name="applicationUrl"
+                value={formData.participation.applicationUrl || ""}
+                onChange={handleParticipationChange}
+                placeholder="URLを入力してください"
+                className="w-full border border-[#D7CEC5] p-2 rounded mt-2"
+              />
+            )}
           </div>
         </div>
 
         {/* 登録ボタン */}
         <button
           onClick={handleSubmit}
-          className="w-full bg-blue-500 text-white py-2 rounded font-bold hover:bg-blue-600"
+          className="w-full bg-[#D7CEC5] text-[#8B7A6B] py-3 rounded font-bold hover:bg-[#A39181] transition"
         >
           この内容で登録する
         </button>
+
       </div>
     </div>
   );
