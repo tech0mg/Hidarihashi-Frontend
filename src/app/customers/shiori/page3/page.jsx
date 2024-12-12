@@ -7,10 +7,12 @@ import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢�
 import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右矢印アイコン
 import WeatherInfo from "../components/WeatherInfo";
 import RouteInfo from "../components/RouteInfo";
+import ColorModal from "../components/ColorModal";
 
 const ShioriPage3 = () => {
   const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
+  const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
   const [startAddress, setStartAddress] = useState(""); // 出発地
   const [destinationAddress, setDestinationAddress] = useState(""); // 目的地
@@ -113,11 +115,22 @@ const ShioriPage3 = () => {
   }
 };
 
+  // イラストの画像をlocalStorageから取得
+  const handleIllustrationChange = (newIllustration) => {
+    setSelectedIllustration(newIllustration);
+    localStorage.setItem("selectedIllustration", newIllustration);
+  };
+
+  // 色選択モーダルを表示
+  const toggleColorModal = () => {
+    setIsColorModalOpen(!isColorModalOpen);
+  };
 
   return (
     <div
       id="page3"
-      className={`flex flex-col min-h-screen ${shioriColor}`}
+      className="flex flex-col items-center justify-between min-h-screen"
+      style={{ backgroundColor: shioriColor }}
     >
       {/* ヘッダー */}
       <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
@@ -209,8 +222,17 @@ const ShioriPage3 = () => {
 
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
-        <ShioriFooterButtons handleNavigation={navigateTo} />
+        <ShioriFooterButtons 
+          handleNavigation={navigateTo} 
+          toggleColorModal={toggleColorModal}
+          onIllustrationChange={handleIllustrationChange}
+        />
       </footer>
+
+      {/* 色選択モーダル */}
+      {isColorModalOpen && (
+        <ColorModal onClose={toggleColorModal} />
+      )}
 
     </div>
   );
