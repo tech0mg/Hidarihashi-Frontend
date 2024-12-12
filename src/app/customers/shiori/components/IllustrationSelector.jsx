@@ -40,7 +40,7 @@ const IllustrationSelector =({ onIllustrationChange }) => {
         id="illustration-select"
         value={selectedIllustration}
         onChange={handleSelectionChange}
-        className="block w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+        className="block w-full p-2 rounded-lg shadow-sm"
       >
         <option value="">-- イラストを選択 --</option>
         {illustrations.map((item, index) => (
@@ -54,7 +54,7 @@ const IllustrationSelector =({ onIllustrationChange }) => {
           <img
             src={`${apiUrl}${selectedIllustration}`}
             alt="Selected Illustration"
-            className="w-32 h-32 object-contain mx-auto border border-gray-300 rounded-lg"
+            className="w-32 h-32 object-contain mx-auto rounded-lg"
           />
         </div>
       )}

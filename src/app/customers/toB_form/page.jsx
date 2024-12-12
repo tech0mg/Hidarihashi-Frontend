@@ -122,7 +122,7 @@ const EventRegistrationForm = () => {
             </button>
             {/* 注意事項 */}
             <div className="flex flex-col">
-              <p className="text-sm font-bold text-[#F3B3CC] mb-2">GOOD</p>
+            <p className="text-sm font-bold text-[#F3B3CC] mb-2">GOOD</p>
               <ul className="text-sm text-[#F3B3CC] list-disc list-inside">
                 <li>明るく鮮やか</li>
                 <li>動きがある</li>
@@ -211,7 +211,7 @@ const EventRegistrationForm = () => {
           <div className="mt-4">
             <label className="block mb-2 font-bold text-[#8B7A6B]">持ち物</label>
             <div className="grid grid-cols-3 gap-2">
-              {[...Array(6)].map((_, index) => (
+            {[...Array(6)].map((_, index) => (
                 <input
                   key={index}
                   type="text"
@@ -254,7 +254,7 @@ const EventRegistrationForm = () => {
           />
           <input
             type="text"
-            name="venueName" 
+            name="venueName"
             value={formData.location.venueName}
             onChange={handleLocationChange}
             placeholder="開催場所名"

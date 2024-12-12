@@ -1,29 +1,22 @@
-import React from 'react';
+import React from "react";
 
-const HomeIcon = ({ size = 24, fill = '#9A877A', className = '' }) => (
+const HomeIcon = ({ size = 24, fill = "currentColor", className = "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
     width={size}
     height={size}
-    fill={fill}
-    className={className}
+    style={{ fill }} // インラインスタイルで対応
+    className={className} // クラス名指定
   >
-    <style type="text/css">
-      {`
-        .st0 { fill: #4B4B4B; }
-      `}
-    </style>
     <g>
+      {/* 屋根部分 */}
       <polygon
-        className="st0"
-        points="433.198,205.503 433.198,86.669 363.908,86.669 363.908,136.267 308.912,81.341 256.09,28.323 0,284.219 37.929,322.123 256.09,104.142 474.072,322.123 512,284.219"
-        style={{ fill: 'rgb(75, 75, 75)' }}
+        points="256,28.3 308.9,81.3 363.9,136.3 433.2,205.5 433.2,86.7 474.1,322.1 256,104.1 37.9,322.1 0,284.2 256,28.3"
       />
+      {/* 本体部分 */}
       <polygon
-        className="st0"
-        points="78.802,312.098 78.802,483.677 213.994,483.677 213.994,368.231 298.007,368.231 298.007,483.677 433.198,483.677 433.198,312.083 256.09,134.959"
-        style={{ fill: 'rgb(75, 75, 75)' }}
+        points="78.8,312.1 78.8,483.7 213.9,483.7 213.9,368.2 298,368.2 298,483.7 433.2,483.7 433.2,312.1 256,134.9"
       />
     </g>
   </svg>

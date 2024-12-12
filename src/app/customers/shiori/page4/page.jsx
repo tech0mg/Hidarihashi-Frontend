@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Header from "../../../components/Header"; // ヘッダーコンポーネント
 import { useNavigation } from "../components/useNavigation";
 import ColorModal from "../components/ColorModal";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
 
-// 持ち物リストコンポーネント
 const PackingList = ({ items, onItemChange }) => (
   <div className="mb-6">
     <h2 className="text-xl font-bold text-center mb-4 text-gray-600">持ち物リスト</h2>
@@ -25,10 +25,9 @@ const PackingList = ({ items, onItemChange }) => (
   </div>
 );
 
-// 思い出の記録コンポーネント
 const MemoryRecorder = ({ memory, onMemoryChange }) => (
   <div className="mb-6">
-    <h2 className="text-xl font-bold text-center mb-4">思い出の記録</h2>
+    <h2 className="text-xl font-bold text-center mb-4 text-gray-600">思い出の記録</h2>
     <textarea
       value={memory}
       onChange={(e) => onMemoryChange(e.target.value)}
@@ -48,28 +47,12 @@ const ShioriPage4 = () => {
   const [memory, setMemory] = useState(""); // 思い出の記録初期値
   const [selectedIllustration, setSelectedIllustration] = useState("");
 
-
-  // 持ち物リストの更新
-  const updateItem = (index, value) => {
-    const updatedItems = [...items];
-    updatedItems[index] = value;
-    setItems(updatedItems);
-  };
-
-  // 思い出の記録の更新
-  const updateMemory = (value) => {
-    setMemory(value);
-  };
-
-  // 動的にメインコンテンツの高さを計算
   useEffect(() => {
     const updateContentHeight = () => {
       const headerHeight = document.querySelector("header")?.offsetHeight || 0;
       const footerHeight = document.querySelector("footer")?.offsetHeight || 0;
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
-
-      // 上下余白分を計算し引く
-      const verticalPadding = 40; // 余白を設定
+      const verticalPadding = 40;
       setContentHeight(availableHeight - verticalPadding * 2);
     };
 
@@ -93,43 +76,46 @@ const ShioriPage4 = () => {
   };
 
   return (
-    <div 
-      id="page4" 
-      className="flex flex-col items-center justify-between min-h-screen"
-      style={{ backgroundColor: shioriColor }}
-    >
+    <div id="page4" className="flex flex-col min-h-screen bg-gray-100">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-      </header>
+      <Header onHomeClick={() => navigateTo("top")} />
 
       {/* メインコンテンツ */}
       <main
         className="flex-grow bg-gradient-main flex justify-center items-center"
         style={{
           height: `${contentHeight}px`,
-          paddingTop: "40px", // 上部の余白を設定
-          paddingBottom: "40px", // 下部の余白を設定
+          paddingTop: "40px",
+          paddingBottom: "40px",
         }}
       >
-        {/* コンテンツ全体のラッパー */}
         <div
-          className="relative bg-white shadow-lg border-8 border-[#da7997] rounded-md"
+          className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
-            aspectRatio: "210 / 297", // A4の比率
+            borderColor: shioriColor,
+            aspectRatio: "210 / 297",
             height: "100%",
             maxWidth: `calc(${contentHeight}px * 210 / 297)`,
           }}
         >
           <div className="p-6 w-full h-full flex flex-col justify-between">
-            {/* 持ち物リスト */}
-            <PackingList items={items} onItemChange={updateItem} />
-
-            {/* 思い出の記録 */}
-            <MemoryRecorder memory={memory} onMemoryChange={updateMemory} />
+            <PackingList
+              items={items}
+              onItemChange={(index, value) =>
+                setItems((prev) => {
+                  const newItems = [...prev];
+                  newItems[index] = value;
+                  return newItems;
+                })
+              }
+            />
+            <MemoryRecorder
+              memory={memory}
+              onMemoryChange={(value) => setMemory(value)}
+            />
           </div>
 
-          {/* 戻るボタン（左矢印） */}
+          {/* 戻るボタン */}
           <div className="absolute top-1/2 -left-10 transform -translate-y-1/2">
             <button onClick={() => navigateTo("prev")}>
               <LeftArrowIcon size={24} />
@@ -140,8 +126,8 @@ const ShioriPage4 = () => {
 
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
-        <ShioriFooterButtons 
-          handleNavigation={navigateTo} 
+        <ShioriFooterButtons
+          handleNavigation={navigateTo}
           toggleColorModal={toggleColorModal}
           onIllustrationChange={handleIllustrationChange}
         />

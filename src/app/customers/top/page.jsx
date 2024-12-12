@@ -69,11 +69,12 @@ const App = () => {
       <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          className="px-4 py-2 bg-[#9A877A] text-white rounded-md hover:bg-[#7E6C63] transition-colors duration-200"
           onClick={goToToBTop}
         >
           企業登録ページリンク
         </button>
+
       </header>
 
       {/* メインコンテンツ */}
