@@ -12,7 +12,7 @@ const EventRegistrationForm = () => {
     startTime: "11:00",
     duration: "150",
     description: "",
-    items: ["エプロン", "三角巾", "手ふきタオル"],
+    items: ["", "", ""],
     location: {
       postalCode: "",
       address: "",
@@ -122,8 +122,8 @@ const EventRegistrationForm = () => {
             </button>
             {/* 注意事項 */}
             <div className="flex flex-col">
-              <p className="text-sm font-bold text-[#8B7A6B] mb-2">GOOD</p>
-              <ul className="text-sm text-[#8B7A6B] list-disc list-inside">
+              <p className="text-sm font-bold text-[#F3B3CC] mb-2">GOOD</p>
+              <ul className="text-sm text-[#F3B3CC] list-disc list-inside">
                 <li>明るく鮮やか</li>
                 <li>動きがある</li>
                 <li>子ども視点</li>
@@ -204,20 +204,29 @@ const EventRegistrationForm = () => {
               value={formData.description}
               onChange={handleInputChange}
               className="w-full border border-[#D7CEC5] p-2 rounded"
-              placeholder="例: 人気店ガエターノの店主自らに教わるピッツァ教室。親子で好きなものをのせて楽しく焼きましょう！"
+              placeholder="例: 人気店ガエターノの店主自らに教わるピッツァ教室。親子で好きなものをのせて、おいしいピザを焼きましょう！"
             ></textarea>
           </div>
 
           <div className="mt-4">
             <label className="block mb-2 font-bold text-[#8B7A6B]">持ち物</label>
             <div className="grid grid-cols-3 gap-2">
-              {formData.items.map((item, index) => (
+              {[...Array(6)].map((_, index) => (
                 <input
                   key={index}
                   type="text"
-                  value={item}
+                  value={formData.items[index] || ""}
                   onChange={(e) => handleArrayChange(index, e.target.value)}
                   className="w-full border border-[#D7CEC5] p-2 rounded"
+                  placeholder={`例: ${
+                    index === 0
+                      ? "エプロン"
+                      : index === 1
+                      ? "三角巾"
+                      : index === 2
+                      ? "手ふきタオル"
+                      : "持ち物を追加"
+                  }`}
                 />
               ))}
             </div>
