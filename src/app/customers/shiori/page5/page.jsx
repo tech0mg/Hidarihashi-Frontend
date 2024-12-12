@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "../components/useNavigation";
 import ShioriFooterButtons from "../components/ShioriFooterButtons";
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
-import PhotoUpload from "../components/PhotoUpload";
-import PhotoGallery from "../components/PhotoGallery";
+import PhotoUpload from "../../PhotoUpload";
+import PhotoGallery from "../../PhotoGallery";
 
 const ShioriPage5 = () => {
   const { navigateTo } = useNavigation();
@@ -57,7 +57,7 @@ const ShioriPage5 = () => {
             onUploadSuccess={handleUploadSuccess}
             onError={(error) => setErrorMessage(error.message)}
           />
- 
+
           {/* アップロード済みの写真 */}
           <PhotoGallery photos={uploadedPhotos} apiUrl={apiUrl} />
         </div>

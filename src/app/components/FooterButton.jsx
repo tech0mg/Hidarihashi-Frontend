@@ -59,7 +59,7 @@ return (
     </IconButton>
 
     <IconButton
-    onClick={() => alert("きろくをみるボタンが押されました！")}
+    onClick={() => router.push("/customers/kiroku_list")}
     fillDefault={buttonStyles.kiroku.default}
     fillHover={buttonStyles.kiroku.hover}
     >

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Header from "../../../components/Header"; // ヘッダーコンポーネント
 import { useNavigation } from "../components/useNavigation";
@@ -8,10 +9,12 @@ import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢�
 import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右矢印アイコン
 import WeatherInfo from "../components/WeatherInfo";
 import RouteInfo from "../components/RouteInfo";
+import ColorModal from "../components/ColorModal";
 
 const ShioriPage3 = () => {
   const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
+  const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
   const [startAddress, setStartAddress] = useState(""); // 出発地
   const [destinationAddress, setDestinationAddress] = useState(""); // 目的地
@@ -30,14 +33,12 @@ const ShioriPage3 = () => {
       const footerHeight = document.querySelector("footer")?.offsetHeight || 0;
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
 
-      // 上下余白分を計算し引く
-      const verticalPadding = 40; // 余白を設定
+      const verticalPadding = 40; // 上下余白を設定
       setContentHeight(availableHeight - verticalPadding * 2);
     };
 
     updateContentHeight();
     window.addEventListener("resize", updateContentHeight);
-
     return () => {
       window.removeEventListener("resize", updateContentHeight);
     };
@@ -50,9 +51,7 @@ const ShioriPage3 = () => {
       if (!response.ok) throw new Error(`Failed to fetch postal code: ${response.statusText}`);
       const { postalCode } = await response.json();
 
-      const weatherResponse = await fetch(
-        `${apiUrl}/api/weather?postalCode=${postalCode}&countryCode=JP`
-      );
+      const weatherResponse = await fetch(`${apiUrl}/api/weather?postalCode=${postalCode}&countryCode=JP`);
       if (!weatherResponse.ok) throw new Error(`Failed to fetch weather: ${weatherResponse.statusText}`);
       const weather = await weatherResponse.json();
       setWeatherData(weather);
@@ -78,20 +77,17 @@ const ShioriPage3 = () => {
 
   const fetchRoute = async (start, destination) => {
     setIsLoadingRoute(true);
-    setRouteError(null); // エラー状態をリセット
+    setRouteError(null);
 
     try {
       const encodedStart = encodeURIComponent(start.trim());
       const encodedDestination = encodeURIComponent(destination.trim());
       const requestUrl = `${apiUrl}/api/route?start=${encodedStart}&destination=${encodedDestination}`;
 
-      console.log("Fetching route with URL:", requestUrl); // デバッグ用ログ
-
       const response = await fetch(requestUrl);
       if (!response.ok) throw new Error(`Failed to fetch route: ${response.status}`);
       const route = await response.json();
 
-      // Google Mapsのリンク
       if (route.snapToRoads) {
         const path = transformPath(route.snapToRoads);
         setRouteData(path);
@@ -106,12 +102,14 @@ const ShioriPage3 = () => {
     }
   };
 
+  const toggleColorModal = () => {
+    setIsColorModalOpen(!isColorModalOpen);
+  };
+
   return (
     <div id="page3" className="flex flex-col min-h-screen bg-gray-100">
-      {/* ヘッダー */}
       <Header onHomeClick={() => navigateTo("top")} />
 
-      {/* メインコンテンツ */}
       <main
         className="flex-grow bg-gradient-main flex justify-center items-center"
         style={{
@@ -120,18 +118,16 @@ const ShioriPage3 = () => {
           paddingBottom: "40px",
         }}
       >
-        {/* コンテンツ全体のラッパー */}
         <div
           className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
-            borderColor: shioriColor, // Contextから取得した色を枠線に適用
-            aspectRatio: "210 / 297", // A4の比率
+            borderColor: shioriColor,
+            aspectRatio: "210 / 297",
             height: "100%",
             maxWidth: `calc(${contentHeight}px * 210 / 297)`,
           }}
         >
           <div className="p-6 w-full h-full flex flex-col justify-between">
-            {/* 出発地入力 */}
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-4 text-center text-gray-600">出発地を入力</h2>
               <input
@@ -143,7 +139,6 @@ const ShioriPage3 = () => {
               />
             </div>
 
-            {/* 目的地入力 */}
             <div className="mb-4">
               <h2 className="text-xl font-bold mb-4 text-center text-gray-600">目的地を入力</h2>
               <input
@@ -165,26 +160,20 @@ const ShioriPage3 = () => {
               </button>
             </div>
 
-            {/* 天気情報表示 */}
             <WeatherInfo isLoading={isLoadingWeather} data={weatherData} />
-
-            {/* 経路情報表示 */}
             <RouteInfo isLoading={isLoadingRoute} data={routeData} />
-
-            {/* エラーメッセージの表示 */}
             {routeError && (
-              <p className="text-sm text-red-500 mt-4">エラーが発生しました: {routeError.message || "詳細不明なエラー"}</p>
+              <p className="text-sm text-red-500 mt-4">
+                エラーが発生しました: {routeError.message || "詳細不明なエラー"}
+              </p>
             )}
           </div>
 
-          {/* 戻るボタン（左矢印） */}
           <div className="absolute top-1/2 -left-10 transform -translate-y-1/2">
             <button onClick={() => navigateTo("prev")}>
               <LeftArrowIcon size={24} />
             </button>
           </div>
-
-          {/* 次へボタン（右矢印） */}
           <div className="absolute top-1/2 -right-10 transform -translate-y-1/2">
             <button onClick={() => navigateTo("next")}>
               <RightArrowIcon size={24} />
@@ -193,10 +182,14 @@ const ShioriPage3 = () => {
         </div>
       </main>
 
-      {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
-        <ShioriFooterButtons handleNavigation={navigateTo} />
+        <ShioriFooterButtons
+          handleNavigation={navigateTo}
+          toggleColorModal={toggleColorModal}
+        />
       </footer>
+
+      {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
     </div>
   );
 };

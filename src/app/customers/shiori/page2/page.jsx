@@ -6,10 +6,12 @@ import { useColor } from "../../../context/ColorContext"; // ColorContextのイ�
 import { useNavigation } from "../components/useNavigation";
 import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
 import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右矢印アイコン
+import ColorModal from "../components/ColorModal";
 
 const ShioriPage2 = () => {
   const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
+  const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
 
   // 動的にメインコンテンツの高さを計算
@@ -31,6 +33,17 @@ const ShioriPage2 = () => {
       window.removeEventListener("resize", updateContentHeight);
     };
   }, []);
+
+  // イラストの画像をlocalStorageから取得
+  const handleIllustrationChange = (newIllustration) => {
+    setSelectedIllustration(newIllustration);
+    localStorage.setItem("selectedIllustration", newIllustration);
+  };
+
+  // 色選択モーダルを表示
+  const toggleColorModal = () => {
+    setIsColorModalOpen(!isColorModalOpen);
+  };
 
   return (
     <div id="page2" className="flex flex-col min-h-screen bg-gray-100">
@@ -104,8 +117,18 @@ const ShioriPage2 = () => {
 
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
-        <ShioriFooterButtons handleNavigation={navigateTo} />
+        <ShioriFooterButtons
+            handleNavigation={navigateTo}
+            toggleColorModal={toggleColorModal}
+            onIllustrationChange={handleIllustrationChange}
+        />
       </footer>
+
+      {/* 色選択モーダル */}
+      {isColorModalOpen && (
+        <ColorModal onClose={toggleColorModal} />
+      )}
+
     </div>
   );
 };

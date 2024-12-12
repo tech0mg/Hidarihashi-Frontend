@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../../components/Header"; // ヘッダーコンポーネント
 import { useNavigation } from "../components/useNavigation";
+import ColorModal from "../components/ColorModal";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
@@ -40,9 +41,11 @@ const MemoryRecorder = ({ memory, onMemoryChange }) => (
 const ShioriPage4 = () => {
   const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
-  const [contentHeight, setContentHeight] = useState(0);
+  const [isColorModalOpen, setIsColorModalOpen] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0); // 動的なコンテンツ高さ
   const [items, setItems] = useState(["", "", "", "", "", ""]); // 持ち物リスト初期値
   const [memory, setMemory] = useState(""); // 思い出の記録初期値
+  const [selectedIllustration, setSelectedIllustration] = useState("");
 
   useEffect(() => {
     const updateContentHeight = () => {
@@ -60,6 +63,17 @@ const ShioriPage4 = () => {
       window.removeEventListener("resize", updateContentHeight);
     };
   }, []);
+
+  // イラストの画像をlocalStorageから取得
+  const handleIllustrationChange = (newIllustration) => {
+    setSelectedIllustration(newIllustration);
+    localStorage.setItem("selectedIllustration", newIllustration);
+  };
+
+  // 色選択モーダルを表示
+  const toggleColorModal = () => {
+    setIsColorModalOpen(!isColorModalOpen);
+  };
 
   return (
     <div id="page4" className="flex flex-col min-h-screen bg-gray-100">
@@ -112,8 +126,17 @@ const ShioriPage4 = () => {
 
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
-        <ShioriFooterButtons handleNavigation={navigateTo} />
+        <ShioriFooterButtons
+          handleNavigation={navigateTo}
+          toggleColorModal={toggleColorModal}
+          onIllustrationChange={handleIllustrationChange}
+        />
       </footer>
+
+      {/* 色選択モーダル */}
+      {isColorModalOpen && (
+        <ColorModal onClose={toggleColorModal} />
+      )}
     </div>
   );
 };

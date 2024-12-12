@@ -3,22 +3,33 @@ import React, { useState } from "react";
 const PhotoUpload = ({ apiUrl, onUploadSuccess, onError }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
+    const [loading, setLoading] = useState(false); // ローディング状態
+    const [successMessage, setSuccessMessage] = useState(null); // 成功メッセージ
+    const [errorMessage, setErrorMessage] = useState(null); // エラーメッセージ
+
 
   
     const handleFileChange = (event) => {
       const file = event.target.files[0];
       setSelectedFile(file);
       setPreviewUrl(URL.createObjectURL(file));
+      setErrorMessage(null); // エラーをリセット
+      setSuccessMessage(null); // 成功メッセージをリセット
     };
   
     const handleFileUpload = async () => {
       if (!selectedFile) {
         onError(new Error("ファイルを選択してください"));
+        setErrorMessage(error.message);
+        onError(error);
         return;
       }
   
       const formData = new FormData();
       formData.append("photo", selectedFile);
+
+      setLoading(true); // ローディング開始
+      setErrorMessage(null); // エラーをリセット
   
       try {
         const response = await fetch(`${apiUrl}/api/upload-photo`, {
@@ -28,13 +39,17 @@ const PhotoUpload = ({ apiUrl, onUploadSuccess, onError }) => {
   
         if (!response.ok) throw new Error("アップロードに失敗しました");
   
-        const data = await response.json();
-        onUploadSuccess(data.file_path); // 親コンポーネントに通知
+        const responseData = await response.json();
+        onUploadSuccess(responseData); 
         setSelectedFile(null);
         setPreviewUrl(null);
+        setSuccessMessage("アップロードが成功しました！"); // 成功メッセージ
       } catch (error) {
         console.error("Error uploading photo:", error);
+        setErrorMessage(error.message);
         onError(error);
+      } finally {
+        setLoading(false); // ローディング終了
       }
     };
   
@@ -61,12 +76,36 @@ const PhotoUpload = ({ apiUrl, onUploadSuccess, onError }) => {
           </div>
         )}
 
+        {/* エラーメッセージ表示 */}
+        {errorMessage && (
+            <div className="mt-2 text-red-500 text-center">
+                エラー: {errorMessage}
+            </div>
+        )}
+
+        {/* 成功メッセージ表示 */}
+        {successMessage && (
+            <div className="mt-2 text-green-500 text-center">
+                {successMessage}
+            </div>
+        )}
+
+        {/* ローディングスピナー */}
+        {loading && (
+            <div className="mt-4 text-center">
+                <div className="loader border-t-4 border-blue-500 rounded-full w-8 h-8 mx-auto animate-spin"></div>
+            </div>
+        )}
+
         {/* アップロードボタン */}
         <button
           onClick={handleFileUpload}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          disabled={loading} // ローディング中はボタンを無効化
+          className={`mt-4 px-4 py-2 rounded-md text-white ${
+            loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+          }`}
         >
-          アップロード
+          {loading ? "アップロード中..." : "アップロード"}
         </button>
       </div>
     );
