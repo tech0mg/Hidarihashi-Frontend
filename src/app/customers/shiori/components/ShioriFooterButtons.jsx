@@ -115,7 +115,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
 
           {/* 記録を見るボタン */}
           <IconButton
-            onClick={() => alert("きろくをみるボタンが押されました")}
+            onClick={() => router.push("/customers/kiroku_list")}
             fillDefault={buttonStyles.kiroku.default}
             fillHover={buttonStyles.kiroku.hover}
           >

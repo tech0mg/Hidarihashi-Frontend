@@ -8,6 +8,7 @@ const App = () => {
   const [images, setImages] = useState([]); // 画像データの状態管理
   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // 環境変数からAPIのURLを取得
   const sasToken = process.env.NEXT_PUBLIC_SAS_TOKEN || ""; // SASトークンの環境変数
+  const router = useRouter();
 
   const buttonStyles = {
     shiori: { default: "#98CBB0", hover: "#6FAE91" },
