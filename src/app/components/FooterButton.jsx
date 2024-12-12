@@ -16,7 +16,7 @@ const FooterButton = () => {
       };
 
     const handleKirokuClick = () => {
-        alert("きろくをみるボタンが押されました！"); // 押したことが分かるアクション
+        router.push("/customers/kiroku_list"); 
     };
     return (
         <footer className="bg-[#EDEAE7] shadow-inner p-4 flex justify-center items-center space-x-8">
