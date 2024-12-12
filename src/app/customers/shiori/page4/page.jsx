@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "../components/useNavigation";
+import ColorModal from "../components/ColorModal";
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
@@ -41,9 +42,11 @@ const MemoryRecorder = ({ memory, onMemoryChange }) => (
 const ShioriPage4 = () => {
   const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
+  const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState(0); // 動的なコンテンツ高さ
   const [items, setItems] = useState(["", "", "", "", "", ""]); // 持ち物リスト初期値
   const [memory, setMemory] = useState(""); // 思い出の記録初期値
+  const [selectedIllustration, setSelectedIllustration] = useState("");
 
 
   // 持ち物リストの更新
@@ -78,8 +81,23 @@ const ShioriPage4 = () => {
     };
   }, []);
 
+  // イラストの画像をlocalStorageから取得
+  const handleIllustrationChange = (newIllustration) => {
+    setSelectedIllustration(newIllustration);
+    localStorage.setItem("selectedIllustration", newIllustration);
+  };
+
+  // 色選択モーダルを表示
+  const toggleColorModal = () => {
+    setIsColorModalOpen(!isColorModalOpen);
+  };
+
   return (
-    <div id="page4" className={`flex flex-col min-h-screen ${shioriColor}`}>
+    <div 
+      id="page4" 
+      className="flex flex-col items-center justify-between min-h-screen"
+      style={{ backgroundColor: shioriColor }}
+    >
       {/* ヘッダー */}
       <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
@@ -122,8 +140,17 @@ const ShioriPage4 = () => {
 
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
-        <ShioriFooterButtons handleNavigation={navigateTo} />
+        <ShioriFooterButtons 
+          handleNavigation={navigateTo} 
+          toggleColorModal={toggleColorModal}
+          onIllustrationChange={handleIllustrationChange}
+        />
       </footer>
+
+      {/* 色選択モーダル */}
+      {isColorModalOpen && (
+        <ColorModal onClose={toggleColorModal} />
+      )}
     </div>
   );
 };
