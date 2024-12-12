@@ -375,6 +375,7 @@ const EventRegistrationForm = () => {
         >
           この内容で登録する
         </button>
+
       </div>
     </div>
   );
