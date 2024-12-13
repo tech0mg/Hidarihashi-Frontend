@@ -40,9 +40,6 @@ const App = () => {
       .catch((error) => console.error("Error fetching images:", error));
   }, []);
 
-  const goToToBTop = () => {
-    router.push("/customers/toB_top"); // toB_topページへの遷移
-  };
 
   const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
     <button
