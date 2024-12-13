@@ -40,9 +40,6 @@ const App = () => {
       .catch((error) => console.error("Error fetching images:", error));
   }, []);
 
-  const goToToBTop = () => {
-    router.push("/customers/toB_top"); // toB_topページへの遷移
-  };
 
   const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
     <button
@@ -68,12 +65,6 @@ const App = () => {
       {/* ヘッダー */}
       <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-        <button
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          onClick={goToToBTop}
-        >
-          企業登録ページリンク
-        </button>
       </header>
 
       {/* メインコンテンツ */}

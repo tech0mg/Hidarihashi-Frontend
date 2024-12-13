@@ -62,3 +62,33 @@
     transform: scale(1.2);
   }
   
+
+/* top_totalボタン用虹色アニメーション */
+@keyframes rainbow {
+  0% { background-color: red; }
+  16.7% { background-color: orange; }
+  33.3% { background-color: yellow; }
+  50% { background-color: green; }
+  66.7% { background-color: blue; }
+  83.3% { background-color: indigo; }
+  100% { background-color: violet; }
+}
+
+.animate-rainbow {
+  animation: rainbow 2s linear infinite; /* 2秒で虹色を循環 */
+  border: none;
+  font-weight: bold;
+}
+
+/* top_totalボタン用ピカピカ点滅アニメーション */
+@keyframes blink {
+  0%, 50%, 100% { background-color: black; color: yellow; }
+  25%, 75% { background-color: yellow; color: black; }
+}
+
+.animate-blink {
+  animation: blink 1.5s linear infinite; /* 1.5秒で点滅 */
+  border: none;
+  font-weight: bold;
+}
+
