@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Header from "../../../components/Header"; // ヘッダーコンポーネント
 import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
 import IllustrationSelector from "../components/IllustrationSelector";
@@ -18,7 +19,7 @@ const ShioriPage1 = () => {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  useEffect(() => {    
+  useEffect(() => {
     const savedIllustration = localStorage.getItem("selectedIllustration");
     if (savedIllustration) {
       setSelectedIllustration(savedIllustration);
@@ -55,17 +56,13 @@ const ShioriPage1 = () => {
     };
   }, []);
 
-  
   return (
-    <div 
-      id="page1" 
-      className="flex flex-col items-center justify-between min-h-screen"
-      style={{ backgroundColor: shioriColor }}
-     >
+    <div
+      id="page1"
+      className="flex flex-col justify-between min-h-screen bg-gray-100"
+    >
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-      </header>
+      <Header onHomeClick={() => navigateTo("top")} />
 
       {/* メインコンテンツ */}
       <main
@@ -78,8 +75,9 @@ const ShioriPage1 = () => {
       >
         {/* コンテンツ全体のラッパー */}
         <div
-          className="relative bg-white shadow-lg border-8 border-[#da7997] rounded-md"
+          className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
+            borderColor: shioriColor, // 枠線の色を動的に設定
             aspectRatio: "210 / 297", // A4の比率
             height: "100%",
             maxWidth: `calc(${contentHeight}px * 210 / 297)`,
@@ -87,18 +85,18 @@ const ShioriPage1 = () => {
         >
           <div className="p-12 w-full h-full flex flex-col justify-between">
             <h1 className="text-3xl font-bold mb-4 text-center text-gray-600">しおり</h1>
-            <p className="text-lg text-center mb-2 text-gray-600">Produced by</p>
-            <p className="text-xl text-center font-semibold text-gray-600">りな</p>
-            {/*  選択したイラストを表示 */}
+            {/* 選択したイラストを表示 */}
             {selectedIllustration ? (
               <img
                 src={selectedIllustration}
                 alt="Selected Illustration"
-                className="mt-4 w-32 h-32 object-contain mx-auto border border-gray-300 rounded-lg"
+                className="mt-4 w-64 h-64 object-contain mx-auto rounded-lg"
               />
             ) : (
               <p className="text-center text-gray-400">イラストが選択されていません</p>
             )}
+            <p className="text-lg text-center mb-2 text-gray-600">Produced by</p>
+            <p className="text-xl text-center font-semibold text-gray-600">りな</p>
           </div>
 
           {/* 次へボタン（右矢印） */}
@@ -110,21 +108,17 @@ const ShioriPage1 = () => {
         </div>
       </main>
 
-      
-
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
-        <ShioriFooterButtons 
-          handleNavigation={navigateTo} 
+        <ShioriFooterButtons
+          handleNavigation={navigateTo}
           toggleColorModal={toggleColorModal}
           onIllustrationChange={handleIllustrationChange}
         />
       </footer>
 
       {/* 色選択モーダル */}
-      {isColorModalOpen && (
-        <ColorModal onClose={toggleColorModal} />
-      )}
+      {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
     </div>
   );
 };

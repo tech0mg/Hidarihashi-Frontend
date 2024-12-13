@@ -1,6 +1,6 @@
 "use client";
 
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import PaintIcon from "../../../components/icon/icon_paint";
 import CrownIcon from "../../../components/icon/icon_crown";
@@ -11,16 +11,28 @@ import KirokuIcon from "../../../components/icon/icon_kiroku";
 import ColorModal from "../components/ColorModal";
 import IllustrationSelector from "./IllustrationSelector";
 
-const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustrationChange }) => {
+const ShioriFooterButtons = ({
+  handleNavigation,
+  toggleColorModal,
+  onIllustrationChange,
+}) => {
   const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
   const router = useRouter();
-  const handleSaveClick = () => {router.push("/customers/shiori_check");
+
+  // モーダルの切り替え
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+  // ページ遷移の関数
+  const handleSaveClick = () => {
+    router.push("/customers/shiori_check");
   };
 
+  const handleKirokuClick = () => {
+    router.push("/customers/kiroku_list");
+  };
 
-  // 各ボタンのスタイルを定義
+  // ボタンのスタイル
   const buttonStyles = {
     paint: { default: "#98CBB0", hover: "#6FAE91" },
     crown: { default: "#DDBD98", hover: "#C8A479" },
@@ -30,7 +42,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
     kiroku: { default: "#C2AAC5", hover: "#A990A6" },
   };
 
-  // ボタンコンポーネントの共通設定
+  // 汎用アイコンボタンコンポーネント
   const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
     <button
       onClick={onClick}
@@ -81,17 +93,15 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
             <span className="text-sm mt-3">イラストをえらぶ</span>
           </IconButton>
 
-
           {/* 保存するボタン */}
-            <IconButton
-              onClick={handleSaveClick}          
-              fillDefault={buttonStyles.save.default}
-              fillHover={buttonStyles.save.hover}
-            >
-              <SaveIcon size={32} fill={buttonStyles.save.default} />
-              <span className="text-sm mt-3">ほぞんする</span>
-            </IconButton>
-
+          <IconButton
+            onClick={handleSaveClick} // 保存ページに移動
+            fillDefault={buttonStyles.save.default}
+            fillHover={buttonStyles.save.hover}
+          >
+            <SaveIcon size={32} fill={buttonStyles.save.default} />
+            <span className="text-sm mt-3">ほぞんする</span>
+          </IconButton>
 
           {/* やめるボタン */}
           <IconButton
@@ -115,7 +125,7 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
 
           {/* 記録を見るボタン */}
           <IconButton
-            onClick={() => router.push("/customers/kiroku_list")}
+            onClick={handleKirokuClick} // 記録ページに移動
             fillDefault={buttonStyles.kiroku.default}
             fillHover={buttonStyles.kiroku.hover}
           >
@@ -125,11 +135,10 @@ const ShioriFooterButtons = ({ handleNavigation, toggleColorModal, onIllustratio
         </div>
       </div>
 
+      {/* 色選択モーダル */}
+      {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
 
-          {/* モーダル */}
-          {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
-
-          {/* イラストモーダル */}
+      {/* イラストモーダル */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">

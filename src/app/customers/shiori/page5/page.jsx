@@ -57,7 +57,7 @@ const ShioriPage5 = () => {
             onUploadSuccess={handleUploadSuccess}
             onError={(error) => setErrorMessage(error.message)}
           />
- 
+
           {/* アップロード済みの写真 */}
           <PhotoGallery photos={uploadedPhotos} apiUrl={apiUrl} />
         </div>

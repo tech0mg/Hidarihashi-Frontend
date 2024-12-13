@@ -44,7 +44,7 @@ const ImageGrid = () => {
   return (
     <div className="flex flex-col h-screen">
       {/* メインコンテンツ */}
-      <div className="p-4 flex-1">
+      <div className="p-4 flex-1 bg-gradient-main ">
         <h1 className="text-2xl font-bold mb-4 text-center">いきたいリスト</h1>
         <div className="image-grid grid grid-cols-3 gap-4">
           {images.map((src, index) => (
