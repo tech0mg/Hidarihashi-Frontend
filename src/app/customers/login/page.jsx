@@ -16,6 +16,10 @@ const LoginPage = () => {
     router.push("/customers/top_total"); // topのpage.jsxに遷移
   };
 
+  const handleLoginNew = () => {
+    router.push("/customers/login/login-new"); // login-newに遷移
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-[#F9F7F5]">
       {/* ヘッダー */}
@@ -76,6 +80,12 @@ const LoginPage = () => {
             className="w-full py-2 bg-[#A39181] text-white rounded-md hover:bg-[#8B7A6B] transition"
           >
             ログイン
+          </button>
+          <button
+            onClick={handleLoginNew}
+            className="w-full mt-4 py-2 border border-[#D7CEC5] text-gray-500 rounded-md hover:border-[#8B7A6B] transition"
+          >
+            新規会員登録
           </button>
         </div>
       </div>

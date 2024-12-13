@@ -1,8 +1,11 @@
 "use client"; // 必須ディレクティブ
 
 import { useState } from 'react';
+import { useRouter } from "next/navigation";
 
 export default function Register() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     parent_nickname: '',
     child_nickname: '',
@@ -30,44 +33,65 @@ export default function Register() {
     alert(data.message);
   };
 
+
+  const handleLogin = () => {
+    router.push("/customers/login"); // loginに遷移
+  };
+
   return (
-    <div style={{
-      maxWidth: '500px',
-      margin: '0 auto',
-      padding: '20px',
-      backgroundColor: '#f0f8ff',
-      borderRadius: '10px',
-      fontFamily: 'Arial, sans-serif'
-    }}>
-      <h2 style={{ textAlign: 'center' }}>アカウント登録</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {/* 保護者のニックネーム */}
-        <label>
-          保護者のニックネーム
-          <input name="parent_nickname" type="text" onChange={handleChange} required />
-        </label>
+    <div className="max-w-screen-md mx-auto bg-pink-50 p-8 rounded-lg shadow-md">
+      <h2 className="text-center text-2xl font-bold mb-6">アカウント登録</h2>
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6"
+      >
+        <div>
+          <label className="block font-semibold mb-2">保護者のニックネーム</label>
+          <input
+            name="parent_nickname"
+            type="text"
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            placeholder="例: パパ・ママ"
+            required
+          />
+        </div>
 
-        {/* お子様のニックネーム */}
-        <label>
-          お子様のニックネーム
-          <input name="child_nickname" type="text" onChange={handleChange} required />
-        </label>
+        <div>
+          <label className="block font-semibold mb-2">お子様のニックネーム</label>
+          <input
+            name="child_nickname"
+            type="text"
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            placeholder="例: タロウ"
+            required
+          />
+        </div>
 
-        {/* お子様の性別 */}
-        <label>
-          お子様の性別
-          <select name="gender" onChange={handleChange} required>
+        <div>
+          <label className="block font-semibold mb-2">お子様の性別</label>
+          <select
+            name="gender"
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            required
+          >
             <option value="">性別を選択してください</option>
             <option value="男">男</option>
             <option value="女">女</option>
             <option value="回答しない">回答しない</option>
           </select>
-        </label>
+        </div>
 
-        {/* 学年 */}
-        <label>
-          学年
-          <select name="grade" onChange={handleChange} required>
+        <div>
+          <label className="block font-semibold mb-2">学年</label>
+          <select
+            name="grade"
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            required
+          >
             <option value="">学年を選択してください</option>
             <option value="未就学児">未就学児</option>
             <option value="小学1年生">小学1年生</option>
@@ -78,35 +102,56 @@ export default function Register() {
             <option value="小学6年生">小学6年生</option>
             <option value="中学生以上">中学生以上</option>
           </select>
-        </label>
+        </div>
 
-        {/* 出発地 */}
-        <label>
-          出発地
-          <input name="location" type="text" onChange={handleChange} required />
-        </label>
+        <div>
+          <label className="block font-semibold mb-2">出発地</label>
+          <input
+            name="location"
+            type="text"
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            placeholder="例: 東京都台東区秋葉原"
+            required
+          />
+        </div>
 
-        {/* メールアドレス */}
-        <label>
-          メールアドレス
-          <input name="email" type="email" onChange={handleChange} required />
-        </label>
+        <div>
+          <label className="block font-semibold mb-2">メールアドレス</label>
+          <input
+            name="email"
+            type="email"
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            placeholder="例: example@example.com"
+            required
+          />
+        </div>
 
-        {/* パスワード */}
-        <label>
-          パスワード
-          <input name="password" type="password" onChange={handleChange} required />
-        </label>
+        <div>
+          <label className="block font-semibold mb-2">パスワード</label>
+          <input
+            name="password"
+            type="password"
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            placeholder="8文字以上のパスワードを入力してください"
+            required
+          />
+        </div>
 
-        {/* 確認画面へボタン */}
-        <button type="submit" style={{
-          padding: '10px',
-          backgroundColor: '#007bff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer'
-        }}>確認画面へ</button>
+        <button
+          type="submit"
+          className="w-full py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 transition focus:outline-none focus:ring focus:ring-blue-300"
+        >
+          確認画面へ
+        </button>
+        <button
+          onClick={handleLogin}
+          className="w-full py-2 bg-[#A39181] text-white font-semibold rounded-md hover:bg-[#8B7A6B] transition"
+        >
+          ログイン画面に戻る
+        </button>
       </form>
     </div>
   );
