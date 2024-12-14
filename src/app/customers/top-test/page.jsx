@@ -18,6 +18,7 @@ const App = () => {
 
   useEffect(() => {
     // APIエンドポイントから画像データとイベント名を取得
+    console.log("API URL:", apiUrl);
     fetch(`${apiUrl}/api/images`)
       .then((response) => {
         if (!response.ok) {
@@ -34,7 +35,7 @@ const App = () => {
         setImages(updatedImages);
       })
       .catch((error) => console.error("Error fetching images:", error));
-  }, []);
+  }, [apiUrl, sasToken]);
 
   // スワイプ処理
   const handlers = useSwipeable({
