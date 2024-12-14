@@ -1,12 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import StarIcon from "../../components/icon/icon_star";
+import { useSwipeable } from "react-swipeable";
+import LeftArrowIcon from "../../components/icon/icon_arrow_left"; // 左矢印アイコン
+import RightArrowIcon from "../../components/icon/icon_arrow_right"; // 右矢印アイコン
+import HeartIcon from "../../components/icon/icon_heart2"; // Likeアイコン
+import NoIcon from "../../components/icon/icon_no"; // Dislikeアイコン
 import FooterButton from "../../components/FooterButton";
 import CompassIcon from "../../components/icon/icon_compass"; // CompassIconをインポート
 
-function App() {
+const App = () => {
   const [images, setImages] = useState([]); // 画像データの状態管理
+  const [currentIndex, setCurrentIndex] = useState(0); // 現在の画像インデックス
+  const [popupMessage, setPopupMessage] = useState(""); // ポップアップメッセージ
   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // 環境変数からAPIのURLを取得
   const sasToken = process.env.NEXT_PUBLIC_SAS_TOKEN || ""; // SASトークンの環境変数
   const router = useRouter();
@@ -19,6 +25,8 @@ function App() {
 
   useEffect(() => {
     // APIエンドポイントから画像データとイベント名を取得
+    console.log("API URL:", apiUrl);
+    console.log("API URL:", sasToken);
     fetch(`${apiUrl}/api/images`)
       .then((response) => {
         if (!response.ok) {
@@ -27,20 +35,43 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        console.log("Fetched data from API:", data); // デバッグ: APIレスポンスの確認
-
-
         // 画像URLにSASトークンを付与して保存
         const updatedImages = data.images.map((item) => ({
           ...item,
           image_url: sasToken ? `${item.image_url}?${sasToken}` : item.image_url,
         }));
-
-        console.log("Updated images with SAS token:", updatedImages); // デバッグ: 更新後の画像データ確認
         setImages(updatedImages);
       })
       .catch((error) => console.error("Error fetching images:", error));
-  }, []);
+  }, [apiUrl, sasToken]);
+
+  // スワイプ処理
+  const handlers = useSwipeable({
+    onSwipedLeft: () => handleSwipe("left"),
+    onSwipedRight: () => handleSwipe("right"),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
+  const handleSwipe = (direction) => {
+    if (direction === "left") {
+      // 次の画像に移動
+      setCurrentIndex((prevIndex) =>
+        prevIndex < images.length - 1 ? prevIndex + 1 : 0
+      );
+    } else if (direction === "right") {
+      // 前の画像に移動
+      setCurrentIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : images.length - 1
+      );
+    }
+  };
+
+  // ボタン操作用関数
+  const showPopup = (message) => {
+    setPopupMessage(message);
+    setTimeout(() => setPopupMessage(""), 2000); // 2秒後に非表示
+  };
 
   const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
     <button
@@ -74,41 +105,65 @@ function App() {
       </header>
 
       {/* メインコンテンツ */}
-      <main className="flex-grow p-4 bg-gradient-main">
-        {/* デスクトップ表示 */}
-        <div className="hidden md:flex flex-wrap gap-4 justify-center">
-          {images.map((image, index) => (
-            <div key={index} className="w-1/4 p-2">
-              <img
-                src={image.image_url} // 画像URL
-                alt={image.event_name} // イベント名をaltに設定
-                className="w-full h-full object-cover rounded-lg shadow-md" />
-              <p className="text-center mt-2">{image.event_name}</p> {/* イベント名 */}
-            </div>
-          ))}
-        </div>
-
-        {/* モバイル表示 */}
-        <div className="block md:hidden">
-          {images.map((image, index) => (
-            <div key={index} className="mb-4">
-              <img
-                src={image.image_url}
-                alt={`Image ${index + 1}`}
-                className="w-full h-64 object-cover rounded-lg shadow-md" />
-              <div className="flex justify-around mt-2">
-                <button className="px-4 py-2 bg-red-500 text-white rounded-full shadow-md hover:bg-red-600">
-                  Dislike
-                </button>
-                <button className="px-4 py-2 bg-green-500 text-white rounded-full shadow-md hover:bg-green-600">
-                  Like
-                </button>
-                <StarIcon size={30} fill="gold" className="mx-2" />
+      <main
+        className="flex-grow p-4 bg-gradient-main"
+        {...handlers} // スワイプ可能エリアを設定
+      >
+        {images.length > 0 ? (
+          <div className="w-full max-w-md flex flex-col items-center">
+            {/* カード */}
+            <div className="relative w-full h-96 flex items-center">
+              <button
+                onClick={() => handleSwipe("right")}
+                className="p-2 bg-gray-300 text-gray-700 rounded-full shadow-md hover:bg-gray-400 absolute left-0 ml-4 z-10"
+              >
+                <LeftArrowIcon />
+              </button>
+              <div className="relative w-full h-full bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+                <img
+                  src={images[currentIndex].image_url}
+                  alt={images[currentIndex].event_name}
+                  className="w-full h-full object-cover"
+                />
+                <p className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2">
+                  {images[currentIndex].event_name}
+                </p>
               </div>
+              <button
+                onClick={() => handleSwipe("left")}
+                className="p-2 bg-gray-300 text-gray-700 rounded-full shadow-md hover:bg-gray-400 absolute right-0 mr-4 z-10"
+              >
+                <RightArrowIcon />
+              </button>
             </div>
-          ))}
-        </div>
+
+            {/* 操作ボタン */}
+            <div className="mt-4 flex justify-around w-full">
+              <button
+                onClick={() => showPopup("Dislike")}
+                className="p-3 bg-red-500 text-white rounded-full shadow-md hover:bg-red-600"
+              >
+                <NoIcon size={24} />
+              </button>
+              <button
+                onClick={() => showPopup("Like")}
+                className="p-3 bg-green-500 text-white rounded-full shadow-md hover:bg-green-600"
+              >
+                <HeartIcon size={24} />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p>Loading images...</p>
+        )}
       </main>
+
+      {/* ポップアップ */}
+      {popupMessage && (
+        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-black text-white py-2 px-4 rounded-lg shadow-lg">
+          {popupMessage}
+        </div>
+      )}
 
       {/* フッター */}
       <FooterButton />
