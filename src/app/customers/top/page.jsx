@@ -106,7 +106,7 @@ const App = () => {
 
       {/* メインコンテンツ */}
       <main
-        className="flex-grow p-4 bg-gradient-main"
+        className="flex-grow flex flex-col justify-center items-center bg-gradient-main"
         {...handlers} // スワイプ可能エリアを設定
       >
         {images.length > 0 ? (
