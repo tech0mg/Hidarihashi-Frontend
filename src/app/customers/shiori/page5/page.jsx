@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "../components/useNavigation";
 import ShioriFooterButtons from "../components/ShioriFooterButtons";
 import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
-import PhotoUpload from "../../PhotoUpload";
-import PhotoGallery from "../../PhotoGallery";
+import PhotoUpload from "../../components/PhotoUpload";
+import PhotoGallery from "../../components/PhotoGallery";
 
 const ShioriPage5 = () => {
   const { navigateTo } = useNavigation();
