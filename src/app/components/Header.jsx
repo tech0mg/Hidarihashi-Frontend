@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation"; // ルーターをインポート
-import CompassIcon from "./icon/icon_Compass"; // CompassIcon に修正
+import CompassIcon from "./icon/icon_compass"; // CompassIcon に修正
 
 const Header = () => {
   const router = useRouter(); // ルーターのインスタンスを取得
