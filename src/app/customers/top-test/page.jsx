@@ -19,6 +19,7 @@ const App = () => {
   useEffect(() => {
     // APIエンドポイントから画像データとイベント名を取得
     console.log("API URL:", apiUrl);
+    console.log("API URL:", sasToken);
     fetch(`${apiUrl}/api/images`)
       .then((response) => {
         if (!response.ok) {
