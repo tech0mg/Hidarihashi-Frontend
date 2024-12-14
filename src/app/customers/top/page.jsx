@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import StarIcon from "../../components/icon/icon_star";
 import FooterButton from "../../components/FooterButton";
+import CompassIcon from "../../components/icon/icon_compass"; // CompassIconをインポート
 
-const App = () => {
+function App() {
   const [images, setImages] = useState([]); // 画像データの状態管理
   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // 環境変数からAPIのURLを取得
   const sasToken = process.env.NEXT_PUBLIC_SAS_TOKEN || ""; // SASトークンの環境変数
@@ -28,6 +29,7 @@ const App = () => {
       .then((data) => {
         console.log("Fetched data from API:", data); // デバッグ: APIレスポンスの確認
 
+
         // 画像URLにSASトークンを付与して保存
         const updatedImages = data.images.map((item) => ({
           ...item,
@@ -40,7 +42,6 @@ const App = () => {
       .catch((error) => console.error("Error fetching images:", error));
   }, []);
 
-
   const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
     <button
       onClick={onClick}
@@ -49,29 +50,27 @@ const App = () => {
       onMouseEnter={(e) => {
         e.currentTarget.querySelector("svg").style.fill = fillHover;
         e.currentTarget.style.transform = "scale(1.1)";
-      }}
+      } }
       onMouseLeave={(e) => {
         e.currentTarget.querySelector("svg").style.fill = fillDefault;
         e.currentTarget.style.transform = "scale(1)";
-      }}
+      } }
     >
       {children}
     </button>
   );
 
-
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 flex justify-between items-center">
+      <header className="bg-[#ECE9E6] shadow-md p-4 flex items-center gap-2">
+        {/* Compass Icon を追加 */}
+        <CompassIcon
+          size={32}
+          fill="#9A877A"
+          className="hover:fill-[#6F6F6F] transition-colors"
+          alt="Compass Icon" />
         <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-        <button
-          className="px-4 py-2 bg-[#9A877A] text-white rounded-md hover:bg-[#7E6C63] transition-colors duration-200"
-          onClick={goToToBTop}
-        >
-          企業登録ページリンク
-        </button>
-
       </header>
 
       {/* メインコンテンツ */}
@@ -83,8 +82,7 @@ const App = () => {
               <img
                 src={image.image_url} // 画像URL
                 alt={image.event_name} // イベント名をaltに設定
-                className="w-full h-full object-cover rounded-lg shadow-md"
-              />
+                className="w-full h-full object-cover rounded-lg shadow-md" />
               <p className="text-center mt-2">{image.event_name}</p> {/* イベント名 */}
             </div>
           ))}
@@ -97,8 +95,7 @@ const App = () => {
               <img
                 src={image.image_url}
                 alt={`Image ${index + 1}`}
-                className="w-full h-64 object-cover rounded-lg shadow-md"
-              />
+                className="w-full h-64 object-cover rounded-lg shadow-md" />
               <div className="flex justify-around mt-2">
                 <button className="px-4 py-2 bg-red-500 text-white rounded-full shadow-md hover:bg-red-600">
                   Dislike
@@ -117,6 +114,6 @@ const App = () => {
       <FooterButton />
     </div>
   );
-};
+}
 
 export default App;

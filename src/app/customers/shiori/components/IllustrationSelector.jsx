@@ -8,6 +8,7 @@ const IllustrationSelector =({ onIllustrationChange }) => {
 
   useEffect(() => {
     const fetchIllustrations = async () => {
+      console.log("API URL being used:", `${apiUrl}/api/illustrations`); // デバッグ用
       try {
         const response = await fetch(`${apiUrl}/api/illustrations`);
         if (!response.ok) throw new Error("Failed to fetch illustrations.");
@@ -19,6 +20,7 @@ const IllustrationSelector =({ onIllustrationChange }) => {
     };
     fetchIllustrations();
   }, [apiUrl]);
+
 
   const handleSelectionChange = (e) => {
     const newIllustration = e.target.value;
@@ -34,7 +36,7 @@ const IllustrationSelector =({ onIllustrationChange }) => {
         htmlFor="illustration-select" 
         className="block mb-2 text-sm font-medium text-gray-700"
       >
-        イラストを選択してください
+        好きなイラストを1つえらぼう
       </label>
       <select
         id="illustration-select"
@@ -42,7 +44,7 @@ const IllustrationSelector =({ onIllustrationChange }) => {
         onChange={handleSelectionChange}
         className="block w-full p-2 rounded-lg shadow-sm"
       >
-        <option value="">-- イラストを選択 --</option>
+        <option value="">---- イラスト ----</option>
         {illustrations.map((item, index) => (
           <option key={index} value={item.url}>
             {item.name}

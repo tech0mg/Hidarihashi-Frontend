@@ -142,13 +142,13 @@ const ShioriFooterButtons = ({
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4 text-center">イラストを選択</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">イラストをえらぶ</h2>
             <IllustrationSelector onIllustrationChange={onIllustrationChange} />
             <button
-              className="mt-4 p-2 bg-gray-500 text-white rounded-md"
+              className="mt-4 p-2 bg-gray-400 text-white rounded-md"
               onClick={toggleModal}
             >
-              イラストをえらぶ
+              えらぶ
             </button>
           </div>
         </div>
