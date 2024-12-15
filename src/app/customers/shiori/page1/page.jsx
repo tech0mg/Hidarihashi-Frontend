@@ -84,7 +84,7 @@ const ShioriPage1 = () => {
           }}
         >
           <div className="p-12 w-full h-full flex flex-col justify-between">
-            <h1 className="text-3xl font-bold mb-4 text-center text-gray-600">しおり</h1>
+            <h2 className="text-3xl font-bold mb-4 text-center text-gray-600">しおり</h2>
             {/* 選択したイラストを表示 */}
             {selectedIllustration ? (
               <img

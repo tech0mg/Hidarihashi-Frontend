@@ -1,8 +1,9 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Header from "../../../components/Header"; // ヘッダーコンポーネント
-import ShioriFooterButtons from "../components/ShioriFooterButtons"; // 下部の共通ボタン
-import { useColor } from "../../../context/ColorContext"; // ColorContextのインポート
+import ShioriFooterButtons from "../components/ShioriFooterButtons"; // フッターの共通ボタン
+import { useColor } from "../../../context/ColorContext"; // 色管理コンテキスト
 import { useNavigation } from "../components/useNavigation";
 import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
 import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右矢印アイコン
@@ -34,12 +35,6 @@ const ShioriPage2 = () => {
     };
   }, []);
 
-  // イラストの画像をlocalStorageから取得
-  const handleIllustrationChange = (newIllustration) => {
-    setSelectedIllustration(newIllustration);
-    localStorage.setItem("selectedIllustration", newIllustration);
-  };
-
   // 色選択モーダルを表示
   const toggleColorModal = () => {
     setIsColorModalOpen(!isColorModalOpen);
@@ -55,45 +50,51 @@ const ShioriPage2 = () => {
         className="flex-grow bg-gradient-main flex justify-center items-center"
         style={{
           height: `${contentHeight}px`,
-          paddingTop: "40px", // 上部の余白を設定
-          paddingBottom: "40px", // 下部の余白を設定
+          paddingTop: "40px",
+          paddingBottom: "40px",
         }}
       >
         {/* コンテンツ全体のラッパー */}
         <div
-          className="relative bg-white shadow-lg border-8 rounded-md"
+          className="relative bg-white shadow-lg border-8 rounded-md max-w-full sm:max-w-[90%]"
           style={{
-            borderColor: shioriColor, // 枠線の色を動的に設定
+            borderColor: shioriColor,
             aspectRatio: "210 / 297", // A4の比率
             height: "100%",
             maxWidth: `calc(${contentHeight}px * 210 / 297)`,
           }}
         >
-          <div className="p-8 w-full h-full flex flex-col justify-between">
+          <div className="p-4 sm:p-8 w-full h-full flex flex-col justify-between">
             {/* スケジュールセクション */}
-            <div className="mb-3">
-              <h3 className="text-lg font-bold text-center mb-3 text-gray-600">スケジュール</h3>
-              <div className="border-t-2 border-b-2 border-gray-300 py-4 px-6 text-left text-sm text-gray-600">
-                <p className="text-xs">9:00 出発</p>
-                <p className="text-xs">9:29 香椎駅</p>
-                <p className="text-xs">9:45 海ノ中道駅</p>
-                <p className="text-xs">9:52 マリンワールド海の中道</p>
-                <p className="text-xs">...</p>
-                <p className="text-xs">13:00 マリンワールド海の中道 出発</p>
-                <p className="text-xs">13:15 海ノ中道駅</p>
-                <p className="text-xs">13:35 香椎駅</p>
-                <p className="text-xs">13:50 帰宅</p>
+            <div className="mb-4 sm:mb-8">
+              <h3 className="text-xs sm:text-sm font-bold text-center mb-2 text-gray-600">
+                スケジュール
+              </h3>
+              <div className="border-t-2 border-b-2 border-gray-300 py-2 sm:py-4 px-4 sm:px-6 text-gray-600 text-[10px] sm:text-xs leading-tight">
+                <p>9:00 出発</p>
+                <p>9:29 香椎駅</p>
+                <p>9:45 海ノ中道駅</p>
+                <p>9:52 マリンワールド海の中道</p>
+                <p>...</p>
+                <p>13:00 マリンワールド海の中道 出発</p>
+                <p>13:15 海ノ中道駅</p>
+                <p>13:35 香椎駅</p>
+                <p>13:50 帰宅</p>
               </div>
             </div>
 
             {/* 目的地セクション */}
-            <div>
-              <h3 className="text-lg font-bold text-center mb-2 text-gray-600">行くところ</h3>
-              <div className="border-t-2 border-b-2 border-gray-300 py-4 px-6 text-left text-sm text-gray-600">
-                <h3 className="font-bold mb-2 text-gray-600">マリンワールド海の中道</h3>
-                <p className="text-xs">
-                マリンワールドは、福岡にある大きなすいぞくかんです。ここでは、まるで海の中をたんけんしているみたいな気分になれる楽しい場所がたくさんあります！
-                サメやクラゲを見られる大きな水そうをはじめ、イルカやアシカのショーも大人気です。大きな自然の中で、海のふしぎをたくさん楽しめるよ！
+            <div className="mb-4 sm:mb-8">
+              <h3 className="text-xs sm:text-sm font-bold text-center mb-2 text-gray-600">
+                行くところ
+              </h3>
+              <div className="border-t-2 border-b-2 border-gray-300 py-2 sm:py-4 px-4 sm:px-6 text-gray-600 text-[10px] sm:text-xs leading-tight">
+                <h3 className="font-bold mb-2 text-[10px] sm:text-xs text-gray-600">
+                  マリンワールド海の中道
+                </h3>
+                <p>
+                  マリンワールドは、福岡にある大きなすいぞくかんです。まるで海の中をたんけんしているみたいな気分になれる楽しい場所がたくさんあります！
+                  サメやクラゲを見られる大きな水そう、イルカやアシカのショーも大人気です。大きな自然の中で、海のふしぎをたくさん楽しめるよ！
                 </p>
               </div>
             </div>
@@ -118,17 +119,13 @@ const ShioriPage2 = () => {
       {/* フッター */}
       <footer className="bg-[#EDEAE7] shadow-inner">
         <ShioriFooterButtons
-            handleNavigation={navigateTo}
-            toggleColorModal={toggleColorModal}
-            onIllustrationChange={handleIllustrationChange}
+          handleNavigation={navigateTo}
+          toggleColorModal={toggleColorModal}
         />
       </footer>
 
       {/* 色選択モーダル */}
-      {isColorModalOpen && (
-        <ColorModal onClose={toggleColorModal} />
-      )}
-
+      {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
     </div>
   );
 };
