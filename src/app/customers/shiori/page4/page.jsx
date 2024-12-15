@@ -17,7 +17,7 @@ const PackingList = ({ items, onItemChange }) => (
           type="text"
           value={item}
           onChange={(e) => onItemChange(index, e.target.value)}
-          placeholder={`持ち物 ${index + 1}`}
+          // placeholder={`持ち物 ${index + 1}`}
           className="p-2 border border-gray-300 rounded shadow-sm w-full"
         />
       ))}
@@ -27,11 +27,11 @@ const PackingList = ({ items, onItemChange }) => (
 
 const MemoryRecorder = ({ memory, onMemoryChange }) => (
   <div className="mb-6">
-    <h2 className="text-xl font-bold text-center mb-4 text-gray-600">思い出の記録</h2>
+    <h2 className="text-xl font-bold text-center mb-4 text-gray-600">思い出のきろく</h2>
     <textarea
       value={memory}
       onChange={(e) => onMemoryChange(e.target.value)}
-      placeholder="ここに思い出を書いてください..."
+      // placeholder="ここに思い出を書いてください..."
       rows={5}
       className="p-2 border border-gray-300 rounded shadow-sm w-full"
     ></textarea>

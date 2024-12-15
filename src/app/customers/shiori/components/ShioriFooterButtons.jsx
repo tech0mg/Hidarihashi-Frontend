@@ -80,7 +80,7 @@ const ShioriFooterButtons = ({
             fillHover={buttonStyles.paint.hover}
           >
             <PaintIcon size={32} fill={buttonStyles.paint.default} />
-            <span className="text-sm mt-3">いろをえらぶ</span>
+            <span className="text-sm mt-3">色をえらぶ</span>
           </IconButton>
 
           {/* イラストを選ぶボタン */}

@@ -12,7 +12,7 @@ router.push("/customers/top"); // TOPページに遷移
 };
 
 return (
-<header className="bg-[#ECE9E6] shadow-md p-2 flex items-center">
+<header className="bg-[#ECE9E6] p-2 flex items-center">
     {/* アイコンとタイトルを横並びに */}
     <div className="flex items-center gap-1">
     {/* Compass アイコン */}

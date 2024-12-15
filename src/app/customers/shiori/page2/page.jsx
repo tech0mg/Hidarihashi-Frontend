@@ -88,12 +88,12 @@ const ShioriPage2 = () => {
 
             {/* 目的地セクション */}
             <div>
-              <h3 className="text-lg font-bold text-center mb-2 text-gray-600">目的地</h3>
+              <h3 className="text-lg font-bold text-center mb-2 text-gray-600">行くところ</h3>
               <div className="border-t-2 border-b-2 border-gray-300 py-4 px-6 text-left text-sm text-gray-600">
                 <h3 className="font-bold mb-2 text-gray-600">マリンワールド海の中道</h3>
                 <p className="text-xs">
-                  マリンワールドは、福岡にある大きな水族館です。ここでは海の中を探検しているかのような気分になれるエキサイティングなスポットがたくさんあります！
-                  サメやクラゲを見られる大水槽をはじめ、イルカやアシカのショーも大人気です。大自然が広がる中で、海のふしぎをいっぱい楽しめるよ！
+                マリンワールドは、福岡にある大きなすいぞくかんです。ここでは、まるで海の中をたんけんしているみたいな気分になれる楽しい場所がたくさんあります！
+                サメやクラゲを見られる大きな水そうをはじめ、イルカやアシカのショーも大人気です。大きな自然の中で、海のふしぎをたくさん楽しめるよ！
                 </p>
               </div>
             </div>
