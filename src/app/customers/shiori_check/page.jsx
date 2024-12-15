@@ -16,50 +16,48 @@ const ShioriCheck = () => {
     const [html2pdf, setHtml2pdf] = useState(null);
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  useEffect(() => {
-      const fetchData = async () => {
-          try {
-              const response = await fetch(`${apiUrl}/api/shiori-data`);
-              if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              const data = await response.json();
-              setPage1(data.page1 || {});
-              setPage2(data.page2 || {});
-              setPage3(data.page3 || {});
-              setPage4(data.page4 || {});
-          } catch (error) {
-              console.error("Error fetching data:", error);
-          }
-      };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${apiUrl}/api/shiori-data`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setPage1(data.page1 || {});
+                setPage2(data.page2 || {});
+                setPage3(data.page3 || {});
+                setPage4(data.page4 || {});
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
 
-      fetchData();
+        fetchData();
 
-      // html2pdf.js をクライアントサイドでのみ動的にインポート
-      import("html2pdf.js")
-          .then((module) => {
-              setHtml2pdf(() => module.default);
-          })
-          .catch((error) => console.error("Failed to load html2pdf.js:", error));
-  }, []);
+        // html2pdf.js をクライアントサイドでのみ動的にインポート
+        import("html2pdf.js")
+            .then((module) => setHtml2pdf(() => module.default))
+            .catch((error) => console.error("Failed to load html2pdf.js:", error));
+    }, []);
 
-  // html2pdf.jsを使ってPDFを保存する
-  const handleSavePDF = () => {
-      if (!html2pdf) return;
+    // html2pdf.jsを使ってPDFを保存する
+    const handleSavePDF = () => {
+        if (!html2pdf) return;
 
-      const element = shioriRef.current;
-      const options = {
-          margin: 1,
-          filename: "Shiori.pdf",
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      };
-      html2pdf().set(options).from(element).save();
-  };
+        const element = shioriRef.current;
+        const options = {
+            margin: 1,
+            filename: "Shiori.pdf",
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        };
+        html2pdf().set(options).from(element).save();
+    };
 
     return (
         <div className="flex flex-col items-center bg-gradient-main">
-            {/* ヘッダーを個別に扱う */}
+            {/* ヘッダー */}
             <div className="w-full">
                 <Header />
             </div>

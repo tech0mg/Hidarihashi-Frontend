@@ -40,7 +40,6 @@ const MemoryRecorder = ({ memory, onMemoryChange }) => (
   </div>
 );
 
-
 const ShioriPage4 = () => {
   const { navigateTo } = useNavigation();
   const { shioriColor } = useColor(); // Contextから色を取得
@@ -48,14 +47,13 @@ const ShioriPage4 = () => {
   const [contentHeight, setContentHeight] = useState(0);
   const [items, setItems] = useState(["", "", "", "", "", ""]); // 持ち物リスト初期値
   const [memory, setMemory] = useState(""); // 思い出の記録初期値
-  const [selectedIllustration, setSelectedIllustration] = useState("");
 
   useEffect(() => {
     const updateContentHeight = () => {
       const headerHeight = document.querySelector("header")?.offsetHeight || 0;
       const footerHeight = document.querySelector("footer")?.offsetHeight || 0;
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
-      const verticalPadding = 40;
+      const verticalPadding = 40; // 上下余白
       setContentHeight(availableHeight - verticalPadding * 2);
     };
 
@@ -63,11 +61,6 @@ const ShioriPage4 = () => {
     window.addEventListener("resize", updateContentHeight);
     return () => window.removeEventListener("resize", updateContentHeight);
   }, []);
-
-  const handleIllustrationChange = (newIllustration) => {
-    setSelectedIllustration(newIllustration);
-    localStorage.setItem("selectedIllustration", newIllustration);
-  };
 
   const toggleColorModal = () => setIsColorModalOpen(!isColorModalOpen);
 
@@ -92,7 +85,8 @@ const ShioriPage4 = () => {
             borderColor: shioriColor,
             aspectRatio: "210 / 297",
             height: "100%",
-            maxWidth: `calc(${contentHeight}px * 210 / 297)`,
+            maxWidth: "calc(90%)", // 柔軟な幅設定
+            maxHeight: "95%", // 高さの最大化
           }}
         >
           {/* 持ち物リスト */}
@@ -114,8 +108,11 @@ const ShioriPage4 = () => {
           />
 
           {/* 戻るボタン */}
-          <div className="absolute top-1/2 -left-10 transform -translate-y-1/2">
-            <button onClick={() => navigateTo("prev")}>
+          <div className="absolute top-1/2 -left-6 transform -translate-y-1/2">
+            <button
+              onClick={() => navigateTo("prev")}
+              className="bg-white p-2 rounded-full shadow-md hover:bg-gray-200"
+            >
               <LeftArrowIcon size={24} />
             </button>
           </div>
@@ -127,7 +124,6 @@ const ShioriPage4 = () => {
         <ShioriFooterButtons
           handleNavigation={navigateTo}
           toggleColorModal={toggleColorModal}
-          onIllustrationChange={handleIllustrationChange}
         />
       </footer>
 

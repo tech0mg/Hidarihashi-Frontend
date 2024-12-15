@@ -56,12 +56,12 @@ const ShioriPage2 = () => {
       >
         {/* コンテンツ全体のラッパー */}
         <div
-          className="relative bg-white shadow-lg border-8 rounded-md max-w-full sm:max-w-[90%]"
+          className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
             borderColor: shioriColor,
+            maxWidth: "90%", // 親要素の幅に基づく柔軟な調整
+            maxHeight: "95%", // 縦方向も95%まで拡大
             aspectRatio: "210 / 297", // A4の比率
-            height: "100%",
-            maxWidth: `calc(${contentHeight}px * 210 / 297)`,
           }}
         >
           <div className="p-4 sm:p-8 w-full h-full flex flex-col justify-between">
@@ -101,15 +101,21 @@ const ShioriPage2 = () => {
           </div>
 
           {/* 戻るボタン（左矢印） */}
-          <div className="absolute top-1/2 -left-10 transform -translate-y-1/2">
-            <button onClick={() => navigateTo("prev")}>
+          <div className="absolute top-1/2 -left-6 transform -translate-y-1/2">
+            <button
+              onClick={() => navigateTo("prev")}
+              className="bg-white p-2 rounded-full shadow-md hover:bg-gray-200"
+            >
               <LeftArrowIcon size={24} />
             </button>
           </div>
 
           {/* 次へボタン（右矢印） */}
-          <div className="absolute top-1/2 -right-10 transform -translate-y-1/2">
-            <button onClick={() => navigateTo("next")}>
+          <div className="absolute top-1/2 -right-6 transform -translate-y-1/2">
+            <button
+              onClick={() => navigateTo("next")}
+              className="bg-white p-2 rounded-full shadow-md hover:bg-gray-200"
+            >
               <RightArrowIcon size={24} />
             </button>
           </div>

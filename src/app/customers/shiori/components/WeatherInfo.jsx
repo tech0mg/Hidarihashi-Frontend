@@ -6,7 +6,7 @@ const WeatherInfo = ({ isLoading, data }) => (
           <p className="text-sm text-gray-600">天気をしらべているよ...</p>
         ) : data ? (
           <div>
-            <p className="text-sm text-gray-600"><strong>地域:</strong> {data.name || "データなし"}</p>
+            {/* <p className="text-sm text-gray-600"><strong>地域:</strong> {data.name || "データなし"}</p> */}
             <p className="text-sm text-gray-600"><strong>気温:</strong> {data.main?.temp || "N/A"}°C</p>
             <p className="text-sm text-gray-600"><strong>天気:</strong> {data.weather[0]?.description || "N/A"}</p>
           </div>
@@ -16,5 +16,5 @@ const WeatherInfo = ({ isLoading, data }) => (
       </div>
     </div>
   );
-  
+
 export default WeatherInfo;
