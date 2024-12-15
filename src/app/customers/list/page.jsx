@@ -2,25 +2,34 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import FooterButton from "../../components/FooterButton";
+import CompassIcon from "../../components/icon/icon_compass"; // CompassIconをインポート
 
 const ImageGrid = () => {
   const [images, setImages] = useState([]);
   const [likedImages, setLikedImages] = useState([]); // ハートが押された画像を記録
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL; // 環境変数からAPIのURLを取得
+  const sasToken = process.env.NEXT_PUBLIC_SAS_TOKEN || ""; // SASトークンの環境変数
+  const [currentIndex, setCurrentIndex] = useState(0); // 現在の画像インデックス
   const router = useRouter();
-
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     fetch(`${apiUrl}/api/images`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => setImages(data.images))
-      .catch((error) => console.error("Error fetching images:", error));
-  }, []);
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // 画像URLにSASトークンを付与して保存
+      const updatedImages = data.images.map((item) => ({
+        ...item,
+        image_url: sasToken ? `${item.image_url}?${sasToken}` : item.image_url,
+      }));
+      setImages(updatedImages);
+    })
+    .catch((error) => console.error("Error fetching images:", error));
+}, [apiUrl, sasToken]);
 
   const handleClick = (image) => {
     // 画像クリックで遷移
@@ -54,8 +63,8 @@ const ImageGrid = () => {
               onClick={() => handleClick(src)} // 画面遷移を実行
             >
               <img
-                src={`${apiUrl}${src}`}
-                alt={`Image ${index + 1}`}
+                src={src.image_url} // 各画像の URL を使用
+                alt={src.event_name} // 各画像のイベント名
                 className="w-full h-full object-cover transition-transform transform hover:scale-105"
               />
               <div className="like-button absolute top-2 right-2 bg-white p-2 rounded-full shadow-md">
