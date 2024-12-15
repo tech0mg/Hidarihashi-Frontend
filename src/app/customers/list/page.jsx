@@ -65,7 +65,7 @@ const ImageGrid = () => {
               <img
                 src={src.image_url} // 各画像の URL を使用
                 alt={src.event_name} // 各画像のイベント名
-                className="w-full h-full object-cover transition-transform transform hover:scale-105"
+                className="w-full object-cover aspect-[3/4] sm:aspect-[4/3] transition-transform transform hover:scale-105"
               />
               <div className="like-button absolute top-2 right-2 bg-white p-2 rounded-full shadow-md">
                 <button
