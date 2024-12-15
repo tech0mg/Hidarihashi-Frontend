@@ -8,8 +8,8 @@ import { useColor } from "../../../context/ColorContext"; // ColorContextのイ�
 import LeftArrowIcon from "../../../components/icon/icon_arrow_left"; // 左矢印アイコン
 import RightArrowIcon from "../../../components/icon/icon_arrow_right"; // 右矢印アイコン
 import WeatherInfo from "../components/WeatherInfo";
-import RouteInfo from "../components/RouteInfo";
 import ColorModal from "../components/ColorModal";
+import { GoogleMap, LoadScript, DirectionsRenderer } from '@react-google-maps/api';
 
 const ShioriPage3 = () => {
   const { navigateTo } = useNavigation();
@@ -19,12 +19,13 @@ const ShioriPage3 = () => {
   const [startAddress, setStartAddress] = useState(""); // 出発地
   const [destinationAddress, setDestinationAddress] = useState(""); // 目的地
   const [weatherData, setWeatherData] = useState(null); // 天気データの状態管理
-  const [routeData, setRouteData] = useState(null); // 経路データの状態管理
+  const [directions, setDirections] = useState(null);
   const [isLoadingWeather, setIsLoadingWeather] = useState(false); // ローディング状態
   const [isLoadingRoute, setIsLoadingRoute] = useState(false); // ローディング状態
   const [routeError, setRouteError] = useState(null); // エラー状態の管理
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // APIのベースURL
+  const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
   // 動的にメインコンテンツの高さを計算
   useEffect(() => {
@@ -33,8 +34,9 @@ const ShioriPage3 = () => {
       const footerHeight = document.querySelector("footer")?.offsetHeight || 0;
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
 
+      const mapMinHeight = 300; // 地図部分の最低高さを追記
       const verticalPadding = 40; // 上下余白を設定
-      setContentHeight(availableHeight - verticalPadding * 2);
+      setContentHeight(availableHeight - verticalPadding * 2+ mapMinHeight);// 地図の最低限の高さを追加
     };
 
     updateContentHeight();
@@ -44,6 +46,7 @@ const ShioriPage3 = () => {
     };
   }, []);
 
+  // 天気データの取得
   const fetchWeather = async (address) => {
     setIsLoadingWeather(true);
     try {
@@ -57,49 +60,43 @@ const ShioriPage3 = () => {
       setWeatherData(weather);
     } catch (error) {
       console.error("Error fetching weather:", error.message);
+      setWeatherData(null); // エラー時にデータをリセット
       alert(`天気データの取得に失敗しました: ${error.message}`);
     } finally {
       setIsLoadingWeather(false);
     }
   };
 
-  const transformPath = (snapToRoadsData) => {
-    if (!snapToRoadsData || !snapToRoadsData.snappedPoints) {
-      console.error("No snapped points found in Snap to Roads API response");
-      return [];
+  // 経路データの取得
+  const fetchRoute = () => {
+    if (!window.google) {
+      console.error("Google Maps API is not loaded."); 
+      alert("Google Maps APIが読み込まれていません。再読み込みしてください。");
+      return;
     }
 
-    return snapToRoadsData.snappedPoints.map((point) => ({
-      lat: point.location.latitude,
-      lng: point.location.longitude,
-    }));
-  };
-
-  const fetchRoute = async (start, destination) => {
+    const directionsService = new window.google.maps.DirectionsService();
     setIsLoadingRoute(true);
     setRouteError(null);
 
-    try {
-      const encodedStart = encodeURIComponent(start.trim());
-      const encodedDestination = encodeURIComponent(destination.trim());
-      const requestUrl = `${apiUrl}/api/route?start=${encodedStart}&destination=${encodedDestination}`;
-
-      const response = await fetch(requestUrl);
-      if (!response.ok) throw new Error(`Failed to fetch route: ${response.status}`);
-      const route = await response.json();
-
-      if (route.snapToRoads) {
-        const path = transformPath(route.snapToRoads);
-        setRouteData(path);
-      } else {
-        setRouteError(new Error("Route data not found in response"));
+    directionsService.route(
+      {
+        origin: startAddress,
+        destination: destinationAddress,
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        setIsLoadingRoute(false);
+        if (status === window.google.maps.DirectionsStatus.OK) {
+          setDirections(result);
+        } else {
+          setRouteError(new Error("経路の取得に失敗しました"+ status));
+          console.error(errorMessage);
+          setRouteError(new Error(errorMessage));
+          alert(errorMessage);
+        }
       }
-    } catch (error) {
-      console.error("Error fetching route:", error);
-      setRouteError(error);
-    } finally {
-      setIsLoadingRoute(false);
-    }
+    );
   };
 
   const toggleColorModal = () => {
@@ -151,7 +148,7 @@ const ShioriPage3 = () => {
               <button
                 onClick={() => {
                   fetchWeather(destinationAddress);
-                  fetchRoute(startAddress, destinationAddress);
+                  fetchRoute();
                 }}
                 className="p-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600"
                 disabled={isLoadingWeather || isLoadingRoute}
@@ -161,7 +158,16 @@ const ShioriPage3 = () => {
             </div>
 
             <WeatherInfo isLoading={isLoadingWeather} data={weatherData} />
-            <RouteInfo isLoading={isLoadingRoute} data={routeData} />
+            <LoadScript googleMapsApiKey={googleMapsApiKey}>
+              <GoogleMap
+                mapContainerStyle={{ width: '100%', height: '300px' }}
+                center={directions ? undefined : { lat: 35.6895, lng: 139.6917 }} // directionsがない場合は初期位置を指定
+                zoom={directions ? undefined : 7} // directionsがない場合のズームレベルを指定
+              >
+                {directions && <DirectionsRenderer directions={directions} />}
+              </GoogleMap>
+            </LoadScript>
+
             {routeError && (
               <p className="text-sm text-red-500 mt-4">
                 エラーが発生しました: {routeError.message || "詳細不明なエラー"}
