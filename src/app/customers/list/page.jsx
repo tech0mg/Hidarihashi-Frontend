@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import FooterButton from "../../components/FooterButton";
-import CompassIcon from "../../components/icon/icon_compass"; // CompassIconをインポート
+import Header from "../../components/Header"; // ヘッダーコンポーネントをインポート
 
 const ImageGrid = () => {
   const [images, setImages] = useState([]);
@@ -14,22 +14,22 @@ const ImageGrid = () => {
 
   useEffect(() => {
     fetch(`${apiUrl}/api/images`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // 画像URLにSASトークンを付与して保存
-      const updatedImages = data.images.map((item) => ({
-        ...item,
-        image_url: sasToken ? `${item.image_url}?${sasToken}` : item.image_url,
-      }));
-      setImages(updatedImages);
-    })
-    .catch((error) => console.error("Error fetching images:", error));
-}, [apiUrl, sasToken]);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // 画像URLにSASトークンを付与して保存
+        const updatedImages = data.images.map((item) => ({
+          ...item,
+          image_url: sasToken ? `${item.image_url}?${sasToken}` : item.image_url,
+        }));
+        setImages(updatedImages);
+      })
+      .catch((error) => console.error("Error fetching images:", error));
+  }, [apiUrl, sasToken]);
 
   const handleClick = (image) => {
     // 画像クリックで遷移
@@ -52,8 +52,11 @@ const ImageGrid = () => {
 
   return (
     <div className="flex flex-col h-screen">
+      {/* ヘッダーを追加 */}
+      <Header />
+
       {/* メインコンテンツ */}
-      <div className="p-4 flex-1 bg-gradient-main ">
+      <div className="p-4 flex-1 bg-gradient-main">
         <h1 className="text-2xl font-bold mb-4 text-center">いきたいリスト</h1>
         <div className="image-grid grid grid-cols-3 gap-4">
           {images.map((src, index) => (

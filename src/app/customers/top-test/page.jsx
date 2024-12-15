@@ -120,13 +120,13 @@ const App = () => {
             <div className="mt-4 flex justify-around w-full">
               <button
                 onClick={() => showPopup("Dislike")}
-                className="p-3 bg-red-500 text-white rounded-full shadow-md hover:bg-red-600"
+                className="p-3 bg-[#DA7997] text-white rounded-full shadow-md hover:bg-[#E6A9BD]"
               >
                 <NoIcon size={24} />
               </button>
               <button
                 onClick={() => showPopup("Like")}
-                className="p-3 bg-green-500 text-white rounded-full shadow-md hover:bg-green-600"
+                className="p-3 bg-[#63c0c3] text-white rounded-full shadow-md hover:bg-[#A7DADC]"
               >
                 <HeartIcon size={24} />
               </button>

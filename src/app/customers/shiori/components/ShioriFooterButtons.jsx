@@ -63,14 +63,13 @@ const ShioriFooterButtons = ({
 
   return (
     <>
-      <div className="bg-[#EDEAE7] shadow-inner p-6 flex justify-center items-center space-x-8">
+      {/* フッター */}
+      <div className="bg-[#EDEAE7] shadow-inner p-4 sm:p-6 flex justify-center items-center">
         <div
-          className="grid grid-cols-3 gap-12"
+          className="grid grid-cols-3 grid-rows-2 gap-4 sm:gap-6"
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)", // 3列に分割
-            justifyContent: "center", // 水平中央寄せ
-            alignItems: "center", // 垂直中央寄せ
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           {/* 色を選ぶボタン */}
@@ -79,8 +78,8 @@ const ShioriFooterButtons = ({
             fillDefault={buttonStyles.paint.default}
             fillHover={buttonStyles.paint.hover}
           >
-            <PaintIcon size={32} fill={buttonStyles.paint.default} />
-            <span className="text-sm mt-3">いろをえらぶ</span>
+            <PaintIcon size={24} fill={buttonStyles.paint.default} />
+            <span className="text-xs sm:text-sm mt-2">色をえらぶ</span>
           </IconButton>
 
           {/* イラストを選ぶボタン */}
@@ -89,18 +88,18 @@ const ShioriFooterButtons = ({
             fillDefault={buttonStyles.crown.default}
             fillHover={buttonStyles.crown.hover}
           >
-            <CrownIcon size={32} fill={buttonStyles.crown.default} />
-            <span className="text-sm mt-3">イラストをえらぶ</span>
+            <CrownIcon size={24} fill={buttonStyles.crown.default} />
+            <span className="text-xs sm:text-sm mt-2">イラストをえらぶ</span>
           </IconButton>
 
           {/* 保存するボタン */}
           <IconButton
-            onClick={handleSaveClick} // 保存ページに移動
+            onClick={handleSaveClick}
             fillDefault={buttonStyles.save.default}
             fillHover={buttonStyles.save.hover}
           >
-            <SaveIcon size={32} fill={buttonStyles.save.default} />
-            <span className="text-sm mt-3">ほぞんする</span>
+            <SaveIcon size={24} fill={buttonStyles.save.default} />
+            <span className="text-xs sm:text-sm mt-2">ほぞんする</span>
           </IconButton>
 
           {/* やめるボタン */}
@@ -109,8 +108,8 @@ const ShioriFooterButtons = ({
             fillDefault={buttonStyles.close.default}
             fillHover={buttonStyles.close.hover}
           >
-            <CloseIcon size={32} fill={buttonStyles.close.default} />
-            <span className="text-sm mt-3">やめる</span>
+            <CloseIcon size={24} fill={buttonStyles.close.default} />
+            <span className="text-xs sm:text-sm mt-2">やめる</span>
           </IconButton>
 
           {/* リストにもどるボタン */}
@@ -119,18 +118,18 @@ const ShioriFooterButtons = ({
             fillDefault={buttonStyles.star.default}
             fillHover={buttonStyles.star.hover}
           >
-            <StarIcon size={32} fill={buttonStyles.star.default} />
-            <span className="text-sm mt-3">リストにもどる</span>
+            <StarIcon size={24} fill={buttonStyles.star.default} />
+            <span className="text-xs sm:text-sm mt-2">リストにもどる</span>
           </IconButton>
 
           {/* 記録を見るボタン */}
           <IconButton
-            onClick={handleKirokuClick} // 記録ページに移動
+            onClick={handleKirokuClick}
             fillDefault={buttonStyles.kiroku.default}
             fillHover={buttonStyles.kiroku.hover}
           >
-            <KirokuIcon size={32} fill={buttonStyles.kiroku.default} />
-            <span className="text-sm mt-3">きろくをみる</span>
+            <KirokuIcon size={24} fill={buttonStyles.kiroku.default} />
+            <span className="text-xs sm:text-sm mt-2">きろくをみる</span>
           </IconButton>
         </div>
       </div>
