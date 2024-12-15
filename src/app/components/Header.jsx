@@ -12,9 +12,9 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-[#ECE9E6] p-2 sm:p-4 flex items-center">
+    <header className="bg-[#ECE9E6] p-2 sm:p-2 flex items-center">
       {/* アイコンとタイトルを横並びに */}
-      <div className="flex items-center gap-2 sm:gap-4">
+      <div className="flex items-center ">
         {/* Compass アイコン */}
         <button
           onClick={handleHomeClick}

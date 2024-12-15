@@ -58,7 +58,7 @@ const ShioriCheck = () => {
   };
 
     return (
-        <div className="flex flex-col items-center bg-gradient-to-b from-[#ECE9E6] to-[#FFFFFF] min-h-screen py-4">
+        <div className="flex flex-col items-center bg-gradient-main">
             {/* ヘッダーを個別に扱う */}
             <div className="w-full">
                 <Header />

@@ -92,7 +92,7 @@ const App = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 flex items-center gap-2">
+      <header className="bg-[#ECE9E6] p-4 flex items-center gap-2">
         {/* Compass Icon を追加 */}
         <CompassIcon
           size={32}
