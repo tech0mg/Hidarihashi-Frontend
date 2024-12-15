@@ -63,18 +63,6 @@ const ShioriPage3 = () => {
     }
   };
 
-  const transformPath = (snapToRoadsData) => {
-    if (!snapToRoadsData || !snapToRoadsData.snappedPoints) {
-      console.error("No snapped points found in Snap to Roads API response");
-      return [];
-    }
-
-    return snapToRoadsData.snappedPoints.map((point) => ({
-      lat: point.location.latitude,
-      lng: point.location.longitude,
-    }));
-  };
-
   const fetchRoute = async (start, destination) => {
     setIsLoadingRoute(true);
     setRouteError(null);
@@ -89,7 +77,10 @@ const ShioriPage3 = () => {
       const route = await response.json();
 
       if (route.snapToRoads) {
-        const path = transformPath(route.snapToRoads);
+        const path = route.snapToRoads.snappedPoints.map((point) => ({
+          lat: point.location.latitude,
+          lng: point.location.longitude,
+        }));
         setRouteData(path);
       } else {
         setRouteError(new Error("Route data not found in response"));
@@ -124,7 +115,8 @@ const ShioriPage3 = () => {
             borderColor: shioriColor,
             aspectRatio: "210 / 297",
             height: "100%",
-            maxWidth: `calc(${contentHeight}px * 210 / 297)`,
+            maxWidth: "calc(90%)",
+            maxHeight: "95%",
           }}
         >
           <div className="p-6 w-full h-full flex flex-col justify-between">
@@ -169,13 +161,22 @@ const ShioriPage3 = () => {
             )}
           </div>
 
-          <div className="absolute top-1/2 -left-10 transform -translate-y-1/2">
-            <button onClick={() => navigateTo("prev")}>
+          {/* 戻るボタン */}
+          <div className="absolute top-1/2 -left-6 transform -translate-y-1/2">
+            <button
+              onClick={() => navigateTo("prev")}
+              className="bg-white p-2 rounded-full shadow-md hover:bg-gray-200"
+            >
               <LeftArrowIcon size={24} />
             </button>
           </div>
-          <div className="absolute top-1/2 -right-10 transform -translate-y-1/2">
-            <button onClick={() => navigateTo("next")}>
+
+          {/* 次へボタン */}
+          <div className="absolute top-1/2 -right-6 transform -translate-y-1/2">
+            <button
+              onClick={() => navigateTo("next")}
+              className="bg-white p-2 rounded-full shadow-md hover:bg-gray-200"
+            >
               <RightArrowIcon size={24} />
             </button>
           </div>
