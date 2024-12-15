@@ -14,25 +14,27 @@ const ShioriCheck = () => {
 
 
   // html2pdf.js のインポート
-  useState(() => {
-    import("html2pdf.js")
-        .then((module) => {
-            setHtml2pdf(() => module.default);
-        })
-        .catch((error) => console.error("Failed to load html2pdf.js:", error));
-});
+  useEffect(() => {
+    if (typeof window !== "undefined") { // クライアントサイドチェック
+        import("html2pdf.js")
+            .then((module) => {
+                setHtml2pdf(() => module.default);
+            })
+            .catch((error) => console.error("Failed to load html2pdf.js:", error));
+        }
+    }, []);
 
-const handleSavePDF = () => {
-    if (!html2pdf) return;
+    const handleSavePDF = () => {
+        if (!html2pdf) return;
 
-    const element = shioriRef.current;
-    const options = {
-        margin: 1,
-        filename: "Shiori.pdf",
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-    html2pdf().set(options).from(element).save();
+        const element = shioriRef.current;
+        const options = {
+            margin: 1,
+            filename: "Shiori.pdf",
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        };
+        html2pdf().set(options).from(element).save();
 };
 
     return (
@@ -61,10 +63,15 @@ const handleSavePDF = () => {
                     <p>2024年12月24日 9:00 - 14:00</p>
                     <p>9:00 家をしゅっぱつ</p>
                     <p>9:45 さいぶガスショールームヒナタふくおか 到着</p>
-                    <p>...</p>
+                    <p>10:00 ピッツァきょうしつ</p>
                     <p>12:00 さいぶガスショールームヒナタふくおか 出発</p>
                     <p>12:10 おひるごはん</p>
                     <p>13:40 家にとうちゃく</p>
+                    <img 
+                        src={(`${apiUrl}/photo_demo/pizza.jpg`)}
+                        alt="pizza" 
+                        className="w-100 h-60 mx-auto object-cover"
+                    />
                 </ShioriCard>
                 {/* Page3: 天気と経路情報 */}
                 <ShioriCard>

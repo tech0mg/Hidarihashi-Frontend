@@ -14,6 +14,7 @@ const ShioriPage2 = () => {
   const { shioriColor } = useColor(); // Contextから色を取得
   const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // 動的にメインコンテンツの高さを計算
   useEffect(() => {
@@ -21,10 +22,10 @@ const ShioriPage2 = () => {
       const headerHeight = document.querySelector("header")?.offsetHeight || 0;
       const footerHeight = document.querySelector("footer")?.offsetHeight || 0;
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
-
+      const photoMinHeight = 300; // 写真部分の最低高さを追記
       // 上下余白分を計算し引く
       const verticalPadding = 40; // 余白を設定
-      setContentHeight(availableHeight - verticalPadding * 2);
+      setContentHeight(availableHeight - verticalPadding * 2 + photoMinHeight);
     };
 
     updateContentHeight();
@@ -92,6 +93,11 @@ const ShioriPage2 = () => {
                 <p>
                   人気店ガエターノの店主自らに教わるピッツァ教室。親子でお好きなものを選んでのせて、おいしいピザを焼きましょう！
                 </p>
+                <img 
+                        src={(`${apiUrl}/photo_demo/pizza.jpg`)}
+                        alt="pizza" 
+                        className="w-100 h-60 mx-auto object-cover"
+                    />
               </div>
             </div>
           </div>
