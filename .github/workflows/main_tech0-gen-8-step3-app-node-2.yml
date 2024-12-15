@@ -25,6 +25,7 @@ jobs:
         env: # ビルド時に環境変数を注入
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_SAS_TOKEN: ${{ secrets.NEXT_PUBLIC_SAS_TOKEN }}
+          NEXT_PUBLIC_GOOGLE_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_API_KEY }}
         run: |
           npm install
           npm run build --if-present
