@@ -84,7 +84,7 @@ const ShioriPage1 = () => {
           }}
         >
           <div className="p-12 w-full h-full flex flex-col justify-between">
-            <h1 className="text-3xl font-bold mb-4 text-center text-gray-600">しおり</h1>
+            <h2 className="text-3xl font-bold mb-4 text-center text-gray-600">しおり</h2>
             {/* 選択したイラストを表示 */}
             {selectedIllustration ? (
               <img
@@ -93,7 +93,7 @@ const ShioriPage1 = () => {
                 className="mt-4 w-64 h-64 object-contain mx-auto rounded-lg"
               />
             ) : (
-              <p className="text-center text-gray-400">イラストが選択されていません</p>
+              <p className="text-center text-gray-400">イラストをえらぶボタンから好きなものを1つえらぼう</p>
             )}
             <p className="text-lg text-center mb-2 text-gray-600">Produced by</p>
             <p className="text-xl text-center font-semibold text-gray-600">りな</p>

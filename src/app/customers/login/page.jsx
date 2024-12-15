@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import CompassIcon from "../../components/icon/icon_compass"; // CompassIconをインポート
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -21,22 +22,22 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-[#F9F7F5]">
+    <div className="flex flex-col h-screen bg-gradient-main">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 w-full flex justify-between items-center">
-        <h1 className="text-xl font-bold text-[#8B7A6B]">Kid's Compass 子供向けログイン</h1>
-        <button
-          onClick={goToTopPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-        >
-          トップページに戻る
-        </button>
+      <header className="bg-[#ECE9E6] p-4 flex items-center gap-2">
+        {/* Compass Icon を追加 */}
+        <CompassIcon
+          size={32}
+          fill="#9A877A"
+          className="hover:fill-[#6F6F6F] transition-colors"
+          alt="Compass Icon" />
+        <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
       </header>
 
       {/* ログインフォーム */}
       <div className="flex justify-center items-center flex-grow">
         <div className="bg-white shadow-lg rounded-md p-8 w-96">
-          <h1 className="text-2xl font-bold text-center text-[#8B7A6B] mb-6">子供向けログイン</h1>
+          <h1 className="text-2xl font-bold text-center text-[#8B7A6B] mb-6">ログイン</h1>
           <div className="mb-4">
             <label className="block text-[#8B7A6B] mb-2" htmlFor="email">
               メールアドレス

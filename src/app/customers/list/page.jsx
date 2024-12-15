@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import FooterButton from "../../components/FooterButton";
 import IconHeart from "../../components/icon/icon_heart2"; // ハートアイコンをインポート
+import Header from "../../components/Header"; // ヘッダーコンポーネントをインポート
 
 const ImageGrid = () => {
   const [images, setImages] = useState([]);
@@ -43,6 +44,8 @@ const ImageGrid = () => {
 
   return (
     <div className="flex flex-col h-screen">
+      {/* ヘッダーを追加 */}
+      <Header />
       <div className="p-4 flex-1 bg-gradient-main">
         <h1 className="text-2xl font-bold mb-4 text-center">いきたいリスト</h1>
         <div className="image-grid grid grid-cols-3 gap-4">
