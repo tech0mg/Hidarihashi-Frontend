@@ -19,15 +19,15 @@ const TopTotal = () => {
     topTotal4: "/top_total_img/top_total4.png",
   };
   
-
+  const imageArray = Object.values(images); // オブジェクトを配列に変換
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 8000);
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageArray.length);
+    }, 3000); // 3秒ごとに切り替え
 
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // コンポーネントのアンマウント時にクリーンアップ
   }, []);
 
   return (
