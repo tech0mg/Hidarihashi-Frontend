@@ -22,6 +22,7 @@ const ImageGrid = () => {
         return response.json();
       })
       .then((data) => {
+        console.log("Fetched images:", data); // ここで確認
         const updatedImages = data.images.map((item) => ({
           ...item,
           image_url: sasToken ? `${item.image_url}?${sasToken}` : item.image_url,
@@ -30,10 +31,13 @@ const ImageGrid = () => {
       })
       .catch((error) => console.error("Error fetching images:", error));
   }, [apiUrl, sasToken]);
-
+  
   const handleClick = (image) => {
-    router.push(`/customers/list/list-detail?image=${encodeURIComponent(image.image_url)}`);  // オブジェクト全体からimage.image_urlを渡すように修正
-  };
+    console.log("Navigating with image data:", image); // デバッグ用
+    router.push(
+      `/customers/list/list-detail?image=${encodeURIComponent(image.image_url)}&id=${image.event_id}`
+    );
+  };    
 
   const toggleLike = (e, image) => {
     e.stopPropagation();
@@ -56,6 +60,7 @@ const ImageGrid = () => {
               key={index}
               className="image-card relative group overflow-hidden rounded-lg shadow-lg"
               onClick={() => handleClick(src)}
+
             >
               <img
                 src={src.image_url}
