@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import CompassIcon from "../../components/icon/icon_compass";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -17,13 +18,18 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-[#F9F7F5]">
+    <div className="flex flex-col items-center min-h-screen bg-gradient-main">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 w-full flex justify-between items-center">
-        <h1 className="text-xl font-bold text-[#8B7A6B]">Kid's Compass 企業向け様ログイン</h1>
+      <header className="relative z-20 w-full bg-[#ECE9E6] p-6 pr-8 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <CompassIcon size={32} fill="#9A877A" alt="Compass Icon" />
+          <h1 className="text-xl font-bold text-[#8B7A6B]">
+            Kid's Compass 企業様向けログイン
+          </h1>
+        </div>
         <button
           onClick={goToTopPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+          className="px-4 py-2 bg-[#A39181] text-white rounded-md hover:bg-[#8e7763] transition"
         >
           トップページに戻る
         </button>
@@ -32,7 +38,11 @@ const LoginPage = () => {
       {/* ログインフォーム */}
       <div className="flex justify-center items-center flex-grow">
         <div className="bg-white shadow-lg rounded-md p-8 w-96">
-          <h1 className="text-2xl font-bold text-center text-[#8B7A6B] mb-6">企業向け様ログイン</h1>
+          <h1 className="text-2xl font-bold text-center text-[#8B7A6B] mb-6">
+            企業様向けログイン
+          </h1>
+
+          {/* メールアドレス入力 */}
           <div className="mb-4">
             <label className="block text-[#8B7A6B] mb-2" htmlFor="email">
               メールアドレス
@@ -46,6 +56,8 @@ const LoginPage = () => {
               placeholder="メールアドレスを入力"
             />
           </div>
+
+          {/* パスワード入力 */}
           <div className="mb-4">
             <label className="block text-[#8B7A6B] mb-2" htmlFor="password">
               パスワード
@@ -59,6 +71,8 @@ const LoginPage = () => {
               placeholder="パスワードを入力"
             />
           </div>
+
+          {/* チェックボックス */}
           <div className="flex items-center mb-6">
             <input
               type="checkbox"
@@ -71,6 +85,8 @@ const LoginPage = () => {
               次回から入力を省略
             </label>
           </div>
+
+          {/* ログインボタン */}
           <button
             onClick={handleLogin}
             className="w-full py-2 bg-[#A39181] text-white rounded-md hover:bg-[#8B7A6B] transition"
