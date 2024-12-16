@@ -138,14 +138,14 @@ const App = () => {
             {/* 操作ボタン */}
             <div className="mt-4 flex justify-around w-full">
               <button
-                onClick={() => showPopup("Dislike")}
-                className="p-3 bg-[#DA7997] text-white rounded-full shadow-md hover:bg-[#E6A9BD]"
+                onClick={() => showPopup("行かない")}
+                className="p-3 bg-[#63C0C3] text-white rounded-full shadow-md hover:bg-[#A7DADC]"
               >
                 <NoIcon size={24} />
               </button>
               <button
-                onClick={() => showPopup("Like")}
-                className="p-3 bg-[#63C0C3] text-white rounded-full shadow-md hover:bg-[#A7DADC]"
+                onClick={() => showPopup("行きたい")}
+                className="p-3 bg-[#DA7997] text-white rounded-full shadow-md hover:bg-[#E6A9BD]"
               >
                 <HeartIcon size={24} />
               </button>
@@ -158,7 +158,7 @@ const App = () => {
 
       {/* ポップアップ */}
       {popupMessage && (
-        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-black text-white py-2 px-4 rounded-lg shadow-lg">
+        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-[#9a877a] text-white py-2 px-4 rounded-lg shadow-lg">
           {popupMessage}
         </div>
       )}
