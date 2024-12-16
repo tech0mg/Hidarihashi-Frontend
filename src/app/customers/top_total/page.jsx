@@ -25,7 +25,7 @@ const TopTotal = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageArray.length);
-    }, 3000); // 3秒ごとに切り替え
+    }, 6000); // 6秒ごとに切り替え
 
     return () => clearInterval(interval); // コンポーネントのアンマウント時にクリーンアップ
   }, []);
