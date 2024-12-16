@@ -14,6 +14,7 @@ const ShioriPage2 = () => {
   const { shioriColor } = useColor(); // Contextから色を取得
   const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // 動的にメインコンテンツの高さを計算
   useEffect(() => {
@@ -21,10 +22,10 @@ const ShioriPage2 = () => {
       const headerHeight = document.querySelector("header")?.offsetHeight || 0;
       const footerHeight = document.querySelector("footer")?.offsetHeight || 0;
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
-
+      const photoMinHeight = 300; // 写真部分の最低高さを追記
       // 上下余白分を計算し引く
       const verticalPadding = 40; // 余白を設定
-      setContentHeight(availableHeight - verticalPadding * 2);
+      setContentHeight(availableHeight - verticalPadding * 2 + photoMinHeight);
     };
 
     updateContentHeight();
@@ -71,15 +72,12 @@ const ShioriPage2 = () => {
                 スケジュール
               </h3>
               <div className="border-t-2 border-b-2 border-gray-300 py-2 sm:py-4 px-4 sm:px-6 text-gray-600 text-[10px] sm:text-xs leading-tight">
-                <p>9:00 出発</p>
-                <p>9:29 香椎駅</p>
-                <p>9:45 海ノ中道駅</p>
-                <p>9:52 マリンワールド海の中道</p>
+                <p>9:00 家をしゅっぱつ</p>
+                <p>9:45 さいぶガスショールームヒナタふくおか 到着</p>
                 <p>...</p>
-                <p>13:00 マリンワールド海の中道 出発</p>
-                <p>13:15 海ノ中道駅</p>
-                <p>13:35 香椎駅</p>
-                <p>13:50 帰宅</p>
+                <p>12:00 さいぶガスショールームヒナタふくおか 出発</p>
+                <p>12:10 おひるごはん</p>
+                <p>13:40 家にとうちゃく</p>
               </div>
             </div>
 
@@ -90,12 +88,16 @@ const ShioriPage2 = () => {
               </h3>
               <div className="border-t-2 border-b-2 border-gray-300 py-2 sm:py-4 px-4 sm:px-6 text-gray-600 text-[10px] sm:text-xs leading-tight">
                 <h3 className="font-bold mb-2 text-[10px] sm:text-xs text-gray-600">
-                  マリンワールド海の中道
+                  ガエターノのおやこピッツァきょうしつ
                 </h3>
                 <p>
-                  マリンワールドは、福岡にある大きなすいぞくかんです。まるで海の中をたんけんしているみたいな気分になれる楽しい場所がたくさんあります！
-                  サメやクラゲを見られる大きな水そう、イルカやアシカのショーも大人気です。大きな自然の中で、海のふしぎをたくさん楽しめるよ！
+                  人気店ガエターノの店主自らに教わるピッツァ教室。親子でお好きなものを選んでのせて、おいしいピザを焼きましょう！
                 </p>
+                <img 
+                        src={(`${apiUrl}/photo_demo/pizza.jpg`)}
+                        alt="pizza" 
+                        className="w-100 h-60 mx-auto object-cover"
+                    />
               </div>
             </div>
           </div>

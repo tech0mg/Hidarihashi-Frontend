@@ -7,41 +7,23 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const ShioriCheck = () => {
-    const [page1, setPage1] = useState({});
-    const [page2, setPage2] = useState({});
-    const [page3, setPage3] = useState({});
-    const [page4, setPage4] = useState({});
     const [selectedDate, setSelectedDate] = useState(new Date()); // 予定日管理
     const shioriRef = useRef(); // PDF生成用の参照
     const [html2pdf, setHtml2pdf] = useState(null);
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${apiUrl}/api/shiori-data`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                setPage1(data.page1 || {});
-                setPage2(data.page2 || {});
-                setPage3(data.page3 || {});
-                setPage4(data.page4 || {});
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
 
-        fetchData();
-
-        // html2pdf.js をクライアントサイドでのみ動的にインポート
+  // html2pdf.js のインポート
+  useEffect(() => {
+    if (typeof window !== "undefined") { // クライアントサイドチェック
         import("html2pdf.js")
-            .then((module) => setHtml2pdf(() => module.default))
+            .then((module) => {
+                setHtml2pdf(() => module.default);
+            })
             .catch((error) => console.error("Failed to load html2pdf.js:", error));
+        }
     }, []);
 
-    // html2pdf.jsを使ってPDFを保存する
     const handleSavePDF = () => {
         if (!html2pdf) return;
 
@@ -53,7 +35,7 @@ const ShioriCheck = () => {
             jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
         };
         html2pdf().set(options).from(element).save();
-    };
+};
 
     return (
         <div className="flex flex-col items-center bg-gradient-main">
@@ -62,29 +44,50 @@ const ShioriCheck = () => {
                 <Header />
             </div>
 
-            <h1 className="text-2xl font-bold text-[#9A877A] mb-4">しおりチェック</h1>
+            <h1 className="text-2xl font-bold text-[#9A877A] mb-4">きろくしたしおり</h1>
 
-            <div className="space-y-8">
-                {/* Page1 */}
+            <div className="space-y-8" ref={shioriRef}>
+                {/* Page1: タイトル */}
                 <ShioriCard>
-                    <h1 className="text-3xl font-bold text-center">{page1.title || "しおりタイトル"}</h1>
-                    <p className="text-xl text-center">Produced by {page1.producer || "未設定"}</p>
+                    <h1 className="text-3xl font-bold text-center">ガエターノのおやこピッツァきょうしつ</h1>
+                    <img 
+                        src={(`${apiUrl}/images/いちご.png`)}
+                        alt="いちご" 
+                        className="w-100 h-80 mx-auto object-cover"
+                    />
+                    <p className="text-xl text-center">Produced by りな</p>
                 </ShioriCard>
-                {/* Page2 */}
+                {/* Page2: スケジュール */}
                 <ShioriCard>
-                    <h2 className="text-2xl font-bold mb-2">スケジュール</h2>
-                    <p>{page2.schedule || "スケジュール未設定"}</p>
+                    <h2 className="text-2xl font-bold mb-4">スケジュール</h2>
+                    <p>2024年12月24日 9:00 - 14:00</p>
+                    <p>9:00 家をしゅっぱつ</p>
+                    <p>9:45 さいぶガスショールームヒナタふくおか 到着</p>
+                    <p>10:00 ピッツァきょうしつ</p>
+                    <p>12:00 さいぶガスショールームヒナタふくおか 出発</p>
+                    <p>12:10 おひるごはん</p>
+                    <p>13:40 家にとうちゃく</p>
+                    <img 
+                        src={(`${apiUrl}/photo_demo/pizza.jpg`)}
+                        alt="pizza" 
+                        className="w-100 h-60 mx-auto object-cover"
+                    />
                 </ShioriCard>
-                {/* Page3 */}
+                {/* Page3: 天気と経路情報 */}
                 <ShioriCard>
-                    <h2 className="text-2xl font-bold mb-2">天気と経路情報</h2>
-                    <p>{page3.weather || "天気未設定"}</p>
-                    {page3.mapUrl && <img src={page3.mapUrl} alt="Map" className="w-full h-48 object-cover" />}
+                    <h2 className="text-2xl font-bold mb-4">天気と経路情報</h2>
+                    <p>天気: 晴れ時々曇り</p>
+                    <img 
+                        src={(`${apiUrl}/photo_demo/map_img.png`)}
+                        alt="map_img" 
+                        className="w-100 h-60 mx-auto object-cover"
+                    />
                 </ShioriCard>
-                {/* Page4 */}
+                {/* Page4: メモ */}
                 <ShioriCard>
-                    <h2 className="text-2xl font-bold mb-2">メモ</h2>
-                    <p>{page4.memo || "メモ未設定"}</p>
+                    <h2 className="text-2xl font-bold mb-4">持ち物リスト</h2>
+                    <h3>にんきピザや「ガエターノ」さんにおそわるピッツァきょうしつ。すきなぐざいをのせておいしいピザをやきましょう！</h3>
+                    <p>持ち物: エプロン、手拭きタオル</p>
                 </ShioriCard>
             </div>
 
