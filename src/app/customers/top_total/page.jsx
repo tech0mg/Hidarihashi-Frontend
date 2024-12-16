@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import CompassIcon from "../../components/icon/icon_compass";
+import Header from "../../components/Header";
 
 const TopTotal = () => {
   const router = useRouter();

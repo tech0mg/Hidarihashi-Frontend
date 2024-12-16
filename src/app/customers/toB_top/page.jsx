@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import CompassIcon from "../../components/icon/icon_compass";
+import Header from "../../components/Header";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -20,20 +20,9 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-main">
       {/* ヘッダー */}
-      <header className="relative z-20 w-full bg-[#ECE9E6] p-6 pr-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <CompassIcon size={32} fill="#9A877A" alt="Compass Icon" />
-          <h1 className="text-xl font-bold text-[#8B7A6B]">
-            Kid's Compass 企業様向けログイン
-          </h1>
-        </div>
-        <button
-          onClick={goToTopPage}
-          className="px-4 py-2 bg-[#A39181] text-white rounded-md hover:bg-[#8e7763] transition"
-        >
-          トップページに戻る
-        </button>
-      </header>
+      <div className="w-full">
+          <Header />
+      </div>
 
       {/* ログインフォーム */}
       <div className="flex justify-center items-center flex-grow">

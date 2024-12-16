@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Header from "../../components/Header";
 
 const EventRegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -97,6 +98,10 @@ const EventRegistrationForm = () => {
 
   return (
     <div className="p-6 bg-[#F9F7F5] min-h-screen">
+      {/* ヘッダー */}
+      <div className="w-full">
+          <Header />
+      </div>
       <h1 className="text-2xl font-bold mb-6 text-center text-[#8B7A6B]">イベント登録画面</h1>
       <div className="space-y-8">
         {/* イベントタイトル */}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
+import Header from "../../../components/Header";
 
 export default function Register() {
   const router = useRouter();
@@ -40,6 +41,10 @@ export default function Register() {
 
   return (
     <div className="max-w-screen-md mx-auto bg-pink-50 p-8 rounded-lg shadow-md">
+      {/* ヘッダー */}
+      <div className="w-full">
+          <Header />
+      </div>
       <h2 className="text-center text-2xl font-bold mb-6">アカウント登録</h2>
       <form
         onSubmit={handleSubmit}

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Header from "../../components/Header"; // ヘッダーコンポーネント
 
 const KirokuList = () => {
   const router = useRouter();
@@ -27,7 +28,11 @@ const KirokuList = () => {
 
   return (
     <div className="min-h-screen bg-[#F9F7F5] p-6">
-      <h1 className="text-2xl font-bold text-center text-[#8B7A6B] mb-6">記録リスト</h1>
+      {/* ヘッダー */}
+      <div className="w-full">
+          <Header />
+      </div>
+      <h1 className="text-2xl font-bold text-center text-[#8B7A6B] mb-6">おとずれたイベントリスト</h1>
       <div className="space-y-6">
         {records.map((record, index) => (
           <div
