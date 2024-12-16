@@ -38,29 +38,29 @@ const ShioriCheck = () => {
 };
 
     return (
-        <div className="flex flex-col items-center bg-gradient-main">
+        <div className="flex flex-col items-center justify-center bg-gradient-main min-h-screen">
             {/* ヘッダー */}
             <div className="w-full">
                 <Header />
             </div>
 
-            <h1 className="text-2xl font-bold text-[#9A877A] mb-4">きろくしたしおり</h1>
+            <h1 className="text-2xl font-bold text-[#9A877A] mb-4 text-center">きろくしたしおり</h1>
 
-            <div className="space-y-8" ref={shioriRef}>
+            <div className="space-y-8 w-full max-w-screen-md px-4" ref={shioriRef}>
                 {/* Page1: タイトル */}
                 <ShioriCard>
-                    <h1 className="text-3xl font-bold text-center">ガエターノのおやこピッツァきょうしつ</h1>
+                    <h1 className="text-3xl font-bold text-center mb-4">ガエターノのおやこピッツァきょうしつ</h1>
                     <img 
                         src={(`${apiUrl}/images/いちご.png`)}
                         alt="いちご" 
-                        className="w-100 h-80 mx-auto object-cover"
+                        className="w-100 h-80 mx-auto object-contain rounded-md"
                     />
-                    <p className="text-xl text-center">Produced by りな</p>
+                    <p className="text-xl text-center mt-4">Produced by りな</p>
                 </ShioriCard>
                 {/* Page2: スケジュール */}
                 <ShioriCard>
                     <h2 className="text-2xl font-bold mb-4">スケジュール</h2>
-                    <p>2024年12月24日 9:00 - 14:00</p>
+                    <p className="mb-2">2024年12月24日 9:00 - 14:00</p>
                     <p>9:00 家をしゅっぱつ</p>
                     <p>9:45 さいぶガスショールームヒナタふくおか 到着</p>
                     <p>10:00 ピッツァきょうしつ</p>
@@ -70,24 +70,25 @@ const ShioriCheck = () => {
                     <img 
                         src={(`${apiUrl}/photo_demo/pizza.jpg`)}
                         alt="pizza" 
-                        className="w-100 h-60 mx-auto object-cover"
+                        className="w-full h-60 mx-auto object-cover rounded-md mt-4"
                     />
                 </ShioriCard>
                 {/* Page3: 天気と経路情報 */}
                 <ShioriCard>
-                    <h2 className="text-2xl font-bold mb-4">天気と経路情報</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-center">天気と経路情報</h2>
                     <p>天気: 晴れ時々曇り</p>
                     <img 
                         src={(`${apiUrl}/photo_demo/map_img.png`)}
                         alt="map_img" 
-                        className="w-100 h-60 mx-auto object-cover"
+                        className="w-full h-60 mx-auto object-cover rounded-md mt-4"
                     />
                 </ShioriCard>
                 {/* Page4: メモ */}
                 <ShioriCard>
-                    <h2 className="text-2xl font-bold mb-4">持ち物リスト</h2>
-                    <h3>にんきピザや「ガエターノ」さんにおそわるピッツァきょうしつ。すきなぐざいをのせておいしいピザをやきましょう！</h3>
-                    <p>持ち物: エプロン、手拭きタオル</p>
+                    <h2 className="text-2xl font-bold mb-4 text-center">持ち物リスト</h2>
+                    <p className="mb-2">にんきピザや「ガエターノ」さんにおそわるピッツァきょうしつ。すきなぐざいをのせておいしいピザをやきましょう！</p>
+                    <p>持ち物: エプロン、タオル、ピザにのせたい具
+                    </p>
                 </ShioriCard>
             </div>
 
@@ -119,20 +120,22 @@ const ShioriCheck = () => {
             </div>
 
             {/* PDF保存ボタン */}
-            <button
-                onClick={handleSavePDF}
-                className="px-6 py-2 bg-[#DA7997] text-white rounded-full shadow-lg hover:bg-pink-600"
-            >
-                PDFに保存する
-            </button>
-            
-            {/* 戻るボタン */}
-            <button
-                className="mt-4 px-6 py-2 bg-[#9A877A] text-white rounded-md"
-                onClick={() => window.history.back()}
-            >
-                戻る
-            </button>
+            <div className="my-6 text-center">
+                <button
+                    onClick={handleSavePDF}
+                    className="px-6 py-2 bg-[#DA7997] text-white rounded-full shadow-lg hover:bg-pink-600"
+                >
+                    PDFに保存する
+                </button>
+                
+                {/* 戻るボタン */}
+                <button
+                    className="mt-4 px-6 py-2 bg-[#9A877A] text-white rounded-md"
+                    onClick={() => window.history.back()}
+                >
+                    戻る
+                </button>
+            </div>
         </div>
     );
 };
