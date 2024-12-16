@@ -12,12 +12,13 @@ const TopTotal = () => {
     router.push("/customers/login");
   };
 
-  const images = [
-    "/static/top_total_img/top_total1.png",
-    "/static/top_total_img/top_total2.png",
-    "/static/top_total_img/top_total3.png",
-    "/static/top_total_img/top_total4.png",
-  ];
+  const images = {
+    topTotal1: "/top_total_img/top_total1.png",
+    topTotal2: "/top_total_img/top_total2.png",
+    topTotal3: "/top_total_img/top_total3.png",
+    topTotal4: "/top_total_img/top_total4.png",
+  };
+  
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -89,19 +90,20 @@ const TopTotal = () => {
       {/* メインコンテンツ */}
       <main className="relative z-10 flex-grow flex flex-col items-center justify-center pt-8">
         {/* スライドショー */}
-        <section className="relative w-full max-w-[95%] h-[400px] sm:h-[600px] rounded-lg shadow-lg">
-          <div className="relative w-full h-full overflow-hidden rounded-lg">
-            {images.map((src, index) => (
-              <img
-                key={index}
-                src={src}
-                alt={`スライド ${index + 1}`}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[3000ms] ease-in-out ${
-                  index === currentImageIndex ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            ))}
-          </div>
+          <section className="relative w-full max-w-[95%] h-[400px] sm:h-[600px] rounded-lg shadow-lg">
+            <div className="relative w-full h-full overflow-hidden rounded-lg">
+              {Object.values(images).map((src, index) => (
+                <img
+                  key={index}
+                  src={src} // 修正済みのパス
+                  alt={`スライド ${index + 1}`}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[3000ms] ease-in-out ${
+                    index === currentImageIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              ))}
+            </div>
+
 
           {/* 丸いボタン */}
           <button
