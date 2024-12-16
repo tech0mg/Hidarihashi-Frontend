@@ -39,7 +39,7 @@ const ShioriCheck = () => {
 
     return (
         <div className="flex flex-col items-center bg-gradient-main">
-            {/* ヘッダーを個別に扱う */}
+            {/* ヘッダー */}
             <div className="w-full">
                 <Header />
             </div>
