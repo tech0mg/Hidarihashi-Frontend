@@ -1,67 +1,158 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "../../components/Header";
+import CompassIcon from "../../components/icon/icon_compass"; 
 
 const TopTotal = () => {
   const router = useRouter();
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navigateToKids = () => {
-    router.push("/customers/login"); // 子供向け入口
+    router.push("/customers/login");
   };
 
-  const navigateToCompany = () => {
-    router.push("/customers/toB_top"); // 企業向け入口
-  };
+  const images = [
+    "/static/top_total_img/top_total1.png",
+    "/static/top_total_img/top_total2.png",
+    "/static/top_total_img/top_total3.png",
+    "/static/top_total_img/top_total4.png",
+  ];
 
-  const handleOpenPDF = () => {
-    const pdfUrl = `${apiUrl}/pdf/slide`;
-    window.open(pdfUrl, "_blank");
-};
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
- 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 8000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-[#F9F7F5]">
-      {/* ヘッダー */}
-      <div className="w-full">
-          <Header />
+    <div className="relative flex flex-col min-h-screen bg-gradient-main overflow-hidden scroll-smooth">
+      {/* 背景のふわふわオブジェクト */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-16 h-16 bg-gradient-to-r from-[#63c0c3] to-[#d1eeef] rounded-full opacity-30"
+            style={{
+              top: `${Math.random() * 100}vh`,
+              left: `${Math.random() * 100}vw`,
+              animation: `floatUp ${20 + Math.random() * 10}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 10}s`,
+            }}
+          />
+        ))}
       </div>
-      
-        <div className="flex flex-col items-center justify-center min-h-screen bg-[#F9F7F5]">
-            {/* 画像 */}
-            <div className="w-full max-w-md">
-                <img
-                src={`${apiUrl}/static/top_total_img/top_total.png`}
-                alt="トップ画像"
-                className="w-full h-auto object-cover rounded shadow-md"
-                />
-            </div>
 
-            {/* ボタン */}
-            <div className="flex flex-col items-center mt-8 space-y-4">
-                <button
-                  onClick={navigateToKids}
-                  className="text-white rounded-md shadow-md px-6 py-3 animate-rainbow"
-                >
-                子供向け入口
-                </button>
-                <button
-                  onClick={navigateToCompany}
-                  className="text-white rounded-md shadow-md px-6 py-3 animate-blink"
-                >
-                企業向け入口
-                </button>
-                <button 
-                  onClick={handleOpenPDF}
-                  className="px-6 py-2 bg-blue-500 text-white rounded-md shadow-lg hover:bg-blue-600"
-                >
-                  プレゼンスライド
-                </button>
-            </div>
+      {/* ヘッダー */}
+      <header className="relative z-20 w-full bg-[#ECE9E6] p-6 pr-8 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <CompassIcon size={32} fill="#9A877A" alt="Compass Icon" />
+          <h1 className="text-lg sm:text-xl font-bold text-[#9A877A]">
+            Kid's Compass
+          </h1>
         </div>
+
+        <nav className="hidden sm:flex gap-4 text-[#9A877A] font-semibold text-base">
+          <a href="#about" className="hover:text-[#6F6F6F]">About</a>
+          <a href="#request" className="hover:text-[#6F6F6F]">資料請求</a>
+          <a href="/customers/toB_top" className="hover:text-[#6F6F6F]">企業向けログイン</a>
+        </nav>
+
+        {/* ハンバーガーメニュー */}
+        <div className="sm:hidden">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-[#9A877A] focus:outline-none"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      {/* メインコンテンツ */}
+      <main className="relative z-10 flex-grow flex flex-col items-center justify-center pt-8">
+        {/* スライドショー */}
+        <section className="relative w-full max-w-[95%] h-[400px] sm:h-[600px] rounded-lg shadow-lg">
+          <div className="relative w-full h-full overflow-hidden rounded-lg">
+            {images.map((src, index) => (
+              <img
+                key={index}
+                src={src}
+                alt={`スライド ${index + 1}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[3000ms] ease-in-out ${
+                  index === currentImageIndex ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* 丸いボタン */}
+          <button
+            onClick={navigateToKids}
+            className="absolute bottom-[-20px] right-[-20px] z-30 text-white bg-gradient-to-br from-[#63c0c3] to-[#d1eeef] rounded-full shadow-lg w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center text-sm sm:text-base drop-shadow-lg"
+          >
+            アプリ<br />ログイン
+          </button>
+        </section>
+
+        {/* 空白部分 */}
+        <div className="mt-32"></div>
+
+        {/* アプリ紹介セクション */}
+        <section 
+          id="about"
+          className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 gap-8 px-4 sm:px-8 py-8 rounded-lg"
+        >
+          {/* 左: テキスト */}
+          <div className="flex flex-col justify-center">
+            <h1 className="text-6xl sm:text-7xl font-extrabold text-[#63C0C3] mb-6 tracking-wider opacity-20">
+              ABOUT
+            </h1>
+            <p className="text-[#89CFD2] text-sm sm:text-base leading-relaxed mb-4">
+              行きたい！を自分で選んで提案する
+            </p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#6F6F6F]  mb-4">
+              子どもが決める休日計画アプリ
+            </h3>
+            <p className="text-[#6F6F6F] leading-relaxed">
+              「休日は親が計画するもの」を変えたい。<br />
+              「Kid's Compass」は、子どもが行きたい場所や体験を計画し、<br />
+              家族と楽しむ新しい休日を提案します。計画する楽しさと達成感を<br />
+              通じて、子どもの主体性を育み、家族みんなの思い出を彩ります。
+            </p>
+          </div>
+
+          {/* 右: 画像またはiframe */}
+          <div className="flex items-center justify-center">
+            <iframe
+              style={{
+                border: "1px solid rgba(0, 0, 0, 0.1)",
+              }}
+              className="w-full h-[300px] sm:h-[450px] rounded-lg shadow-lg"
+              src="https://embed.figma.com/proto/AG7Agjugx2zEVW2ylbxa19/Tech0_Hidari-Hashi-App-Design?page-id=0%3A1&node-id=476-652&node-type=canvas&viewport=6756%2C-2680%2C0.93&scaling=scale-down&content-scaling=fixed&starting-point-node-id=476%3A652&show-proto-sidebar=1&embed-host=share"
+              allowFullScreen
+              title="Figma Embed"
+            ></iframe>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
