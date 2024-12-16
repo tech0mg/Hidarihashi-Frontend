@@ -38,7 +38,7 @@ const KirokuList = () => {
               {record.images && record.images.map((image, imgIndex) => (
                 <img
                   key={imgIndex}
-                  src={image}
+                  src={`${apiUrl}${image}`}
                   alt={`記録画像 ${imgIndex + 1}`}
                   className="w-1/3 h-24 object-cover rounded-md"
                 />
