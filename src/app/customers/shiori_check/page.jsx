@@ -87,8 +87,14 @@ const ShioriCheck = () => {
                 <ShioriCard>
                     <h2 className="text-2xl font-bold mb-4 text-center">持ち物リスト</h2>
                     <p className="mb-2">にんきピザや「ガエターノ」さんにおそわるピッツァきょうしつ。すきなぐざいをのせておいしいピザをやきましょう！</p>
-                    <p>持ち物: エプロン、タオル、ピザにのせたい具
-                    </p>
+                    <p>持ち物</p>
+                    <p>・エプロン</p>
+                    <p>・タオル</p>
+                    <p>・ピザにのせたい食べもの</p>
+                    <p>・ピザ窯のように熱い心</p>
+                    <h2 className="text-2xl font-bold mb-4 text-center">メモ書き</h2>
+                    <p>ピザは、おいしくできるかな</p>
+                    <p>おいしくできたら、あつあつモチモチピザをお腹いっぱい食べたいな</p>
                 </ShioriCard>
             </div>
 

@@ -30,7 +30,7 @@ const PackingList = ({ items, onItemChange }) => (
 const MemoryRecorder = ({ memory, onMemoryChange }) => (
   <div className="flex-1 flex flex-col">
     <h2 className="text-sm sm:text-base font-bold text-center mb-2 text-gray-600">
-      思い出のきろく
+      メモ書き
     </h2>
     <textarea
       value={memory}
