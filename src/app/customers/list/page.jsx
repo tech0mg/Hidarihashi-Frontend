@@ -32,7 +32,7 @@ const ImageGrid = () => {
   }, [apiUrl, sasToken]);
 
   const handleClick = (image) => {
-    router.push(`/customers/list/list-detail?image=${encodeURIComponent(image)}`);
+    router.push(`/customers/list/list-detail?image=${encodeURIComponent(image.image_url)}`);  // オブジェクト全体からimage.image_urlを渡すように修正
   };
 
   const toggleLike = (e, image) => {
