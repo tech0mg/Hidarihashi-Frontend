@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import Header from "../../components/Header";
 
 const TopTotal = () => {
   const router = useRouter();
@@ -25,9 +26,9 @@ const TopTotal = () => {
   return (
     <div className="flex flex-col items-center min-h-screen bg-[#F9F7F5]">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 w-full flex justify-between items-center">
-        <h1 className="text-xl font-bold text-[#8B7A6B]">Kid's Compass</h1>
-      </header>
+      <div className="w-full">
+          <Header />
+      </div>
       
         <div className="flex flex-col items-center justify-center min-h-screen bg-[#F9F7F5]">
             {/* 画像 */}

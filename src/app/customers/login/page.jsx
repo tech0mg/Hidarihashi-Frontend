@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import CompassIcon from "../../components/icon/icon_compass"; // CompassIconをインポート
+import Header from "../../components/Header";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -24,15 +25,9 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col h-screen bg-gradient-main">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] p-4 flex items-center gap-2">
-        {/* Compass Icon を追加 */}
-        <CompassIcon
-          size={32}
-          fill="#9A877A"
-          className="hover:fill-[#6F6F6F] transition-colors"
-          alt="Compass Icon" />
-        <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-      </header>
+      <div className="w-full">
+          <Header />
+      </div>
 
       {/* ログインフォーム */}
       <div className="flex justify-center items-center flex-grow">

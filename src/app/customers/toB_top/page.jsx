@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Header from "../../components/Header";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -19,15 +20,9 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col items-center min-h-screen bg-[#F9F7F5]">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] shadow-md p-4 w-full flex justify-between items-center">
-        <h1 className="text-xl font-bold text-[#8B7A6B]">Kid's Compass 企業向け様ログイン</h1>
-        <button
-          onClick={goToTopPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-        >
-          トップページに戻る
-        </button>
-      </header>
+      <div className="w-full">
+          <Header />
+      </div>
 
       {/* ログインフォーム */}
       <div className="flex justify-center items-center flex-grow">

@@ -8,6 +8,7 @@ import HeartIcon from "../../components/icon/icon_heart2"; // Likeアイコン
 import NoIcon from "../../components/icon/icon_no"; // Dislikeアイコン
 import FooterButton from "../../components/FooterButton";
 import CompassIcon from "../../components/icon/icon_compass"; // CompassIconをインポート
+import Header from "../../components/Header";
 
 const App = () => {
   const [images, setImages] = useState([]); // 画像データの状態管理
@@ -92,15 +93,9 @@ const App = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       {/* ヘッダー */}
-      <header className="bg-[#ECE9E6] p-4 flex items-center gap-2">
-        {/* Compass Icon を追加 */}
-        <CompassIcon
-          size={32}
-          fill="#9A877A"
-          className="hover:fill-[#6F6F6F] transition-colors"
-          alt="Compass Icon" />
-        <h1 className="text-xl font-bold text-[#9A877A]">Kid's Compass</h1>
-      </header>
+      <div className="w-full">
+          <Header />
+      </div>
 
       {/* メインコンテンツ */}
       <main
