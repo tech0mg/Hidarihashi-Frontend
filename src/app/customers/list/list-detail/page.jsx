@@ -1,9 +1,11 @@
 "use client";
-import { Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+
+import React, { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import FooterButton from "../../../components/FooterButton";
 import Header from "../../../components/Header"; // ヘッダーコンポーネントをインポート
 
+// コンテンツ部分のコンポーネント
 const ListDetailContent = () => {
   const searchParams = useSearchParams();
   const image = searchParams.get("image"); // クエリから 'image' を取得
@@ -56,4 +58,11 @@ const ListDetailContent = () => {
   );
 };
 
-export default ListDetailContent;
+// メインコンポーネント
+export default function ListDetailPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ListDetailContent />
+    </Suspense>
+  );
+}
