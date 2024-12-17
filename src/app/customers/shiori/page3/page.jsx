@@ -23,6 +23,8 @@ const ShioriPage3 = () => {
   const [isLoadingWeather, setIsLoadingWeather] = useState(false); // ローディング状態
   const [isLoadingRoute, setIsLoadingRoute] = useState(false); // ローディング状態
   const [routeError, setRouteError] = useState(null); // エラー状態の管理
+  const [drivingDuration, setDrivingDuration] = useState(null);// 車での所要時間
+  const [walkingDuration, setWalkingDuration] = useState(null);// 徒歩での所要時間
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // APIのベースURL
   const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
@@ -35,8 +37,9 @@ const ShioriPage3 = () => {
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
 
       const mapMinHeight = 300; // 地図部分の最低高さを追記
+      const timeSectionMinHeight = 100; // 所要時間表示の最低高さ
       const verticalPadding = 40; // 上下余白を設定
-      setContentHeight(availableHeight - verticalPadding * 2+ mapMinHeight);// 地図の最低限の高さを追加
+      setContentHeight(availableHeight - verticalPadding * 2+ timeSectionMinHeight+ mapMinHeight);// 地図の最低限の高さを追加
     };
 
     updateContentHeight();
@@ -86,18 +89,31 @@ const ShioriPage3 = () => {
         travelMode: window.google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
-        setIsLoadingRoute(false);
         if (status === window.google.maps.DirectionsStatus.OK) {
-          setDirections(result);
+          setDirections(result); // 経路を設定
+          setDrivingDuration(result.routes[0].legs[0].duration.text);
         } else {
-          setRouteError(new Error("経路の取得に失敗しました"+ status));
-          console.error(errorMessage);
-          setRouteError(new Error(errorMessage));
-          alert(errorMessage);
+          setRouteError(new Error("経路の取得に失敗しました"));
+        }
+        setIsLoadingRoute(false);
+      }
+    );
+  
+    // 徒歩の時間も取得
+    directionsService.route(
+      {
+        origin: startAddress,
+        destination: destinationAddress,
+        travelMode: window.google.maps.TravelMode.WALKING,
+      },
+      (result, status) => {
+        if (status === window.google.maps.DirectionsStatus.OK) {
+          setWalkingDuration(result.routes[0].legs[0].duration.text);
         }
       }
     );
   };
+
 
   const toggleColorModal = () => {
     setIsColorModalOpen(!isColorModalOpen);
@@ -161,9 +177,9 @@ const ShioriPage3 = () => {
             <WeatherInfo isLoading={isLoadingWeather} data={weatherData} />
             <LoadScript googleMapsApiKey={googleMapsApiKey}>
               <GoogleMap
-                mapContainerStyle={{ width: '100%', height: '300px' }}
+                mapContainerStyle={{ width: '100%', height: '400px' }}
                 center={directions ? undefined : { lat: 35.6895, lng: 139.6917 }} // directionsがない場合は初期位置を指定
-                zoom={directions ? undefined : 7} // directionsがない場合のズームレベルを指定
+                zoom={directions ? 12 : 7} // directionsがない場合のズームレベルを指定
               >
                 {directions && <DirectionsRenderer directions={directions} />}
               </GoogleMap>
@@ -174,6 +190,26 @@ const ShioriPage3 = () => {
                 エラーが発生しました: {routeError.message || "詳細不明なエラー"}
               </p>
             )}
+
+            {/* 所要時間の表示 */}
+            <div className="mt-4 text-center">
+              {isLoadingRoute ? (
+                <p>所要時間を計算中...</p>
+              ) : (
+                <>
+                  {drivingDuration && (
+                    <p className="text-sm text-gray-600">
+                      🚗 車でかかる時間: <strong>{drivingDuration}</strong>
+                    </p>
+                  )}
+                  {walkingDuration && (
+                    <p className="text-sm text-gray-600">
+                      🚶 歩いてかかる時間: <strong>{walkingDuration}</strong>
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
           </div>
 
           {/* 戻るボタン */}
