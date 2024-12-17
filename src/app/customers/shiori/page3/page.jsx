@@ -137,18 +137,19 @@ const ShioriPage3 = () => {
       <main
         className="flex-grow bg-gradient-main flex justify-center items-center"
         style={{
-          height: `${contentHeight}px`,
-          paddingTop: "40px",
-          paddingBottom: "40px",
+          // height: `${contentHeight}px`,
+          height: "500px",
+          paddingTop: "20px",
+          paddingBottom: "20px",
         }}
       >
         <div
           className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
             borderColor: shioriColor,
-            aspectRatio: "1 / 1.414",
+            aspectRatio: "210 / 297",
             height: "95%",
-            maxWidth: "90%",
+            maxWidth: "100%",
           }}
         >
           <div className="p-6 w-full h-full flex flex-col">

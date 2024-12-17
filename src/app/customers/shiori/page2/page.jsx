@@ -50,9 +50,10 @@ const ShioriPage2 = () => {
       <main
         className="flex-grow bg-gradient-main flex justify-center items-center"
         style={{
-          height: `${contentHeight}px`,
-          paddingTop: "40px",
-          paddingBottom: "40px",
+          // height: `${contentHeight}px`,
+          height: "500px",
+          paddingTop: "20px",
+          paddingBottom: "20px",
         }}
       >
         {/* コンテンツ全体のラッパー */}
@@ -60,8 +61,8 @@ const ShioriPage2 = () => {
           className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
             borderColor: shioriColor,
-            maxWidth: "90%", // 親要素の幅に基づく柔軟な調整
-            maxHeight: "95%", // 縦方向も95%まで拡大
+            Width: "95%", // 親要素の幅に基づく柔軟な調整
+            maxHeight: "100%", // 縦方向も95%まで拡大
             aspectRatio: "210 / 297", // A4の比率
           }}
         >
@@ -96,7 +97,7 @@ const ShioriPage2 = () => {
                 <img 
                         src="/shiori_check_img/pizza.jpg"
                         alt="pizza" 
-                        className="w-100 h-60 mx-auto object-cover"
+                        className="w-70 h-30 mx-auto object-cover"
                     />
               </div>
             </div>
