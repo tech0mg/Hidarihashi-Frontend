@@ -112,7 +112,7 @@ const App = () => {
               >
                 <LeftArrowIcon />
               </button>
-              <div className="relative w-full h-full bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+              <div className="relative w-full aspect-[4/3] bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
                 <img
                   src={images[currentIndex].image_url}
                   alt={images[currentIndex].event_name}

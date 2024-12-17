@@ -50,7 +50,7 @@ const ImageGrid = () => {
       <Header />
       <div className="p-4 flex-1 bg-gradient-main">
         <h1 className="text-2xl font-bold mb-4 text-center">いきたいリスト</h1>
-        <div className="image-grid grid grid-cols-3 gap-4">
+        <div className="image-grid grid grid-cols-2 sm:grid-cols-3 gap-4">
           {images.map((src, index) => (
             <div
               key={index}
