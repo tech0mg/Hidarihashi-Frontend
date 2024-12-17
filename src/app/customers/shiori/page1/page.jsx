@@ -70,22 +70,28 @@ const ShioriPage1 = () => {
           className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
             borderColor: shioriColor,
-            maxWidth: "90%",
-            maxHeight: "95%",
-            aspectRatio: "1 / 1.414", // A4に近い比率
+            maxWidth: "95%", // 幅をさらに広げる
+            maxHeight: "98%", // 高さも画面枠ギリギリまで拡大
+            aspectRatio: "1 / 1.414", // A4比率を維持
           }}
         >
-          <div className="p-8 sm:p-12 w-full h-full flex flex-col justify-between">
-            <h2 className="text-xl sm:text-3xl font-bold text-center text-gray-600 mb-4">
+          <div
+            className="p-4 sm:p-6 w-full h-full flex flex-col justify-between"
+            style={{
+              paddingTop: "10px", // 上下の余白をさらに小さく
+              paddingBottom: "10px",
+            }}
+          >
+            <h2 className="text-xl sm:text-3xl font-bold text-center text-gray-600 mb-2">
               しおり
             </h2>
 
-            {/* 選択したイラストを表示 */}
+            {/* イラストを大きく中央に表示 */}
             {selectedIllustration ? (
               <img
                 src={selectedIllustration}
                 alt="Selected Illustration"
-                className="max-w-full max-h-[60%] object-contain mx-auto"
+                className="max-w-full max-h-[80%] object-contain mx-auto" // 高さを80%まで拡大
               />
             ) : (
               <p className="text-center text-gray-400">
@@ -93,9 +99,10 @@ const ShioriPage1 = () => {
               </p>
             )}
 
-            <p className="text-lg text-center mt-4 text-gray-600">Produced by</p>
+            <p className="text-lg text-center mt-2 text-gray-600">Produced by</p>
             <p className="text-xl text-center font-semibold text-gray-600">りな</p>
           </div>
+        </div>
 
           {/* 次へボタン */}
           <div className="absolute top-1/2 -right-6 transform -translate-y-1/2">
@@ -106,7 +113,6 @@ const ShioriPage1 = () => {
               <RightArrowIcon size={24} />
             </button>
           </div>
-        </div>
       </main>
 
       {/* フッター */}
