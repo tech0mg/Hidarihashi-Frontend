@@ -7,6 +7,7 @@ import CompassIcon from "../../components/icon/icon_compass";
 const TopTotal = () => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const navigateToKids = () => {
     router.push("/customers/login");
@@ -155,6 +156,20 @@ const TopTotal = () => {
           </div>
         </section>
       </main>
+      {/* フッター */}
+      <footer className="relative z-10 w-full bg-[#ECE9E6] p-6 text-center">
+        <p className="text-[#6F6F6F] text-sm sm:text-base mb-2">
+          発表用PDFはこちらからダウンロードできます。
+        </p>
+        <a
+          href={(`${apiUrl}/pdf/slide`)} 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#63c0c3] font-semibold hover:underline"
+        >
+          PDFを開く
+        </a>
+      </footer>
     </div>
   );
 };
