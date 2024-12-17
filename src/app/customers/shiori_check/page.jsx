@@ -51,7 +51,7 @@ const ShioriCheck = () => {
                 <ShioriCard>
                     <h1 className="text-3xl font-bold text-center mb-4">ガエターノのおやこピッツァきょうしつ</h1>
                     <img 
-                        src={(`${apiUrl}/images/いちご.png`)}
+                        src="/shiori_check_img/いちご.png"
                         alt="いちご" 
                         className="w-100 h-80 mx-auto object-contain rounded-md"
                     />
@@ -68,7 +68,7 @@ const ShioriCheck = () => {
                     <p>12:10 おひるごはん</p>
                     <p>13:40 家にとうちゃく</p>
                     <img 
-                        src={(`${apiUrl}/photo_demo/pizza.jpg`)}
+                        src="/shiori_check_img/pizza.jpg"
                         alt="pizza" 
                         className="w-full h-60 mx-auto object-cover rounded-md mt-4"
                     />
@@ -78,7 +78,7 @@ const ShioriCheck = () => {
                     <h2 className="text-2xl font-bold mb-4 text-center">天気と経路情報</h2>
                     <p>天気: 晴れ時々曇り</p>
                     <img 
-                        src={(`${apiUrl}/photo_demo/map_img.png`)}
+                        src="/shiori_check_img/map_img.png"
                         alt="map_img" 
                         className="w-full h-60 mx-auto object-cover rounded-md mt-4"
                     />
