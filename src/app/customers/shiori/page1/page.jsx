@@ -72,11 +72,11 @@ const ShioriPage1 = () => {
             borderColor: shioriColor,
             maxWidth: "90%",
             maxHeight: "95%",
-            aspectRatio: "210 / 297",
+            aspectRatio: "1 / 1.414", // A4に近い比率
           }}
         >
           <div className="p-8 sm:p-12 w-full h-full flex flex-col justify-between">
-            <h2 className="text-3xl font-bold mb-4 text-center text-gray-600">
+            <h2 className="text-xl sm:text-3xl font-bold text-center text-gray-600 mb-4">
               しおり
             </h2>
 
@@ -85,7 +85,7 @@ const ShioriPage1 = () => {
               <img
                 src={selectedIllustration}
                 alt="Selected Illustration"
-                className="mt-4 w-64 h-64 object-contain mx-auto rounded-lg"
+                className="max-w-full max-h-[60%] object-contain mx-auto"
               />
             ) : (
               <p className="text-center text-gray-400">
@@ -93,15 +93,15 @@ const ShioriPage1 = () => {
               </p>
             )}
 
-            <p className="text-lg text-center mb-2 text-gray-600">Produced by</p>
+            <p className="text-lg text-center mt-4 text-gray-600">Produced by</p>
             <p className="text-xl text-center font-semibold text-gray-600">りな</p>
           </div>
 
           {/* 次へボタン */}
-          <div className="absolute top-1/2 -right-8 transform -translate-y-1/2">
+          <div className="absolute top-1/2 -right-6 transform -translate-y-1/2">
             <button
               onClick={() => navigateTo("next")}
-              className="bg-white p-3 rounded-full shadow-md hover:bg-gray-200"
+              className="bg-white p-3 rounded-full shadow-md hover:bg-gray-200 transition"
             >
               <RightArrowIcon size={24} />
             </button>
