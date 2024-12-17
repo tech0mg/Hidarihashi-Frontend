@@ -232,6 +232,12 @@ const handleFileUpload = async (file) => {
         >
             リセット
         </button>
+        <button
+          onClick={() => router.back()}
+          className="px-4 py-2 bg-gray-500 text-white rounded"
+        >
+          前のページに戻る
+        </button>
 
       </div>
     </div>
