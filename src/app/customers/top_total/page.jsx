@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CompassIcon from "../../components/icon/icon_compass"; 
-import styles from "../../styles/Home.module.css";
 
 const TopTotal = () => {
   const router = useRouter();
@@ -144,18 +143,13 @@ const TopTotal = () => {
           </div>
 
           {/* 右: 画像またはiframe */}
-          <div className="flex items-center justify-center">
-            <div style={{ width: '100%', maxWidth: '600px' }}>
-              <iframe
-                style={{
-                  border: '1px solid rgba(0, 0, 0, 0.1)',
-                  borderRadius: '8px',
-                }}
-                src="https://embed.figma.com/proto/AG7Agjugx2zEVW2ylbxa19/Tech0_Hidari-Hashi-App-Design?page-id=0%3A1&node-id=476-652&node-type=canvas&viewport=6756%2C-2680%2C0.93&scaling=scale-down&content-scaling=fixed&starting-point-node-id=476%3A652&show-proto-sidebar=1&embed-host=share"
-                allowFullScreen
-                title="Figma Embed"
-              ></iframe>
-            </div>
+          <div className="iframe-container flex items-center justify-center">
+            <iframe
+              className="responsive-iframe"
+              src="https://embed.figma.com/proto/AG7Agjugx2zEVW2ylbxa19/Tech0_Hidari-Hashi-App-Design?page-id=0%3A1&node-id=476-652&node-type=canvas&viewport=6756%2C-2680%2C0.93&scaling=scale-down&content-scaling=fixed&starting-point-node-id=476%3A652&show-proto-sidebar=1&embed-host=share"
+              allowFullScreen
+              title="Figma Embed"
+            ></iframe>
           </div>
         </section>
       </main>

@@ -62,6 +62,23 @@
     transform: scale(1.2);
   }
   
+  .iframe-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .responsive-iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* 16:9の比率を維持 */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  
 
 /* top_totalボタン用虹色アニメーション */
 @keyframes rainbow {
