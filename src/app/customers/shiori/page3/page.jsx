@@ -20,11 +20,13 @@ const ShioriPage3 = () => {
   const [destinationAddress, setDestinationAddress] = useState(""); // 目的地
   const [weatherData, setWeatherData] = useState(null); // 天気データの状態管理
   const [directions, setDirections] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // モーダルの状態
   const [isLoadingWeather, setIsLoadingWeather] = useState(false); // ローディング状態
   const [isLoadingRoute, setIsLoadingRoute] = useState(false); // ローディング状態
   const [routeError, setRouteError] = useState(null); // エラー状態の管理
   const [drivingDuration, setDrivingDuration] = useState(null);// 車での所要時間
   const [walkingDuration, setWalkingDuration] = useState(null);// 徒歩での所要時間
+  const [footerHeight, setFooterHeight] = useState(0);
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // APIのベースURL
   const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
@@ -36,10 +38,10 @@ const ShioriPage3 = () => {
       const footerHeight = document.querySelector("footer")?.offsetHeight || 0;
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
 
-      const mapMinHeight = 300; // 地図部分の最低高さを追記
-      const timeSectionMinHeight = 100; // 所要時間表示の最低高さ
       const verticalPadding = 40; // 上下余白を設定
-      setContentHeight(availableHeight - verticalPadding * 2+ timeSectionMinHeight+ mapMinHeight);// 地図の最低限の高さを追加
+      setContentHeight(availableHeight - verticalPadding * 2);
+      const footer = document.querySelector("footer");
+      setFooterHeight(footer?.offsetHeight || 0);
     };
 
     updateContentHeight();
@@ -114,9 +116,18 @@ const ShioriPage3 = () => {
     );
   };
 
+  // // fetchWeather と fetchRoute を順番に実行する関数
+  // const fetchWeatherAndRoute = () => {
+  //   fetchWeather(destinationAddress); // 天気データを取得
+  //   fetchRoute(); // 経路データを取得
+  // };
 
   const toggleColorModal = () => {
     setIsColorModalOpen(!isColorModalOpen);
+  };
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
@@ -135,51 +146,18 @@ const ShioriPage3 = () => {
           className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
             borderColor: shioriColor,
-            aspectRatio: "210 / 297",
-            height: "100%",
-            maxWidth: "calc(90%)",
-            maxHeight: "95%",
+            aspectRatio: "1 / 1.414",
+            height: "95%",
+            maxWidth: "90%",
           }}
         >
-          <div className="p-6 w-full h-full flex flex-col justify-between">
-            <div className="mb-6">
-              <h2 className="text-xl font-bold mb-4 text-center text-gray-600">出発地を入力</h2>
-              <input
-                type="text"
-                value={startAddress}
-                onChange={(e) => setStartAddress(e.target.value)}
-                placeholder="例: 東京都台東区秋葉原"
-                className="border-2 border-gray-300 p-2 w-full rounded-md mb-4"
-              />
-            </div>
-
-            <div className="mb-4">
-              <h2 className="text-xl font-bold mb-4 text-center text-gray-600">目的地を入力</h2>
-              <input
-                type="text"
-                value={destinationAddress}
-                onChange={(e) => setDestinationAddress(e.target.value)}
-                placeholder="例: 福岡県福岡市博多区中洲"
-                className="border-2 border-gray-300 p-2 w-full rounded-md mb-4"
-              />
-              <button
-                onClick={() => {
-                  fetchWeather(destinationAddress);
-                  fetchRoute();
-                }}
-                className="p-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600"
-                disabled={isLoadingWeather || isLoadingRoute}
-              >
-                {isLoadingWeather || isLoadingRoute ? "取得中..." : "天気と経路を取得"}
-              </button>
-            </div>
-
+          <div className="p-6 w-full h-full flex flex-col">
             <WeatherInfo isLoading={isLoadingWeather} data={weatherData} />
             <LoadScript googleMapsApiKey={googleMapsApiKey}>
               <GoogleMap
-                mapContainerStyle={{ width: '100%', height: '400px' }}
+                mapContainerStyle={{ width: '100%', height: '300px' }}
                 center={directions ? undefined : { lat: 35.6895, lng: 139.6917 }} // directionsがない場合は初期位置を指定
-                zoom={directions ? 12 : 7} // directionsがない場合のズームレベルを指定
+                zoom={directions ? undefined : 7} // directionsがない場合のズームレベルを指定
               >
                 {directions && <DirectionsRenderer directions={directions} />}
               </GoogleMap>
@@ -240,6 +218,65 @@ const ShioriPage3 = () => {
           toggleColorModal={toggleColorModal}
         />
       </footer>
+
+      {/* 天気と地図確認用のモーダル */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-40">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-4/5 max-w-md">
+            <h2 className="text-lg font-bold mb-4 text-center text-gray-600">
+              出発地と目的地を入力
+            </h2>
+            <input
+              type="text"
+              value={startAddress}
+              onChange={(e) => setStartAddress(e.target.value)}
+              placeholder="出発地を入力 (例: 東京都台東区秋葉原)"
+              className="border-2 border-gray-300 p-2 w-full rounded-md mb-4"
+            />
+            <input
+              type="text"
+              value={destinationAddress}
+              onChange={(e) => setDestinationAddress(e.target.value)}
+              placeholder="目的地を入力 (例: 福岡県福岡市博多区中洲)"
+              className="border-2 border-gray-300 p-2 w-full rounded-md mb-4"
+            />
+            <div className="flex justify-between">
+              <button
+                onClick={toggleModal}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md"
+              >
+                キャンセル
+              </button>
+              <button
+                onClick={() => {
+                  fetchRoute();
+                  fetchWeather(destinationAddress);
+                  toggleModal();
+                }}
+                className="bg-[#AB9B90] text-white px-4 py-2 rounded-md hover:bg-[#9B897D]"
+              >
+                かくにんする
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* モーダルを開くトリガーボタン */}
+      <button
+        onClick={() => {
+          toggleModal();
+        }}
+        style={{
+          position: "fixed",
+          bottom: `${footerHeight + 20}px`, // フッターの高さ + 余白
+          right: "20px",
+        }}
+        className="fixed bottom-20 right-10 bg-[#AB9B90] text-white p-4 rounded-full shadow-lg hover:bg-[#9B897D] z-40"
+      >
+        天気と地図をかくにんする
+      </button>
+
 
       {isColorModalOpen && <ColorModal onClose={toggleColorModal} />}
     </div>
