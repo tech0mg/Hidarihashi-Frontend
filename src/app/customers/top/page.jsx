@@ -93,17 +93,17 @@ const App = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       {/* ヘッダー */}
-      <div className="w-full">
-          <Header />
+      <div className="w-full mb-2">
+        <Header />
       </div>
 
       {/* メインコンテンツ */}
       <main
-        className="flex-grow flex flex-col justify-center items-center bg-gradient-main"
-        {...handlers} // スワイプ可能エリアを設定
+        className="flex-grow flex flex-col justify-center items-center bg-gradient-main px-4 py-4" // 余裕を追加
+        {...handlers}
       >
         {images.length > 0 ? (
-          <div className="w-full max-w-md flex flex-col items-center">
+          <div className="w-full max-w-md flex flex-col items-center space-y-4">
             {/* カード */}
             <div className="relative w-full h-96 flex items-center">
               <button
@@ -112,7 +112,7 @@ const App = () => {
               >
                 <LeftArrowIcon />
               </button>
-              <div className="relative w-full h-full bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+              <div className="relative w-full h-full aspect-[3/4] bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
                 <img
                   src={images[currentIndex].image_url}
                   alt={images[currentIndex].event_name}
@@ -151,17 +151,12 @@ const App = () => {
         )}
       </main>
 
-      {/* ポップアップ */}
-      {popupMessage && (
-        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-[#9a877a] text-white py-2 px-4 rounded-lg shadow-lg">
-          {popupMessage}
-        </div>
-      )}
-
       {/* フッター */}
-      <FooterButton />
+      <div className="mt-2">
+        <FooterButton />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
