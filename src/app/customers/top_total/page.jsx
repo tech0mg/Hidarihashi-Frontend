@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CompassIcon from "../../components/icon/icon_compass"; 
+import styles from "../../styles/Home.module.css";
 
 const TopTotal = () => {
   const router = useRouter();
