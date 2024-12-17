@@ -27,13 +27,14 @@ const KirokuList = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F9F7F5] p-6">
+    <div className="flex flex-col min-h-screen bg-[#F9F7F5]">
       {/* ヘッダー */}
-      <Header onHomeClick={() => router.push("/customers/top")} />
-      <main className="flex-grow px-6">
-        <h1 className="text-2xl font-bold text-center text-[#8B7A6B] mb-6">
-          おとずれたイベントリスト
-        </h1>
+      <header className="w-full bg-[#EDEAE7] shadow-md">
+        <Header onHomeClick={() => router.push("/customers/top")} />
+      </header>
+      <h1 className="text-2xl font-bold text-center text-[#8B7A6B] mb-6 mt-10">
+        おとずれたイベントリスト
+      </h1>
         <div className="space-y-6">
           {records.map((record, index) => (
             <div
@@ -79,7 +80,6 @@ const KirokuList = () => {
         >
           ホームにもどる
         </button>
-      </main>
     </div>
   );
 };
