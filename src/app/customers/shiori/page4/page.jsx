@@ -73,9 +73,10 @@ const ShioriPage4 = () => {
       <main
         className="flex-grow bg-gradient-main flex justify-center items-center"
         style={{
-          height: `${contentHeight}px`,
-          paddingTop: "40px",
-          paddingBottom: "40px",
+          // height: `${contentHeight}px`,
+          height: "500px",
+          paddingTop: "20px",
+          paddingBottom: "20px",
         }}
       >
         {/* ラッパー */}
@@ -85,8 +86,7 @@ const ShioriPage4 = () => {
             borderColor: shioriColor,
             aspectRatio: "210 / 297",
             height: "100%",
-            maxWidth: "calc(90%)", // 柔軟な幅設定
-            maxHeight: "95%", // 高さの最大化
+            maxWidth: "100%", // 柔軟な幅設定
           }}
         >
           {/* 持ち物リスト */}

@@ -39,7 +39,7 @@ const ShioriPage1 = () => {
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
 
       // 上下余白分を計算し引く
-      const verticalPadding = 40; // 余白を設定
+      const verticalPadding = 20; // 余白を設定
       setContentHeight(availableHeight - verticalPadding * 2);
     };
 
@@ -60,9 +60,10 @@ const ShioriPage1 = () => {
       <main
         className="flex-grow bg-gradient-main flex justify-center items-center"
         style={{
-          height: `${contentHeight}px`,
-          paddingTop: "40px",
-          paddingBottom: "40px",
+          // height: `${contentHeight}px`,
+          height: "500px",
+          paddingTop: "20px",
+          paddingBottom: "20px",
         }}
       >
         {/* コンテンツ全体のラッパー */}
@@ -70,8 +71,8 @@ const ShioriPage1 = () => {
           className="relative bg-white shadow-lg border-8 rounded-md"
           style={{
             borderColor: shioriColor,
-            maxWidth: "90%",
-            maxHeight: "95%",
+            Width: "95%",
+            maxHeight: "100%",
             aspectRatio: "1 / 1.414", // A4に近い比率
           }}
         >
