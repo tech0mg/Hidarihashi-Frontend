@@ -14,10 +14,10 @@ const TopTotal = () => {
   };
 
   const images = {
-    topTotal1: "/top_total_img/top_total1.png",
-    topTotal2: "/top_total_img/top_total2.png",
-    topTotal3: "/top_total_img/top_total3.png",
-    topTotal4: "/top_total_img/top_total4.png",
+    topTotal1: "/top_total_img/top_total1.jpg",
+    topTotal2: "/top_total_img/top_total2.jpg",
+    topTotal3: "/top_total_img/top_total3.jpg",
+    topTotal4: "/top_total_img/top_total4.jpg",
   };
   
   const imageArray = Object.values(images); // オブジェクトを配列に変換
