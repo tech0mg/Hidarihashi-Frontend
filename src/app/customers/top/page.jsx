@@ -97,59 +97,59 @@ const App = () => {
           <Header />
       </div>
 
-      {/* メインコンテンツ */}
-      <main
-        className="flex-grow flex flex-col justify-center items-center bg-gradient-main"
-        {...handlers} // スワイプ可能エリアを設定
-      >
-        {images.length > 0 ? (
-          <div className="w-full max-w-md flex flex-col items-center">
-            {/* カード */}
-            <div className="relative w-full h-96 flex items-center">
-              <button
-                onClick={() => handleSwipe("right")}
-                className="p-2 bg-gray-300 text-gray-700 rounded-full shadow-md hover:bg-gray-400 absolute left-0 ml-4 z-10"
-              >
-                <LeftArrowIcon />
-              </button>
-              <div className="relative w-full aspect-[4/3] bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
-                <img
-                  src={images[currentIndex].image_url}
-                  alt={images[currentIndex].event_name}
-                  className="w-full h-full object-cover"
-                />
-                <p className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2">
-                  {images[currentIndex].event_name}
-                </p>
-              </div>
-              <button
-                onClick={() => handleSwipe("left")}
-                className="p-2 bg-gray-300 text-gray-700 rounded-full shadow-md hover:bg-gray-400 absolute right-0 mr-4 z-10"
-              >
-                <RightArrowIcon />
-              </button>
-            </div>
+{/* メインコンテンツ */}
+<main
+  className="flex-grow bg-gradient-main px-4 py-6"
+  {...handlers} // スワイプ可能エリアを設定
+>
+  {images.length > 0 ? (
+    <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-col sm:items-center">
+      {/* カード */}
+      <div className="relative w-full h-56 sm:h-96 flex items-center">
+        <button
+          onClick={() => handleSwipe("right")}
+          className="p-2 bg-gray-300 text-gray-700 rounded-full shadow-md hover:bg-gray-400 absolute left-0 ml-2 z-10"
+        >
+          <LeftArrowIcon />
+        </button>
+        <div className="relative w-full aspect-[4/3] bg-white rounded-lg shadow-md overflow-hidden">
+          <img
+            src={images[currentIndex].image_url}
+            alt={images[currentIndex].event_name}
+            className="w-full h-full object-cover"
+          />
+          <p className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 text-sm">
+            {images[currentIndex].event_name}
+          </p>
+        </div>
+        <button
+          onClick={() => handleSwipe("left")}
+          className="p-2 bg-gray-300 text-gray-700 rounded-full shadow-md hover:bg-gray-400 absolute right-0 mr-2 z-10"
+        >
+          <RightArrowIcon />
+        </button>
+      </div>
 
-            {/* 操作ボタン */}
-            <div className="mt-4 flex justify-around w-full">
-              <button
-                onClick={() => showPopup("行かない")}
-                className="p-3 bg-[#63C0C3] text-white rounded-full shadow-md hover:bg-[#A7DADC]"
-              >
-                <NoIcon size={24} />
-              </button>
-              <button
-                onClick={() => showPopup("行きたい")}
-                className="p-3 bg-[#DA7997] text-white rounded-full shadow-md hover:bg-[#E6A9BD]"
-              >
-                <HeartIcon size={24} />
-              </button>
-            </div>
-          </div>
-        ) : (
-          <p>Loading images...</p>
-        )}
-      </main>
+      {/* 操作ボタン */}
+      <div className="mt-4 flex justify-around w-full sm:w-auto">
+        <button
+          onClick={() => showPopup("行かない")}
+          className="p-3 bg-[#63C0C3] text-white rounded-full shadow-md hover:bg-[#A7DADC]"
+        >
+          <NoIcon size={24} />
+        </button>
+        <button
+          onClick={() => showPopup("行きたい")}
+          className="p-3 bg-[#DA7997] text-white rounded-full shadow-md hover:bg-[#E6A9BD]"
+        >
+          <HeartIcon size={24} />
+        </button>
+      </div>
+    </div>
+  ) : (
+    <p className="text-center text-gray-500">Loading images...</p>
+  )}
+</main>
 
       {/* ポップアップ */}
       {popupMessage && (
