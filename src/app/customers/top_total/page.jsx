@@ -144,15 +144,14 @@ const TopTotal = () => {
 
           {/* 右: 画像またはiframe */}
           <div className="flex items-center justify-center">
-            <iframe
-              style={{
-                border: "1px solid rgba(0, 0, 0, 0.1)",
-              }}
-              className="w-full h-[300px] sm:h-[450px] rounded-lg shadow-lg"
-              src="https://embed.figma.com/proto/AG7Agjugx2zEVW2ylbxa19/Tech0_Hidari-Hashi-App-Design?page-id=0%3A1&node-id=476-652&node-type=canvas&viewport=6756%2C-2680%2C0.93&scaling=scale-down&content-scaling=fixed&starting-point-node-id=476%3A652&show-proto-sidebar=1&embed-host=share"
-              allowFullScreen
-              title="Figma Embed"
-            ></iframe>
+            <div style="width: 100%; max-width: 600px;">
+              <iframe
+                style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 8px;"
+                src="https://embed.figma.com/proto/AG7Agjugx2zEVW2ylbxa19/Tech0_Hidari-Hashi-App-Design?page-id=0%3A1&node-id=476-652&node-type=canvas&viewport=6756%2C-2680%2C0.93&scaling=scale-down&content-scaling=fixed&starting-point-node-id=476%3A652&show-proto-sidebar=1&embed-host=share"
+                allowFullScreen
+                title="Figma Embed"
+              ></iframe>
+            </div>
           </div>
         </section>
       </main>
