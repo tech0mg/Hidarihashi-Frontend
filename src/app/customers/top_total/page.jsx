@@ -58,6 +58,7 @@ const TopTotal = () => {
           </h1>
         </div>
 
+        {/* デスクトップナビ */}
         <nav className="hidden sm:flex gap-4 text-[#9A877A] font-semibold text-base">
           <a href="#about" className="hover:text-[#6F6F6F]">About</a>
           <a href="#request" className="hover:text-[#6F6F6F]">資料請求</a>
@@ -87,6 +88,29 @@ const TopTotal = () => {
           </button>
         </div>
       </header>
+
+      {/* ハンバーガーメニューの展開部分 */}
+      {menuOpen && (
+        <nav className="absolute top-20 left-0 right-0 bg-white shadow-md rounded-lg z-30 sm:hidden">
+          <ul className="flex flex-col items-center gap-4 p-6 text-[#9A877A] font-semibold text-lg">
+            <li>
+              <a href="#about" onClick={() => setMenuOpen(false)}>
+                About
+              </a>
+            </li>
+            <li>
+              <a href="#request" onClick={() => setMenuOpen(false)}>
+                資料請求
+              </a>
+            </li>
+            <li>
+              <a href="/customers/toB_top" onClick={() => setMenuOpen(false)}>
+                企業向けログイン
+              </a>
+            </li>
+          </ul>
+        </nav>
+      )}
 
       {/* メインコンテンツ */}
       <main className="relative z-10 flex-grow flex flex-col items-center justify-center pt-8">
