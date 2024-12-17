@@ -94,7 +94,7 @@ const ShioriPage2 = () => {
                   人気店ガエターノの店主自らに教わるピッツァ教室。親子でお好きなものを選んでのせて、おいしいピザを焼きましょう！
                 </p>
                 <img 
-                        src={(`${apiUrl}/photo_demo/pizza.jpg`)}
+                        src="/shiori_check_img/pizza.jpg"
                         alt="pizza" 
                         className="w-100 h-60 mx-auto object-cover"
                     />
