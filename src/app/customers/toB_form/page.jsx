@@ -97,13 +97,11 @@ const EventRegistrationForm = () => {
   };
 
   return (
-    <div className="p-6 bg-[#F9F7F5] min-h-screen">
+    <div className="bg-[#F9F7F5] flex flex-col min-h-screen">
       {/* ヘッダー */}
-      <div className="w-full">
-          <Header />
-      </div>
-      <h1 className="text-2xl font-bold mb-6 text-center text-[#8B7A6B]">イベント登録画面</h1>
-      <div className="space-y-8">
+      <Header onHomeClick={() => navigateTo("top")} />
+      <h1 className="p-4 text-2xl font-bold mb-6 text-center text-[#8B7A6B]">イベント登録画面</h1>
+      <div className="mx-4 space-y-8">
         {/* イベントタイトル */}
         <div>
           <label className="block mb-2 font-bold text-[#8B7A6B]">イベントタイトル</label>
@@ -120,7 +118,7 @@ const EventRegistrationForm = () => {
         {/* イベントTOP画像 */}
         <div>
           <label className="block mb-2 font-bold text-[#8B7A6B]">イベントTOP画像</label>
-          <div className="flex items-start gap-6 bg-[#F9F7F5] p-4 rounded border border-[#D7CEC5]">
+          <div className="flex flex-col items-start gap-6 bg-[#F9F7F5] p-4 rounded border border-[#D7CEC5]">
             {/* ファイルアップロードボタン */}
             <button className="px-6 py-2 bg-[#D7CEC5] text-[#8B7A6B] rounded-full hover:bg-[#A39181] transition">
               ファイルをアップロード

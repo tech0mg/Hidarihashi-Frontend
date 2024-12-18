@@ -94,11 +94,9 @@ const App = () => {
 
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="bg-[#F9F7F5] flex flex-col min-h-screen">
       {/* ヘッダー */}
-      <div className="w-full mb-2">
-        <Header />
-      </div>
+      <Header onHomeClick={() => navigateTo("top")} />
 
       {/* メインコンテンツ */}
       <main
@@ -115,7 +113,7 @@ const App = () => {
               >
                 <LeftArrowIcon />
               </button>
-              <div className="relative w-full h-full aspect-[3/4] bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
+              <div className="relative w-full h-full aspect-[3/6] bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0">
                 <img
                   src={images[currentIndex].image_url}
                   alt={images[currentIndex].event_name}
