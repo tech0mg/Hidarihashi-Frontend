@@ -69,7 +69,8 @@ const App = () => {
   // ボタン操作用関数
   const showPopup = (message) => {
     setPopupMessage(message);
-    setTimeout(() => setPopupMessage(""), 2000); // 2秒後に非表示
+    setIsPopupVisible(true);
+    setTimeout(() => setIsPopupVisible(false), 2000); // 2秒後にポップアップを非表示
   };
 
   const IconButton = ({ onClick, children, fillDefault, fillHover }) => (
@@ -89,6 +90,8 @@ const App = () => {
       {children}
     </button>
   );
+
+
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
