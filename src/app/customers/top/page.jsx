@@ -132,25 +132,32 @@ const App = () => {
             </div>
 
             {/* 操作ボタン */}
-            <div className="mt-4 flex justify-around w-full">
-              <button
-                onClick={() => showPopup("行かない")}
-                className="p-3 bg-[#63C0C3] text-white rounded-full shadow-md hover:bg-[#A7DADC]"
-              >
-                <NoIcon size={24} />
-              </button>
-              <button
-                onClick={() => showPopup("行きたい")}
-                className="p-3 bg-[#DA7997] text-white rounded-full shadow-md hover:bg-[#E6A9BD]"
-              >
-                <HeartIcon size={24} />
-              </button>
+            <div className="mt-4 flex flex-col items-center w-full">
+              <div className="flex flex-col items-center">
+                <button
+                  onClick={() => showPopup("行かない")}
+                  className="p-3 bg-[#63C0C3] text-white rounded-full shadow-md hover:bg-[#A7DADC]"
+                >
+                  <NoIcon size={24} />
+                </button>
+                <span className="mt-2 text-gray-700">行きたくない</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <button
+                  onClick={() => showPopup("行きたい")}
+                  className="p-3 bg-[#DA7997] text-white rounded-full shadow-md hover:bg-[#E6A9BD]"
+                >
+                  <HeartIcon size={24} />
+                </button>
+                <span className="mt-2 text-gray-700">行きたい</span>
+              </div>
             </div>
           </div>
         ) : (
           <p>Loading images...</p>
         )}
       </main>
+
 
       {/* フッター */}
       <div className="mt-2">
