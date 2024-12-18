@@ -45,7 +45,7 @@ const ShioriPage4 = () => {
   const { shioriColor } = useColor(); // Contextから色を取得
   const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
-  const [items, setItems] = useState(["", "", "", "", "", ""]); // 持ち物リスト初期値
+  const [items, setItems] = useState(["エプロン", "ハンカチ", "", "", "", ""]); // 持ち物リスト初期値
   const [memory, setMemory] = useState(""); // 思い出の記録初期値
 
   useEffect(() => {
