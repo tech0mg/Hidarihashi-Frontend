@@ -86,7 +86,7 @@ const ShioriPage1 = () => {
               <img
                 src={selectedIllustration}
                 alt="Selected Illustration"
-                className="max-w-full max-h-[60%] object-contain mx-auto"
+                className="max-w-full object-contain mx-auto"
               />
             ) : (
               <p className="text-center text-gray-400">

@@ -16,8 +16,8 @@ const ShioriPage3 = () => {
   const { shioriColor } = useColor(); // Contextから色を取得
   const [isColorModalOpen, setIsColorModalOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
-  const [startAddress, setStartAddress] = useState(""); // 出発地
-  const [destinationAddress, setDestinationAddress] = useState(""); // 目的地
+  const [startAddress, setStartAddress] = useState("福岡県大野城市白木原"); // 出発地
+  const [destinationAddress, setDestinationAddress] = useState("福岡県福岡市博多区博多駅東"); // 目的地
   const [weatherData, setWeatherData] = useState(null); // 天気データの状態管理
   const [directions, setDirections] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // モーダルの状態
