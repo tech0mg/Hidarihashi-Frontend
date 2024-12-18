@@ -40,15 +40,13 @@ export default function Register() {
   };
 
   return (
-    <div className="max-w-screen-md mx-auto bg-pink-50 p-8 rounded-lg shadow-md">
+    <div className="bg-[#F9F7F5] flex flex-col min-h-screen">
       {/* ヘッダー */}
-      <div className="w-full">
-          <Header />
-      </div>
-      <h2 className="text-center text-2xl font-bold mb-6">アカウント登録</h2>
+      <Header onHomeClick={() => navigateTo("top")} />
+      <h2 className="p-6 text-center text-2xl font-bold mb-6">アカウント登録</h2>
       <form
         onSubmit={handleSubmit}
-        className="space-y-6"
+        className="space-y-6 mx-6"
       >
         <div>
           <label className="block font-semibold mb-2">保護者のニックネーム</label>
